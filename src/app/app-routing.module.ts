@@ -17,6 +17,15 @@ const routes: Routes = [
         loadChildren: () => import(`@pages/facultades/facultades.module`).then(m => m.FacultadesModule),
       },
     ],
+  },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'pantalla-principal'
+  },
+  {
+    path: '**',
+    redirectTo: 'pantalla-principal'
   }
 ];
 

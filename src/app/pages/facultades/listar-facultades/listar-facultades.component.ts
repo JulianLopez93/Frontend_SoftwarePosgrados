@@ -7,7 +7,7 @@ import { FacultadesServicioService } from 'src/app/services/facultades-servicio.
   styleUrls: ['./listar-facultades.component.css']
 })
 export class ListarFacultadesComponent {
-  facultades: any[] = []; 
+  facultades: any[] = [];
   constructor(private facultadesService: FacultadesServicioService) {}
 
   ngOnInit() {
@@ -17,7 +17,8 @@ export class ListarFacultadesComponent {
   obtenerFacultades() {
     this.facultadesService.getFacultades().subscribe(
       (facultades) => {
-        this.facultades = facultades; // Asignamos los datos al arreglo de facultades
+        this.facultades = facultades;// Asignamos los datos al arreglo de facultades
+
       },
       (error) => {
         console.error('Error al obtener las facultades:', error);

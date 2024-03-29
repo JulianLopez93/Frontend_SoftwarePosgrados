@@ -12,6 +12,10 @@ const routes: Routes = [
         path: 'pantalla-principal',
         loadChildren: () => import(`@pages/main-screen/main-screen.module`).then(m => m.MainScreenModule),
       },
+      {
+        path: 'facultades',
+        loadChildren: () => import(`@pages/facultades/facultades.module`).then(m => m.FacultadesModule),
+      },
     ],
   }
 ];

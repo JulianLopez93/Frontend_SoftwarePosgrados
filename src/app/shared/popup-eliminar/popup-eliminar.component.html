@@ -1,9 +1,8 @@
-<h1 mat-dialog-title>Eliminar Departamento</h1>
+<h1 mat-dialog-title>Eliminar {{data.modulo}}</h1>
 <div mat-dialog-content>
-  ¿Estás seguro de que quieres eliminar este departamento?
+  ¿Estás seguro de que quieres eliminar este {{data.modulo}}?
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No</button>
   <button mat-button [mat-dialog-close]="data.id" cdkFocusInitial>Sí</button>
 </div>
-

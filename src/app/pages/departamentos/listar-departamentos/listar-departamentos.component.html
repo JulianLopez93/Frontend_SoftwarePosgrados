@@ -1,5 +1,5 @@
 <div class="container">
-    <button mat-raised-button (click)="openCreateDialog()">Crear Departamento</button>
+    <button mat-raised-button (click)="openCreateDialog('departamento')">Crear Departamento</button>
   
     <table mat-table [dataSource]="departamentos" class="mat-elevation-z8">
       <!-- Columna de nombre -->
@@ -16,10 +16,10 @@
       <ng-container matColumnDef="acciones">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let departamento">
-          <button mat-icon-button color="primary" (click)="openCreateDialog(departamento)">
+          <button mat-icon-button color="primary" (click)="openCreateDialog('departamento',departamento)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="openDeleteDialog(departamento.id)">
+          <button mat-icon-button color="warn" (click)="openDeleteDialog(departamento.id, 'departamento')">
             <mat-icon>delete</mat-icon>
           </button>
         </td>

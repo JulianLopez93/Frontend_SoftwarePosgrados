@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>{{data.isEdit ? 'Editar' : 'Crear'}} {{data.modulo}}</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Nombre del {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.nombre">
+  </mat-form-field>
+  <div>
+    <span class="field-label">Seleccione {{data.modulo === 'departamento' ? 'facultad' : data.modulo === 'programa' ? 'departamento' : data.modulo === 'cohorte' ? 'programa':''}} perteneciente</span>
+    <select class="form-control" [(ngModel)]="entidadSeleccionada">
+        <option *ngFor="let item of this.listaPerteneciente" [value]="item.id">{{item.nombre}}</option>
+    </select>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button (click)="onAccept()" cdkFocusInitial>{{data.isEdit ? 'Guardar' : 'Aceptar'}}</button>
+</div>
+
+

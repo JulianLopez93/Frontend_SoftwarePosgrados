@@ -7,14 +7,11 @@ import { ListarDepartamentosComponent } from './listar-departamentos/listar-depa
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@app/material/material/material.module';
 import { MatTableModule } from '@angular/material/table';
-import { PopupCrearEditarDepartamentosComponent } from './listar-departamentos/popup-crear-editar-departamentos/popup-crear-editar-departamentos.component';
-import { PopupEliminarDepartamentosComponent } from './listar-departamentos/popup-eliminar-departamentos/popup-eliminar-departamentos.component';
+
 
 @NgModule({
   declarations: [
     ListarDepartamentosComponent,
-    PopupCrearEditarDepartamentosComponent,
-    PopupEliminarDepartamentosComponent
   ],
   imports: [
     CommonModule,

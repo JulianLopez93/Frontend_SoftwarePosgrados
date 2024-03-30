@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { DepartamentosService } from '@app/services/departamentos.service';
-import { PopupCrearEditarDepartamentosComponent } from './popup-crear-editar-departamentos/popup-crear-editar-departamentos.component';
-import { PopupEliminarDepartamentosComponent } from './popup-eliminar-departamentos/popup-eliminar-departamentos.component';
+import { PopupCrearEditarComponent } from '@app/shared/popup-crear-editar/popup-crear-editar.component';
+import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
 import { FacultadesServicioService } from '@app/services/facultades-servicio.service';
 
 @Component({
@@ -37,7 +37,7 @@ export class ListarDepartamentosComponent {
 
       },
       (error) => {
-        console.error('Error al obtener las facultades:', error);
+        console.error('Error al obtener los departamentos:', error);
       }
     );
   }
@@ -120,12 +120,13 @@ export class ListarDepartamentosComponent {
       }   
   }
 
-  openCreateDialog(departamento?: any): void {
+  openCreateDialog(modulo:string, departamento?: any): void {
     console.log(departamento);    
     
-    const dialogRef = this.dialog.open(PopupCrearEditarDepartamentosComponent , {
-      width:'300px',
+    const dialogRef = this.dialog.open(PopupCrearEditarComponent , {
+      width:'350px',
       data: { 
+              modulo:modulo,
               nombre: departamento ? departamento.nombre : '', 
               isEdit: !!departamento,
               listaFacultades: this.listadoFacultades
@@ -138,26 +139,27 @@ export class ListarDepartamentosComponent {
       if (result) {
         if (departamento) {
           console.log("Edita Departamento");
-          this.editarDepartamento(departamento.id, result.nombre, result.facultad);
+          this.editarDepartamento(departamento.id, result.nombre, result.entidadPerteneciente);
         } else {
           console.log("Crea departamento");
-          this.crearDepartamento(result.nombre, result.facultad);
+          this.crearDepartamento(result.nombre, result.entidadPerteneciente);
         }
       }
       
     });
   }
-  openDeleteDialog(facultadId: string):void{
-    const dialogRef = this.dialog.open(PopupEliminarDepartamentosComponent , {
+  openDeleteDialog(departamentoId: string, modulo:string):void{
+    const dialogRef = this.dialog.open(PopupEliminarComponent , {
       width:'300px',
       data:{
-        id: facultadId
+        modulo: modulo,
+        id: departamentoId
 
       }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.eliminarDepartamento(facultadId);
+        this.eliminarDepartamento(departamentoId);
       }
     });
 

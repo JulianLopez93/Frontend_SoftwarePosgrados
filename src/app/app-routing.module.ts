@@ -20,6 +20,10 @@ const routes: Routes = [
         path: 'departamentos',
         loadChildren: () => import(`@pages/departamentos/departamentos.module`).then(m => m.DepartamentosModule),
       },
+      {
+        path: 'programas',
+        loadChildren: () => import(`@pages/programas/programas.module`).then(m => m.ProgramasModule),
+      },
     ],
   },
   {

@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>{{data.isEdit ? 'Editar' : 'Crear'}} Departamento</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Nombre del departamento</mat-label>
+    <input matInput [(ngModel)]="data.nombre">
+  </mat-form-field>
+  <select class="form-control" [(ngModel)]="facultadSeleccionada">
+    <option *ngFor="let facultad of listaFacultades" [value]="facultad.id">{{facultad.nombre}}</option>
+  </select>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button (click)="onAccept()" cdkFocusInitial>{{data.isEdit ? 'Guardar' : 'Aceptar'}}</button>
+</div>

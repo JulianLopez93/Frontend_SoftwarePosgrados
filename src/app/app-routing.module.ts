@@ -16,6 +16,10 @@ const routes: Routes = [
         path: 'facultades',
         loadChildren: () => import(`@pages/facultades/facultades.module`).then(m => m.FacultadesModule),
       },
+      {
+        path: 'departamentos',
+        loadChildren: () => import(`@pages/departamentos/departamentos.module`).then(m => m.DepartamentosModule),
+      },
     ],
   },
   {

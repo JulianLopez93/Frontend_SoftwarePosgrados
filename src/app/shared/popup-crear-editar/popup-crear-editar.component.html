@@ -2,7 +2,13 @@
 <div mat-dialog-content>
   <mat-form-field>
     <mat-label>Nombre del {{data.modulo}}</mat-label>
-    <input matInput [(ngModel)]="data.nombre">
+    <input *ngIf="data.modulo != 'cohorte'" matInput [(ngModel)]="data.nombre">
+    <input *ngIf="data.modulo == 'cohorte'" matInput [(ngModel)]="data.numero">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo == 'cohorte'">
+    <input matInput [matDatepicker]="picker" placeholder="Fecha" [(ngModel)]="data.fecha">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
   <div>
     <span class="field-label">Seleccione {{data.modulo === 'departamento' ? 'facultad' : data.modulo === 'programa' ? 'departamento' : data.modulo === 'cohorte' ? 'programa':''}} perteneciente</span>

@@ -1,1 +1,35 @@
-<p>listar-cohortes works!</p>
+<div class="container">
+    <button mat-raised-button (click)="openCreateDialog('cohorte')">Crear Cohorte</button>
+  
+    <table mat-table [dataSource]="cohortes" class="mat-elevation-z8">
+      <!-- Columna de nombre -->
+      <ng-container matColumnDef="numero">
+        <th mat-header-cell *matHeaderCellDef> Numero </th>
+        <td mat-cell *matCellDef="let cohorte"> {{cohorte.numero}} </td>
+      </ng-container>
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef> Fecha </th>
+        <td mat-cell *matCellDef="let cohorte"> {{cohorte.fecha | date:'dd-MM-yyyy'}} </td>
+      </ng-container>
+      <ng-container matColumnDef="programa">
+        <th mat-header-cell *matHeaderCellDef> Programa </th>
+        <td mat-cell *matCellDef="let cohorte"> {{cohorte.programa.nombre}} </td>
+      </ng-container>
+  
+      <!-- Columna de acciones -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let cohorte">
+          <button mat-icon-button color="primary" (click)="openCreateDialog('cohorte', cohorte)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="openDeleteDialog(cohorte.id, 'cohorte')">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>

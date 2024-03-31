@@ -24,6 +24,10 @@ const routes: Routes = [
         path: 'programas',
         loadChildren: () => import(`@pages/programas/programas.module`).then(m => m.ProgramasModule),
       },
+      {
+        path: 'cohortes',
+        loadChildren: () => import(`@pages/cohortes/cohortes.module`).then(m => m.CohortesModule),
+      }
     ],
   },
   {

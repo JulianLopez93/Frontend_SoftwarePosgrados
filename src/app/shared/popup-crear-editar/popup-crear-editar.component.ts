@@ -15,6 +15,8 @@ export class PopupCrearEditarComponent {
     @Inject(MAT_DIALOG_DATA) public data: any) {
       console.log(data);
       console.log(data.modulo);
+      console.log(data.numero);
+      console.log(data.fecha);
       console.log(data.nombre);
       console.log(data.isEdit);
       console.log(data.listaDepartamentos);
@@ -43,12 +45,37 @@ export class PopupCrearEditarComponent {
     {
       const nombre = this.data.nombre;
       const entidadPerteneciente = this.entidadSeleccionada;
+      const numero = this.data.numero;
+      
+      // Verifica si la fecha está definida antes de intentar formatearla
+      const fecha = this.data.fecha ? this.formatDate(new Date(this.data.fecha)) : undefined;
+      
       console.log(nombre);
       console.log(entidadPerteneciente);
+      console.log(fecha);
+      
       this.dialogRef.close({
         nombre: nombre,
-        entidadPerteneciente: entidadPerteneciente
+        entidadPerteneciente: entidadPerteneciente,
+        numero: numero,
+        fecha: fecha
       });
+    }
+
+    formatDate(date: Date): string {
+      const day = date.getDate();
+      const month = date.getMonth() + 1;  // Los meses en JavaScript empiezan en 0
+      const year = date.getFullYear();
+
+      return `${this.pad(day)}-${this.pad(month)}-${year}`;
+    }
+
+    pad(number: number): string {
+      if (number < 10) {
+        return '0' + number;
+      } else {
+        return number.toString();
+      }
     }
 
 }

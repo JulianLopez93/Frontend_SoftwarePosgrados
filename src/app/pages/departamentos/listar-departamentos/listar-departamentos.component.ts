@@ -94,33 +94,29 @@ export class ListarDepartamentosComponent {
       }
 
   }
-  crearDepartamento(nombre:string, facultad:any)
-  {
-    try
-    {
+  crearDepartamento(nombre: string, facultad: any) {
+
+
+    try {
       console.log(nombre);
       console.log(facultad);
-      const params =
-      {
+      const params = {
         nombre: nombre,
         idFacultad: facultad
-      }
+      };
       console.log(params);
-      this.departamentosService.postDepartamento(params).subscribe((result:any) => {
+      this.departamentosService.postDepartamento(params).subscribe((result: any) => {
         console.log(result);
-        if (result = "Departamento guardado")
-        {
+        if (result == "Departamento guardado") { // Asegúrate de usar '==' para comparar
           console.log("Departamento guardado");
           this.obtenerDepartamentos();
         }
-
       });
+    } catch (error) {
+      console.error('Error al crear el departamento:', error);
     }
-    catch(error)
-      {
-
-      }
   }
+
 
   openCreateDialog(modulo:string, departamento?: any): void {
     console.log(departamento);

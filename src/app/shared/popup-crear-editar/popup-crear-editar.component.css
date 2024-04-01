@@ -1,0 +1,10 @@
+.error-message {
+  text-align: center; /* Centra el texto horizontalmente */
+  width: 100%; /* Asegura que el div ocupe todo el ancho disponible */
+  margin-top: 20px; /* Espacio antes del mensaje de error */
+}
+
+.error-message span {
+  color: red;
+  display: block; /* Hace que el span se comporte como un bloque y respete el centrado */
+}

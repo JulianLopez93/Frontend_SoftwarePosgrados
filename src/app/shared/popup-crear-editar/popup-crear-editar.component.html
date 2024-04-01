@@ -17,6 +17,9 @@
     </select>
   </div>
 </div>
+<div *ngIf="showError" class="error-message">
+  <span>Por favor, completa todos los campos requeridos.</span>
+</div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancelar</button>
   <button mat-button (click)="onAccept()" cdkFocusInitial>{{data.isEdit ? 'Guardar' : 'Aceptar'}}</button>

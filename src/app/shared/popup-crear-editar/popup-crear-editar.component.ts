@@ -10,6 +10,9 @@ export class PopupCrearEditarComponent {
   listaPerteneciente:any [] = []
   entidadSeleccionada:number = 0;
   nombreIngresado:string = '';
+  showError: boolean = false;
+
+
   constructor(
     public dialogRef: MatDialogRef<PopupCrearEditarComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -43,17 +46,26 @@ export class PopupCrearEditarComponent {
     }
     onAccept():void
     {
+
+      this.showError = false;
+
+      // Verifica si los campos están vacíos
+      if (!this.data.nombre || this.entidadSeleccionada === 0) {
+        this.showError = true; // Muestra el mensaje de error
+        return; // Detiene la ejecución si hay campos vacíos
+      }
+
       const nombre = this.data.nombre;
       const entidadPerteneciente = this.entidadSeleccionada;
       const numero = this.data.numero;
-      
+
       // Verifica si la fecha está definida antes de intentar formatearla
       const fecha = this.data.fecha ? this.formatDate(new Date(this.data.fecha)) : undefined;
-      
+
       console.log(nombre);
       console.log(entidadPerteneciente);
       console.log(fecha);
-      
+
       this.dialogRef.close({
         nombre: nombre,
         entidadPerteneciente: entidadPerteneciente,

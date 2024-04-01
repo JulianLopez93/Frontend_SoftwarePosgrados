@@ -19,7 +19,8 @@ import { PopupCrearEditarComponent } from './popup-crear-editar/popup-crear-edit
     CommonModule,
     FormsModule,
     MaterialModule,
-    MatTableModule
+    MatTableModule,
+
   ],
   exports:[
     NavbarComponent

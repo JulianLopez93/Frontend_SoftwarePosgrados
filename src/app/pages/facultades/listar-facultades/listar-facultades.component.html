@@ -1,7 +1,7 @@
 <div class="container">
   <button mat-raised-button (click)="openCreateDialog()">Crear Facultad</button>
 
-  <table mat-table [dataSource]="facultades" class="mat-elevation-z8">
+  <table mat-table [dataSource]="facultades | paginate: { itemsPerPage: 10, currentPage: p }" class="mat-elevation-z8" >
     <!-- Columna de nombre -->
     <ng-container matColumnDef="nombre">
       <th mat-header-cell *matHeaderCellDef> Nombre </th>
@@ -24,6 +24,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>
 
 

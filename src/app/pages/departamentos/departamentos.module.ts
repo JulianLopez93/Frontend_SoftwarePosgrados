@@ -7,6 +7,7 @@ import { ListarDepartamentosComponent } from './listar-departamentos/listar-depa
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@app/material/material/material.module';
 import { MatTableModule } from '@angular/material/table';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { MatTableModule } from '@angular/material/table';
     DepartamentosRoutingModule,
     FormsModule,
     MaterialModule,
-    MatTableModule
+    MatTableModule,
+    NgxPaginationModule
   ]
 })
 export class DepartamentosModule { }

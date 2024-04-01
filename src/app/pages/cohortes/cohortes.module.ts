@@ -8,6 +8,7 @@ import { ListarCohortesComponent } from './listar-cohortes/listar-cohortes.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@app/material/material/material.module';
 import { MatTableModule } from '@angular/material/table';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { MatTableModule } from '@angular/material/table';
     CohortesRoutingModule,
     FormsModule,
     MaterialModule,
-    MatTableModule
+    MatTableModule,
+    NgxPaginationModule
   ]
 })
 export class CohortesModule { }

@@ -8,6 +8,7 @@ import { MaterialModule } from '@app/material/material/material.module';
 import { MatTableModule } from '@angular/material/table';
 import { CrearFacultadComponent } from './listar-facultades/crear-facultad/crear-facultad.component';
 import { PopupEliminarFacultadComponent } from './listar-facultades/popup-eliminar-facultad/popup-eliminar-facultad.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -22,7 +23,8 @@ import { PopupEliminarFacultadComponent } from './listar-facultades/popup-elimin
     FacultadesRoutingModule,
     FormsModule,
     MaterialModule,
-    MatTableModule
+    MatTableModule,
+    NgxPaginationModule
   ]
 })
 export class FacultadesModule { }

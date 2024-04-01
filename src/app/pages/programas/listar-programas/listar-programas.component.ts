@@ -18,7 +18,8 @@ export class ListarProgramasComponent {
   form!: FormGroup;
   nombre:string='';
   programas: any[] = [];
-  
+  p: number = 1; //Paginación
+
   constructor(private programasService: ProgramasService,
     private departamentosService: DepartamentosService,
               public dialog: MatDialog) {}
@@ -49,7 +50,7 @@ export class ListarProgramasComponent {
       console.log(idPrograma);
       console.log(idDepartamento)
       console.log(nombre);
-      const params = 
+      const params =
       {
         nombre: nombre,
         idDepartamento: idDepartamento
@@ -63,12 +64,12 @@ export class ListarProgramasComponent {
           this.obtenerProgramas();
         }
 
-      });  
+      });
     }
     catch(error)
       {
-        
-      }  
+
+      }
 
   }
   eliminarPrograma(idPrograma:string)
@@ -84,13 +85,13 @@ export class ListarProgramasComponent {
           this.obtenerProgramas();
         }
 
-      });  
+      });
     }
     catch(error)
       {
-        
+
       }
-    
+
   }
   crearPrograma(nombre:string, departamento:any)
   {
@@ -98,7 +99,7 @@ export class ListarProgramasComponent {
     {
       console.log(nombre);
       console.log(departamento);
-      const params = 
+      const params =
       {
         nombre: nombre,
         idDepartamento: departamento
@@ -112,23 +113,23 @@ export class ListarProgramasComponent {
           this.obtenerProgramas();
         }
 
-      });  
+      });
     }
     catch(error)
       {
-        
-      }   
+
+      }
   }
 
-  
+
   openCreateDialog(modulo:string, programa?: any ): void {
-    console.log(programa);    
-    
+    console.log(programa);
+
     const dialogRef = this.dialog.open(PopupCrearEditarComponent , {
       width:'350px',
-      data: { 
+      data: {
               modulo:modulo,
-              nombre: programa ? programa.nombre : '', 
+              nombre: programa ? programa.nombre : '',
               isEdit: !!programa,
               listaDepartamentos: this.listadoDepartamentos
             }
@@ -146,10 +147,10 @@ export class ListarProgramasComponent {
            this.crearPrograma(result.nombre, result.entidadPerteneciente);
         }
       }
-      
+
     });
   }
-   
+
   openDeleteDialog(programaId: string, modulo:string):void{
     const dialogRef = this.dialog.open(PopupEliminarComponent , {
       width:'300px',

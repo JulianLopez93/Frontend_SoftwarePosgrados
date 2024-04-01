@@ -15,7 +15,8 @@ export class ListarFacultadesComponent {
   displayedColumns: string[] = ['nombre', 'acciones'];
   form!: FormGroup;
   nombre:string='';
-  
+  p: number = 1;
+
   constructor(private facultadesService: FacultadesServicioService,
               public dialog: MatDialog) {}
 
@@ -41,7 +42,7 @@ export class ListarFacultadesComponent {
     try
     {
       console.log(nombre);
-      const params = 
+      const params =
       {
         nombre: nombre
       }
@@ -54,12 +55,12 @@ export class ListarFacultadesComponent {
           this.obtenerFacultades();
         }
 
-      });  
+      });
     }
     catch(error)
       {
-        
-      }  
+
+      }
 
   }
   eliminarFacultad(idFacultad:string)
@@ -75,20 +76,20 @@ export class ListarFacultadesComponent {
           this.obtenerFacultades();
         }
 
-      });  
+      });
     }
     catch(error)
       {
-        
+
       }
-    
+
   }
   crearFacultad(nombre:string)
   {
     try
     {
       console.log(nombre);
-      const params = 
+      const params =
       {
         nombre: nombre
       }
@@ -101,17 +102,17 @@ export class ListarFacultadesComponent {
           this.obtenerFacultades();
         }
 
-      });  
+      });
     }
     catch(error)
       {
-        
-      }   
+
+      }
   }
 
   openCreateDialog(facultad?: any): void {
-    console.log(facultad);    
-    
+    console.log(facultad);
+
     const dialogRef = this.dialog.open(CrearFacultadComponent , {
       width:'300px',
       data: { nombre: facultad ? facultad.nombre : '', isEdit: !!facultad }
@@ -129,7 +130,7 @@ export class ListarFacultadesComponent {
           this.crearFacultad(result);
         }
       }
-      
+
     });
   }
   openDeleteDialog(facultadId: string):void{

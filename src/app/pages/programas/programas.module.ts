@@ -7,6 +7,7 @@ import { ListarProgramasComponent } from './listar-programas/listar-programas.co
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@app/material/material/material.module';
 import { MatTableModule } from '@angular/material/table';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { MatTableModule } from '@angular/material/table';
     ProgramasRoutingModule,
     FormsModule,
     MaterialModule,
-    MatTableModule
+    MatTableModule,
+    NgxPaginationModule
   ]
 })
 export class ProgramasModule { }

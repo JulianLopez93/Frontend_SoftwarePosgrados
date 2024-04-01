@@ -6,19 +6,21 @@ import { PopupCrearEditarComponent } from '@app/shared/popup-crear-editar/popup-
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
 import { FacultadesServicioService } from '@app/services/facultades-servicio.service';
 
+
 @Component({
   selector: 'app-listar-departamentos',
   templateUrl: './listar-departamentos.component.html',
   styleUrls: ['./listar-departamentos.component.css']
 })
 export class ListarDepartamentosComponent {
-  
+
   departamentos: any[] = [];
   displayedColumns: string[] = ['nombre','facultad','acciones'];
   listadoFacultades:any[] = [];
   form!: FormGroup;
   nombre:string='';
-  
+  p: number = 1;
+
   constructor(private departamentosService: DepartamentosService,
     private facultadesService: FacultadesServicioService,
               public dialog: MatDialog) {}
@@ -49,7 +51,7 @@ export class ListarDepartamentosComponent {
       console.log(idDepartamento)
       console.log(nombre);
       console.log(idFacultad);
-      const params = 
+      const params =
       {
         nombre: nombre,
         idFacultad: idFacultad
@@ -63,12 +65,12 @@ export class ListarDepartamentosComponent {
           this.obtenerDepartamentos();
         }
 
-      });  
+      });
     }
     catch(error)
       {
-        
-      }  
+
+      }
 
   }
   eliminarDepartamento(idDepartamento:string)
@@ -84,13 +86,13 @@ export class ListarDepartamentosComponent {
           this.obtenerDepartamentos();
         }
 
-      });  
+      });
     }
     catch(error)
       {
-        
+
       }
-    
+
   }
   crearDepartamento(nombre:string, facultad:any)
   {
@@ -98,7 +100,7 @@ export class ListarDepartamentosComponent {
     {
       console.log(nombre);
       console.log(facultad);
-      const params = 
+      const params =
       {
         nombre: nombre,
         idFacultad: facultad
@@ -112,22 +114,22 @@ export class ListarDepartamentosComponent {
           this.obtenerDepartamentos();
         }
 
-      });  
+      });
     }
     catch(error)
       {
-        
-      }   
+
+      }
   }
 
   openCreateDialog(modulo:string, departamento?: any): void {
-    console.log(departamento);    
-    
+    console.log(departamento);
+
     const dialogRef = this.dialog.open(PopupCrearEditarComponent , {
       width:'350px',
-      data: { 
+      data: {
               modulo:modulo,
-              nombre: departamento ? departamento.nombre : '', 
+              nombre: departamento ? departamento.nombre : '',
               isEdit: !!departamento,
               listaFacultades: this.listadoFacultades
             }
@@ -145,7 +147,7 @@ export class ListarDepartamentosComponent {
           this.crearDepartamento(result.nombre, result.entidadPerteneciente);
         }
       }
-      
+
     });
   }
   openDeleteDialog(departamentoId: string, modulo:string):void{

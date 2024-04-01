@@ -19,7 +19,8 @@ export class ListarCohortesComponent {
   form!: FormGroup;
   nombre:string='';
   cohortes: any[] = [];
-  
+  p: number = 1;
+
   constructor(private cohortesService: CohortesService,
     private programasService: ProgramasService,
               public dialog: MatDialog) {}
@@ -51,8 +52,8 @@ export class ListarCohortesComponent {
       console.log(numero);
       console.log(fecha);
       console.log(idPrograma);
-      
-      const params = 
+
+      const params =
       {
         numero: numero,
         fecha:fecha,
@@ -68,12 +69,12 @@ export class ListarCohortesComponent {
           this.obtenerCohortes();
         }
 
-      });  
+      });
     }
     catch(error)
       {
-        
-      }  
+
+      }
 
   }
   eliminarCohorte(idCohorte:string)
@@ -89,13 +90,13 @@ export class ListarCohortesComponent {
           this.obtenerCohortes();
         }
 
-      });  
+      });
     }
     catch(error)
       {
-        
+
       }
-    
+
   }
   crearCohorte(numero:string, fecha:any, programa:any)
   {
@@ -104,7 +105,7 @@ export class ListarCohortesComponent {
       console.log(numero);
       console.log(fecha)
       console.log(programa);
-      const params = 
+      const params =
       {
         numero: numero,
         fecha: fecha,
@@ -119,23 +120,23 @@ export class ListarCohortesComponent {
           this.obtenerCohortes();
         }
 
-      });  
+      });
     }
     catch(error)
       {
-        
-      }   
+
+      }
   }
 
-  
+
   openCreateDialog(modulo:string, cohorte?: any): void {
-    console.log(cohorte);    
-    
+    console.log(cohorte);
+
     const dialogRef = this.dialog.open(PopupCrearEditarComponent , {
       width:'350px',
-      data: { 
+      data: {
               modulo:modulo,
-              numero: cohorte ? cohorte.numero : '', 
+              numero: cohorte ? cohorte.numero : '',
               fecha: cohorte ? cohorte.fecha:'',
               isEdit: !!cohorte,
               listaProgramas: this.listadoProgramas
@@ -154,10 +155,10 @@ export class ListarCohortesComponent {
            this.crearCohorte(result.numero, result.fecha,result.entidadPerteneciente);
         }
       }
-      
+
     });
   }
-   
+
   openDeleteDialog(cohorteId: string, modulo:string):void{
     const dialogRef = this.dialog.open(PopupEliminarComponent , {
       width:'300px',

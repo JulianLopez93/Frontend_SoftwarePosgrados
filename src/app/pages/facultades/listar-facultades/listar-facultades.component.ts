@@ -16,6 +16,8 @@ export class ListarFacultadesComponent {
   form!: FormGroup;
   nombre:string='';
   p: number = 1;
+  searchText: string = '';
+  filteredFacultades: any[] = [];
 
   constructor(private facultadesService: FacultadesServicioService,
               public dialog: MatDialog) {}
@@ -29,12 +31,23 @@ export class ListarFacultadesComponent {
     this.facultadesService.getFacultades().subscribe(
       (facultades) => {
         this.facultades = facultades;
+        this.applyFilter();
 
       },
       (error) => {
         console.error('Error al obtener las facultades:', error);
       }
     );
+  }
+
+  applyFilter() {
+    if (this.searchText) {
+      this.filteredFacultades = this.facultades.filter(facultad =>
+        facultad.nombre.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    } else {
+      this.filteredFacultades = this.facultades;
+    }
   }
 
   editarFacultad(idFacultad:string, nombre:string)

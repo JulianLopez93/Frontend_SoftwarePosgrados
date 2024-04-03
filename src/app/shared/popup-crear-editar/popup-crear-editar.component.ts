@@ -44,35 +44,55 @@ export class PopupCrearEditarComponent {
     onNoClick(): void {
       this.dialogRef.close();
     }
-    onAccept():void
-    {
-
+    onAccept():void {
       this.showError = false;
 
+      let nombre;
+      let numero;
+      let fecha;
+
       // Verifica si los campos están vacíos
-      if (!this.data.nombre || this.entidadSeleccionada === 0) {
-        this.showError = true; // Muestra el mensaje de error
-        return; // Detiene la ejecución si hay campos vacíos
+      if (this.data.modulo === 'cohorte') {
+        if (!this.data.numero || !this.data.fecha || this.entidadSeleccionada === 0) {
+          this.showError = true; // Muestra el mensaje de error
+          return; // Detiene la ejecución si hay campos vacíos
+        }
+        numero = this.data.numero;
+        fecha = this.data.fecha ? this.formatDate(new Date(this.data.fecha)) : undefined;
+      } else {
+        if (!this.data.nombre || this.entidadSeleccionada === 0) {
+          this.showError = true; // Muestra el mensaje de error
+          return; // Detiene la ejecución si hay campos vacíos
+        }
+        nombre = this.data.nombre;
       }
 
-      const nombre = this.data.nombre;
       const entidadPerteneciente = this.entidadSeleccionada;
-      const numero = this.data.numero;
-
-      // Verifica si la fecha está definida antes de intentar formatearla
-      const fecha = this.data.fecha ? this.formatDate(new Date(this.data.fecha)) : undefined;
 
       console.log(nombre);
       console.log(entidadPerteneciente);
       console.log(fecha);
 
-      this.dialogRef.close({
-        nombre: nombre,
-        entidadPerteneciente: entidadPerteneciente,
-        numero: numero,
-        fecha: fecha
-      });
+      // Construye el objeto que se devuelve dependiendo del módulo
+      let result;
+      if (this.data.modulo === 'cohorte') {
+        result = {
+          entidadPerteneciente: entidadPerteneciente,
+          numero: numero,
+          fecha: fecha
+        };
+      } else {
+        result = {
+          nombre: nombre,
+          entidadPerteneciente: entidadPerteneciente
+        };
+      }
+
+      this.dialogRef.close(result);
     }
+
+
+
 
     formatDate(date: Date): string {
       const day = date.getDate();

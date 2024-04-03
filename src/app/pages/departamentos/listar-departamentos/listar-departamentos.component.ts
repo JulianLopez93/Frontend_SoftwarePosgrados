@@ -20,6 +20,8 @@ export class ListarDepartamentosComponent {
   form!: FormGroup;
   nombre:string='';
   p: number = 1;
+  searchText: string = '';
+  filteredDepartamentos: any[] = [];
 
   constructor(private departamentosService: DepartamentosService,
     private facultadesService: FacultadesServicioService,
@@ -36,12 +38,23 @@ export class ListarDepartamentosComponent {
       (result) => {
         console.log(result);
         this.departamentos = result;
-
+        this.applyFilter();
       },
       (error) => {
         console.error('Error al obtener los departamentos:', error);
       }
     );
+  }
+
+  applyFilter() {
+    if (this.searchText) {
+      this.filteredDepartamentos = this.departamentos.filter(departamento =>
+        departamento.nombre.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        departamento.facultad.nombre.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    } else {
+      this.filteredDepartamentos = this.departamentos;
+    }
   }
 
   editarDepartamento(idDepartamento:string, nombre:string, idFacultad:number)

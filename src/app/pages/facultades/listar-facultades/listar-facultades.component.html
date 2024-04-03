@@ -1,7 +1,15 @@
 <div class="container">
-  <button mat-raised-button (click)="openCreateDialog()">Crear Facultad</button>
+          <!-- Contenedor para el botón y el campo de búsqueda -->
+          <div class="action-bar">
+            <button mat-raised-button color="primary"  (click)="openCreateDialog()" class="create-button">Crear facultad</button>
+            <!-- Campo de búsqueda -->
+            <mat-form-field class="example-full-width search-field" appearance="fill">
+                <mat-label>Buscar</mat-label>
+                <input matInput [(ngModel)]="searchText" (ngModelChange)="applyFilter()" placeholder="Ingresa tu búsqueda">
+            </mat-form-field>
+        </div>
 
-  <table mat-table [dataSource]="facultades | paginate: { itemsPerPage: 10, currentPage: p }" class="mat-elevation-z8" >
+  <table mat-table [dataSource]="filteredFacultades | paginate: { itemsPerPage: 10, currentPage: p }" class="mat-elevation-z8" >
     <!-- Columna de nombre -->
     <ng-container matColumnDef="nombre">
       <th mat-header-cell *matHeaderCellDef> Nombre </th>

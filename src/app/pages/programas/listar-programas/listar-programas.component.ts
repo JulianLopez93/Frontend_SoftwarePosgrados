@@ -13,12 +13,15 @@ import { PopupCrearEditarComponent } from '@app/shared/popup-crear-editar/popup-
 })
 export class ListarProgramasComponent {
   departamentos: any[] = [];
-  displayedColumns: string[] = ['nombre','departamento','acciones'];
+  displayedColumns: string[] = ['nombre','departamento','facultad','acciones'];
   listadoDepartamentos:any[] = [];
+
   form!: FormGroup;
   nombre:string='';
   programas: any[] = [];
   p: number = 1; //Paginación
+  searchText: string = '';
+  filteredProgramas: any[] = [];
 
   constructor(private programasService: ProgramasService,
     private departamentosService: DepartamentosService,
@@ -34,13 +37,25 @@ export class ListarProgramasComponent {
     this.programasService.getProgramas().subscribe(
       (result) => {
         console.log(result);
-        this.programas= result;
-
+        this.programas = result;
+        this.applyFilter();
       },
       (error) => {
-        console.error('Error al obtener los programas:', error);
+        console.error('Error al obtener las cohortes:', error);
       }
     );
+  }
+
+  applyFilter() {
+    if (this.searchText) {
+      this.filteredProgramas = this.programas.filter(programa =>
+        programa.nombre.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        programa.departamento.nombre.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        programa.departamento.facultad.nombre.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    } else {
+      this.filteredProgramas = this.programas;
+    }
   }
 
   editarPrograma(idPrograma:string, nombre:string, idDepartamento:number)

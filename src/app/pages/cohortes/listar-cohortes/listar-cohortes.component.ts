@@ -14,12 +14,14 @@ import { ProgramasService } from '@app/services/programas.service';
 })
 export class ListarCohortesComponent {
   programas: any[] = [];
-  displayedColumns: string[] = ['numero','fecha','programa','acciones'];
+  displayedColumns: string[] = ['numero','fecha','programa','departamento', 'facultad','acciones'];
   listadoProgramas:any[] = [];
   form!: FormGroup;
   nombre:string='';
   cohortes: any[] = [];
   p: number = 1;
+  searchText: string = '';
+  filteredCohortes: any[] = [];
 
   constructor(private cohortesService: CohortesService,
     private programasService: ProgramasService,
@@ -35,13 +37,27 @@ export class ListarCohortesComponent {
     this.cohortesService.getCohortes().subscribe(
       (result) => {
         console.log(result);
-        this.cohortes= result;
-
+        this.cohortes = result;
+        this.applyFilter();
       },
       (error) => {
         console.error('Error al obtener las cohortes:', error);
       }
     );
+  }
+
+  applyFilter() {
+    if (this.searchText) {
+      this.filteredCohortes = this.cohortes.filter(cohorte =>
+        cohorte.numero.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        cohorte.fecha.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        cohorte.programa.nombre.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        cohorte.programa.departamento.nombre.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        cohorte.programa.departamento.facultad.nombre.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    } else {
+      this.filteredCohortes = this.cohortes;
+    }
   }
 
   editarCohorte(idCohorte:string, numero:string, fecha:any, idPrograma:any)

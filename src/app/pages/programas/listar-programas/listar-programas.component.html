@@ -4,7 +4,6 @@
           <button mat-raised-button color="primary"  (click)="openCreateDialog('programa')" class="create-button">Crear programa</button>
           <!-- Campo de búsqueda -->
           <mat-form-field class="example-full-width search-field" appearance="fill">
-              <mat-label>Buscar</mat-label>
               <input matInput [(ngModel)]="searchText" (ngModelChange)="applyFilter()" placeholder="Ingresa tu búsqueda">
           </mat-form-field>
       </div>

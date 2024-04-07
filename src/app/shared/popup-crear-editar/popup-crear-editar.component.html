@@ -10,7 +10,7 @@
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
-  <div>
+  <div *ngIf="data.modulo === 'departamento' || data.modulo === 'programa' || data.modulo === 'cohorte'">
     <span class="field-label">Seleccione {{data.modulo === 'departamento' ? 'facultad' : data.modulo === 'programa' ? 'departamento' : data.modulo === 'cohorte' ? 'programa':''}} perteneciente</span>
     <select class="form-control" [(ngModel)]="entidadSeleccionada">
         <option *ngFor="let item of this.listaPerteneciente" [value]="item.id">{{item.nombre}}</option>

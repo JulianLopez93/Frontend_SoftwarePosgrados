@@ -27,6 +27,14 @@ const routes: Routes = [
       {
         path: 'cohortes',
         loadChildren: () => import(`@pages/cohortes/cohortes.module`).then(m => m.CohortesModule),
+      },
+      {
+        path: 'tipos-compensacion',
+        loadChildren: () => import(`@pages/tipos/tipo-compensacion/tipo-compensacion.module`).then(m => m.TipoCompensacionModule),
+      },
+      {
+        path: 'tipos-costo',
+        loadChildren: () => import(`@pages/tipos/tipo-costo/tipo-costo.module`).then(m => m.TipoCostoModule),
       }
     ],
   },

@@ -60,10 +60,15 @@ export class PopupCrearEditarComponent {
         numero = this.data.numero;
         fecha = this.data.fecha ? this.formatDate(new Date(this.data.fecha)) : undefined;
       } else {
-        if (!this.data.nombre || this.entidadSeleccionada === 0) {
-          this.showError = true; // Muestra el mensaje de error
-          return; // Detiene la ejecución si hay campos vacíos
-        }
+        if(this.data.modulo !== 'tipo de compensacion' && this.data.modulo !== 'tipo de costo')
+          {
+            if (!this.data.nombre || this.entidadSeleccionada === 0) {
+              this.showError = true; // Muestra el mensaje de error
+              return; // Detiene la ejecución si hay campos vacíos
+            }
+
+          }
+        
         nombre = this.data.nombre;
       }
 

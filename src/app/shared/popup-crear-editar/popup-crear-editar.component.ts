@@ -60,7 +60,9 @@ export class PopupCrearEditarComponent {
         numero = this.data.numero;
         fecha = this.data.fecha ? this.formatDate(new Date(this.data.fecha)) : undefined;
       } else {
-        if(this.data.modulo !== 'tipo de compensacion' && this.data.modulo !== 'tipo de costo')
+        if(this.data.modulo !== 'tipo de compensacion' && this.data.modulo !== 'tipo de costo' && this.data.modulo !== 'tipo de transferencia'
+        && this.data.modulo !== 'tipo de descuento' && this.data.modulo !== 'tipo de inversion'
+        )
           {
             if (!this.data.nombre || this.entidadSeleccionada === 0) {
               this.showError = true; // Muestra el mensaje de error

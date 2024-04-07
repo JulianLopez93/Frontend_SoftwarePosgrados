@@ -35,7 +35,19 @@ const routes: Routes = [
       {
         path: 'tipos-costo',
         loadChildren: () => import(`@pages/tipos/tipo-costo/tipo-costo.module`).then(m => m.TipoCostoModule),
-      }
+      },
+      {
+        path: 'tipos-transferencia',
+        loadChildren: () => import(`@pages/tipos/tipo-transferencia/tipo-transferencia.module`).then(m => m.TipoTransferenciaModule),
+      },
+      {
+        path: 'tipos-descuento',
+        loadChildren: () => import(`@pages/tipos/tipo-descuento/tipo-descuento.module`).then(m => m.TipoDescuentoModule),
+      },
+      {
+        path: 'tipos-inversion',
+        loadChildren: () => import(`@pages/tipos/tipo-inversion/tipo-inversion.module`).then(m => m.TipoInversionModule),
+      },
     ],
   },
   {

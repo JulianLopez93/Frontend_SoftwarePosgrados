@@ -48,6 +48,10 @@ const routes: Routes = [
         path: 'tipos-inversion',
         loadChildren: () => import(`@pages/tipos/tipo-inversion/tipo-inversion.module`).then(m => m.TipoInversionModule),
       },
+      {
+        path: 'presupuestos',
+        loadChildren: () => import(`@pages/presupuesto/presupuesto.module`).then(m => m.PresupuestoModule),
+      },
     ],
   },
   {

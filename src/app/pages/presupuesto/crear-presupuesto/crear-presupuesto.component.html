@@ -1,0 +1,24 @@
+<div class="container">
+    <form [formGroup]="presupuestoForm" (ngSubmit)="crearPresupuesto()">
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Selecciona una cohorte</mat-label>
+                <mat-select formControlName="idCohorte">
+                  <mat-option *ngFor="let cohorte of listaCohortes" [value]="cohorte.id">
+                    {{cohorte.numero}} - {{cohorte.programa.nombre}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Observaciones</mat-label>
+                <textarea matInput formControlName="observaciones"></textarea>
+              </mat-form-field>
+        </div>
+        <div class="row">
+            <button mat-raised-button color="primary" type="submit">Crear Presupuesto</button>
+        </div>  
+      </form>
+    
+</div>

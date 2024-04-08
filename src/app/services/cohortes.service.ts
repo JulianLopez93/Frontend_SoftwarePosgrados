@@ -40,6 +40,6 @@ export class CohortesService {
     .set('fecha', fechaFormateada)
     .set('idCohorte', idCohorte.toString())     
     .set('idPrograma', idPrograma.toString());
-return this.http.put(url, params.toString(), { params: params, responseType: 'text' });
+  return this.http.put(url, params.toString(), { params: params, responseType: 'text' });
   }
 }

@@ -63,7 +63,7 @@ export class ListarTiposInversionComponent {
       console.log(params);
       this.tiposService.editTipoInversion(id, nombreTipo).subscribe((result:any) => {
         console.log(result);
-        if (result = "Tipo de inversion editado")
+        if (result = "OK")
         {
           console.log("Tipo de inversion editado");
           this.obtenerTiposInversion();
@@ -84,7 +84,7 @@ export class ListarTiposInversionComponent {
       console.log(id);
       this.tiposService.deleteTipoInversion(id).subscribe((result:any) => {
         console.log(result);
-        if (result = "Tipo de inversion eliminado")
+        if (result = "OK")
         {
           console.log("Tipo de inversion eliminado");
           this.obtenerTiposInversion();
@@ -110,7 +110,7 @@ export class ListarTiposInversionComponent {
       console.log(params);
       this.tiposService.postTipoInversion(params).subscribe((result:any) => {
         console.log(result);
-        if (result = "Tipo de inversion guardado")
+        if (result = "OK")
         {
           console.log("Tipo de inversion creado");
           this.obtenerTiposInversion();

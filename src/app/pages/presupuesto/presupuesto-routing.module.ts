@@ -14,7 +14,7 @@ const routes: Routes = [
     component: ListarPresupuestosComponent,
   },
   {
-    path: 'crear-presupuesto',
+    path: 'crear-presupuesto/:idCohorte',
     component: CrearPresupuestoComponent,
   },
   {

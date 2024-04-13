@@ -62,7 +62,7 @@ export class ListarFacultadesComponent {
       console.log(params);
       this.facultadesService.editFacultad(idFacultad, nombre).subscribe((result:any) => {
         console.log(result);
-        if (result = "Facultad editada")
+        if (result = "OK")
         {
           console.log("Facultad editada");
           this.obtenerFacultades();
@@ -83,7 +83,7 @@ export class ListarFacultadesComponent {
       console.log(idFacultad);
       this.facultadesService.deleteFacultad(idFacultad).subscribe((result:any) => {
         console.log(result);
-        if (result = "Facultad eliminado")
+        if (result = "OK")
         {
           console.log("Facultad eliminada");
           this.obtenerFacultades();
@@ -109,7 +109,7 @@ export class ListarFacultadesComponent {
       console.log(params);
       this.facultadesService.postFacultad(params).subscribe((result:any) => {
         console.log(result);
-        if (result = "Facultad guardada")
+        if (result = "OK")
         {
           console.log("Facultad creada");
           this.obtenerFacultades();

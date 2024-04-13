@@ -1,24 +1,49 @@
 <div class="container">
-    <form [formGroup]="presupuestoForm" (ngSubmit)="crearPresupuesto()">
-        <div class="row">
-            <mat-form-field appearance="fill">
-                <mat-label>Selecciona una cohorte</mat-label>
-                <mat-select formControlName="idCohorte">
-                  <mat-option *ngFor="let cohorte of listaCohortes" [value]="cohorte.id">
-                    {{cohorte.numero}} - {{cohorte.programa.nombre}}
-                  </mat-option>
-                </mat-select>
+    <form [formGroup]="presupuestoForm">
+      <div class="row mb-2 mt-2">
+        <div class="card">
+          <div class="row mr-1">
+            <h2>INFORMACIÓN GENERAL</h2>
+          </div>
+          <div class="row">
+            <div class="col-5">
+              <mat-form-field appearance="fill">
+                <mat-label>Numero cohorte</mat-label>
+                <input matInput readonly [value]="numeroCohorte">
               </mat-form-field>
-        </div>
-        <div class="row">
-            <mat-form-field appearance="fill">
+            </div>
+            <div class="col-5">
+              <mat-form-field appearance="fill">
+                <mat-label>Programa</mat-label>
+                <input matInput readonly [value]="programaCohorte">
+              </mat-form-field>
+            </div>
+            <div class="col-2">
+             <span>Ingresos Totales: {{ingresosTotales}}</span>
+            </div>
+            <!-- <div class="col-7">
+              <mat-form-field appearance="fill">
                 <mat-label>Observaciones</mat-label>
                 <textarea matInput formControlName="observaciones"></textarea>
               </mat-form-field>
+            </div>     -->
+          </div>
+            
         </div>
-        <div class="row">
-            <button mat-raised-button color="primary" type="submit">Crear Presupuesto</button>
-        </div>  
-      </form>
-    
+      </div>
+      <div class="row mb-2 mt-2">
+        <div class="card">
+          <div class="row mr-1">
+            <h2>DATOS DE INGRESOS</h2>
+          </div>
+          <div class="row" *ngIf="idPresupuesto !== 0">
+               <app-listar-ingresos></app-listar-ingresos>
+          </div>
+            
+        </div>
+      </div>
+      <div class="row">
+        <button mat-raised-button color="primary" type="submit">Guardar Presupuesto</button>
+      </div>    
+    </form>    
 </div>

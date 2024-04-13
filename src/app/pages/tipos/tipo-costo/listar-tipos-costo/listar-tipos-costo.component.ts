@@ -63,7 +63,7 @@ export class ListarTiposCostoComponent {
       console.log(params);
       this.tiposService.editTipoCosto(id, nombreTipo).subscribe((result:any) => {
         console.log(result);
-        if (result = "Tipo de costo editado")
+        if (result = "OK")
         {
           console.log("Tipo de costo editado");
           this.obtenerTiposCosto();
@@ -84,7 +84,7 @@ export class ListarTiposCostoComponent {
       console.log(id);
       this.tiposService.deleteTipoCosto(id).subscribe((result:any) => {
         console.log(result);
-        if (result = "Tipo de costo eliminado")
+        if (result = "OK")
         {
           console.log("Tipo de costo eliminado");
           this.obtenerTiposCosto();
@@ -110,7 +110,7 @@ export class ListarTiposCostoComponent {
       console.log(params);
       this.tiposService.postTipoCosto(params).subscribe((result:any) => {
         console.log(result);
-        if (result = "Tipo de costo guardado")
+        if (result = "OK")
         {
           console.log("Tipo de costo creado");
           this.obtenerTiposCosto();

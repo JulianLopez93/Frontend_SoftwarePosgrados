@@ -63,7 +63,7 @@ export class ListarTiposDescuentoComponent {
       console.log(params);
       this.tiposService.editTipoDescuento(id, nombreTipo).subscribe((result:any) => {
         console.log(result);
-        if (result = "Tipo de descuento editado")
+        if (result = "OK")
         {
           console.log("Tipo de descuento editado");
           this.obtenerTiposDescuento();
@@ -84,7 +84,7 @@ export class ListarTiposDescuentoComponent {
       console.log(id);
       this.tiposService.deleteTipoDescuento(id).subscribe((result:any) => {
         console.log(result);
-        if (result = "Tipo de descuento eliminado")
+        if (result = "OK")
         {
           console.log("Tipo de descuento eliminado");
           this.obtenerTiposDescuento();
@@ -110,7 +110,7 @@ export class ListarTiposDescuentoComponent {
       console.log(params);
       this.tiposService.postTipoDescuento(params).subscribe((result:any) => {
         console.log(result);
-        if (result = "Tipo de descuento guardado")
+        if (result = "OK")
         {
           console.log("Tipo de descuento creado");
           this.obtenerTiposDescuento();

@@ -1,30 +1,28 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { CohortesRoutingModule } from './cohortes-routing.module';
-import { ListarCohortesComponent } from './listar-cohortes/listar-cohortes.component';
-
-
+import { IngresosRoutingModule } from './ingresos-routing.module';
+import { ListarIngresosComponent } from './listar-ingresos/listar-ingresos.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@app/material/material/material.module';
 import { MatTableModule } from '@angular/material/table';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { PopupConfirmarCreacionComponent } from './listar-cohortes/popup-confirmar-creacion/popup-confirmar-creacion.component';
 
 @NgModule({
   declarations: [
-    ListarCohortesComponent,
-    PopupConfirmarCreacionComponent
+    ListarIngresosComponent
   ],
   imports: [
     CommonModule,
-    CohortesRoutingModule,
+    IngresosRoutingModule,
     FormsModule,
     MaterialModule,
     MatTableModule,
     NgxPaginationModule,
-    NgxDatatableModule
+    ReactiveFormsModule
+  ],
+  exports:[
+    ListarIngresosComponent
   ]
 })
-export class CohortesModule { }
+export class IngresosModule { }

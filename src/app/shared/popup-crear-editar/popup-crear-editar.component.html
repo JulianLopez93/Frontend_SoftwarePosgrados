@@ -1,10 +1,18 @@
 <h1 mat-dialog-title>{{data.isEdit ? 'Editar' : 'Crear'}} {{data.modulo}}</h1>
 <div mat-dialog-content>
-  <mat-form-field>
+  <mat-form-field *ngIf="data.modulo !== 'ingreso'">
     <mat-label>Nombre del {{data.modulo}}</mat-label>
     <input *ngIf="data.modulo != 'cohorte'" matInput [(ngModel)]="data.nombre">
     <input *ngIf="data.modulo == 'cohorte'" matInput [(ngModel)]="data.numero">
   </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'ingreso'">
+    <mat-label>Concepto del {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.concepto">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'ingreso'">
+    <mat-label>Valor del {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.valor" type="number">
+</mat-form-field>
   <mat-form-field *ngIf="data.modulo == 'cohorte'">
     <input matInput [matDatepicker]="picker" placeholder="Fecha" [(ngModel)]="data.fecha">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

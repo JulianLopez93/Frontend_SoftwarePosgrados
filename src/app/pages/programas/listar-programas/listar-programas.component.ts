@@ -73,7 +73,7 @@ export class ListarProgramasComponent {
       console.log(params);
       this.programasService.editPrograma(nombre, idPrograma, idDepartamento).subscribe((result:any) => {
         console.log(result);
-        if (result = "Programa editado")
+        if (result = "OK")
         {
           console.log("Programa editado");
           this.obtenerProgramas();
@@ -94,7 +94,7 @@ export class ListarProgramasComponent {
       console.log(idPrograma);
       this.programasService.deletePrograma(idPrograma).subscribe((result:any) => {
         console.log(result);
-        if (result = "Programa eliminado")
+        if (result = "OK")
         {
           console.log("Programa eliminado");
           this.obtenerProgramas();
@@ -122,7 +122,7 @@ export class ListarProgramasComponent {
       console.log(params);
       this.programasService.postPrograma(params).subscribe((result:any) => {
         console.log(result);
-        if (result = "Programa guardado")
+        if (result = "OK")
         {
           console.log("Programa guardado");
           this.obtenerProgramas();

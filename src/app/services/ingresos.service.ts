@@ -5,45 +5,42 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class PresupuestosService {
-
-  private baseUrl = 'http://localhost:8080/presupuesto';
+export class IngresosService {
+  private baseUrl = 'http://localhost:8080/ingreso';
 
   constructor(private http: HttpClient) {}
 
-  getPresupuestos(): Observable<any> {
+  getIngresos(): Observable<any> {
     const url = `${this.baseUrl}/listar`;
     return this.http.get(url);
   }
+  getIngresosPorPresupuesto(idPresupuesto:number): Observable<any> {
+    const url = `${this.baseUrl}/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
+    return this.http.get(url);
+  }
 
-  postPresupuesto(params: any) {
+  postIngresos(params: any) {
     const url = `${this.baseUrl}/crear`;
     const body = new HttpParams()
-      .set('idCohorte', params.idCohorte);
+      .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
+      .set('concepto', params.concepto)
+      .set('valor', params.valor);
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
   
     return this.http.post(url, body.toString(), { headers, responseType: 'text' });
   }
 
-  getPresupuestoPorCohorte(idCohorte:number)
-  {
-    const url = `${this.baseUrl}/buscarPorCohorte?idCohorte=${idCohorte}`;
-    return this.http.get(url);
-  }
-
-  deletePresupuesto(idCohorte: string) {
-    const url = `${this.baseUrl}/eliminar?id=${idCohorte}`;
+  deleteIngreso(id: string) {
+    const url = `${this.baseUrl}/eliminar?id=${id}`;
     return this.http.delete(url, { responseType: 'text' });
   }
 
-  editPresupuesto(numero: string, fecha: string, idCohorte: string,  idPrograma:number) {
+  editIngreso(id: number, concepto: string, valor: number) {
     const url = `${this.baseUrl}/actualizar`;
-    const fechaFormateada = new Date(fecha).toISOString().split('T')[0];
     const params = new HttpParams()
-    .set('numero', numero)
-    .set('fecha', fechaFormateada)
-    .set('idCohorte', idCohorte.toString())     
-    .set('idPrograma', idPrograma.toString());
+    .set('id', id.toString())     
+    .set('concepto', concepto)
+    .set('valor', valor);
   return this.http.put(url, params.toString(), { params: params, responseType: 'text' });
   }
 }

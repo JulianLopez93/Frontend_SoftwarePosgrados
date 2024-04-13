@@ -72,7 +72,7 @@ export class ListarDepartamentosComponent {
       console.log(params);
       this.departamentosService.editDepartamento(nombre, idDepartamento, idFacultad).subscribe((result:any) => {
         console.log(result);
-        if (result = "Departamento editado")
+        if (result = "OK")
         {
           console.log("Departamento editado");
           this.obtenerDepartamentos();
@@ -93,7 +93,7 @@ export class ListarDepartamentosComponent {
       console.log(idDepartamento);
       this.departamentosService.deleteDepartamento(idDepartamento).subscribe((result:any) => {
         console.log(result);
-        if (result = "Departamento eliminado")
+        if (result = "OK")
         {
           console.log("Departamento eliminado");
           this.obtenerDepartamentos();
@@ -108,8 +108,6 @@ export class ListarDepartamentosComponent {
 
   }
   crearDepartamento(nombre: string, facultad: any) {
-
-
     try {
       console.log(nombre);
       console.log(facultad);
@@ -120,7 +118,7 @@ export class ListarDepartamentosComponent {
       console.log(params);
       this.departamentosService.postDepartamento(params).subscribe((result: any) => {
         console.log(result);
-        if (result == "Departamento guardado") { // Asegúrate de usar '==' para comparar
+        if (result == "OK") {
           console.log("Departamento guardado");
           this.obtenerDepartamentos();
         }

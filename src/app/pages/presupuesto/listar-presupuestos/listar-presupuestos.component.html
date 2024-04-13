@@ -1,7 +1,6 @@
 <div class="container">
     <!-- Contenedor para el botón y el campo de búsqueda -->
     <div class="action-bar">
-      <button mat-raised-button color="primary"  (click)="openBudgetForm()" class="create-button">Crear presupuesto</button>
       <!-- Campo de búsqueda -->
       <mat-form-field class="example-full-width search-field" appearance="fill">
           <input matInput [(ngModel)]="searchText" (ngModelChange)="applyFilter()" placeholder="Ingresa tu búsqueda">

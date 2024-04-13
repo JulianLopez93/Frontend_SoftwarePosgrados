@@ -8,6 +8,7 @@ import { MaterialModule } from '@app/material/material/material.module';
 import { MatTableModule } from '@angular/material/table';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CrearPresupuestoComponent } from './crear-presupuesto/crear-presupuesto.component';
+import { IngresosModule } from '../ingresos/ingresos.module';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { CrearPresupuestoComponent } from './crear-presupuesto/crear-presupuesto
     MaterialModule,
     MatTableModule,
     NgxPaginationModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    IngresosModule
   ]
 })
 export class PresupuestoModule { }

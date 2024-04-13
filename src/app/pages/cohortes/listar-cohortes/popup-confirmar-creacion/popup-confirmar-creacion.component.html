@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Crear Presupuesto</h1>
+<div mat-dialog-content>
+  No hay presupuesto creado para esta cohorte, ¿Estás seguro de que quieres crear un presupuesto para cohorte {{data.numero}} - {{data.programa}}?
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No</button>
+  <button mat-button (click)="onAccept()" cdkFocusInitial>Sí</button>
+</div>

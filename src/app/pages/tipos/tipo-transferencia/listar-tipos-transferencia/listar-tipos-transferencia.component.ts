@@ -63,7 +63,7 @@ export class ListarTiposTransferenciaComponent {
       console.log(params);
       this.tiposService.editTipoTransferencia(id, nombreTipo).subscribe((result:any) => {
         console.log(result);
-        if (result = "Tipo de transferencia editado")
+        if (result = "OK")
         {
           console.log("Tipo de transferencia editado");
           this.obtenerTiposTransferencia();
@@ -84,7 +84,7 @@ export class ListarTiposTransferenciaComponent {
       console.log(id);
       this.tiposService.deleteTipoTransferencia(id).subscribe((result:any) => {
         console.log(result);
-        if (result = "Tipo de transferencia eliminado")
+        if (result = "OK")
         {
           console.log("Tipo de transferencia eliminado");
           this.obtenerTiposTransferencia();
@@ -110,7 +110,7 @@ export class ListarTiposTransferenciaComponent {
       console.log(params);
       this.tiposService.postTipoTransferencia(params).subscribe((result:any) => {
         console.log(result);
-        if (result = "Tipo de transferencia guardado")
+        if (result = "OK")
         {
           console.log("Tipo de transferencia creado");
           this.obtenerTiposTransferencia();

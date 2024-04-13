@@ -4,8 +4,11 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
 import { PopupCrearEditarComponent } from '@app/shared/popup-crear-editar/popup-crear-editar.component';
+import { PopupConfirmarCreacionComponent } from './popup-confirmar-creacion/popup-confirmar-creacion.component';
 import { CohortesService } from '@app/services/cohortes.service';
 import { ProgramasService } from '@app/services/programas.service';
+import { PresupuestosService } from '@app/services/presupuestos.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listar-cohortes',
@@ -22,14 +25,18 @@ export class ListarCohortesComponent {
   p: number = 1;
   searchText: string = '';
   filteredCohortes: any[] = [];
+  presupuesto:any;
 
   constructor(private cohortesService: CohortesService,
     private programasService: ProgramasService,
+    private presupuestosService:PresupuestosService,
+    private route:Router,
               public dialog: MatDialog) {}
 
   ngOnInit() {
     this.obtenerCohortes();
     this.obtenerProgramas();
+    
   }
 
 
@@ -44,6 +51,27 @@ export class ListarCohortesComponent {
         console.error('Error al obtener las cohortes:', error);
       }
     );
+  }
+  obtenerPresupuestoPorCohorte(cohorte:any)
+  {
+    this.presupuestosService.getPresupuestoPorCohorte(cohorte.id).subscribe((result:any) =>{
+      console.log(result);
+      if (result !== null)
+        {
+          console.log("Entra condicional");
+          this.presupuesto = result;
+          console.log(this.presupuesto);
+          localStorage.setItem('idPresupuesto', this.presupuesto.id);
+          this.route.navigate(['presupuestos/crear-presupuesto',cohorte.id.toString()]);
+
+        }
+        else
+        {
+          this.openBudgetCreationDialog(cohorte);
+        }
+          
+    });
+
   }
 
   applyFilter() {
@@ -79,7 +107,7 @@ export class ListarCohortesComponent {
       console.log(params);
       this.cohortesService.editCohorte(numero, fecha, idCohorte, idPrograma).subscribe((result:any) => {
         console.log(result);
-        if (result = "Cohorte actualizada")
+        if (result = "OK")
         {
           console.log("Cohorte actualizada");
           this.obtenerCohortes();
@@ -100,7 +128,7 @@ export class ListarCohortesComponent {
       console.log(idCohorte);
       this.cohortesService.deleteCohorte(idCohorte).subscribe((result:any) => {
         console.log(result);
-        if (result = "Cohorte eliminado")
+        if (result = "OK")
         {
           console.log("Cohorte eliminada");
           this.obtenerCohortes();
@@ -130,7 +158,7 @@ export class ListarCohortesComponent {
       console.log(params);
       this.cohortesService.postCohortes(params).subscribe((result:any) => {
         console.log(result);
-        if (result = "Cohorte guardada")
+        if (result = "OK")
         {
           console.log("Cohorte guardada");
           this.obtenerCohortes();
@@ -142,6 +170,30 @@ export class ListarCohortesComponent {
       {
 
       }
+  }
+
+  openBudgetForm(idCohorte:number)
+  {
+
+    this.obtenerPresupuestoPorCohorte(idCohorte);
+    console.log(this.presupuesto);
+    //this.route.navigate(['presupuestos/crear-presupuesto', idCohorte.toString()]);
+
+  }
+
+  openBudgetCreationDialog(cohorte:any)
+  {
+    console.log(cohorte);
+
+    const dialogRef = this.dialog.open(PopupConfirmarCreacionComponent,{
+      width:'350px',
+      data: {
+              idCohorte: cohorte.id,
+              numero: cohorte.numero,
+              programa: cohorte.programa.nombre
+            }
+    })
+
   }
 
 

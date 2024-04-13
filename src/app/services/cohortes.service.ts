@@ -16,6 +16,13 @@ export class CohortesService {
     return this.http.get(url);
   }
 
+  searchCohorte(idCohorte: string)
+  {
+    const url = `${this.baseUrl}/buscar?id=${idCohorte}`;
+    return this.http.get(url, { responseType: 'text' });
+
+  }
+
   postCohortes(params: any) {
     const url = `${this.baseUrl}/crear`;
     const body = new HttpParams()

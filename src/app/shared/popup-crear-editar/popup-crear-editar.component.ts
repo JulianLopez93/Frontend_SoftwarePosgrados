@@ -50,6 +50,8 @@ export class PopupCrearEditarComponent {
       let nombre;
       let numero;
       let fecha;
+      let concepto;
+      let valor;
 
       // Verifica si los campos están vacíos
       if (this.data.modulo === 'cohorte') {
@@ -61,7 +63,7 @@ export class PopupCrearEditarComponent {
         fecha = this.data.fecha ? this.formatDate(new Date(this.data.fecha)) : undefined;
       } else {
         if(this.data.modulo !== 'tipo de compensacion' && this.data.modulo !== 'tipo de costo' && this.data.modulo !== 'tipo de transferencia'
-        && this.data.modulo !== 'tipo de descuento' && this.data.modulo !== 'tipo de inversion'
+        && this.data.modulo !== 'tipo de descuento' && this.data.modulo !== 'tipo de inversion' && this.data.modulo !== 'ingreso'
         )
           {
             if (!this.data.nombre || this.entidadSeleccionada === 0) {
@@ -75,6 +77,8 @@ export class PopupCrearEditarComponent {
       }
 
       const entidadPerteneciente = this.entidadSeleccionada;
+      valor = this.data.valor;
+      concepto = this.data.concepto;
 
       console.log(nombre);
       console.log(entidadPerteneciente);
@@ -87,6 +91,17 @@ export class PopupCrearEditarComponent {
           entidadPerteneciente: entidadPerteneciente,
           numero: numero,
           fecha: fecha
+        };
+      }
+      if (this.data.modulo === 'ingreso') {
+        if (!this.data.concepto || !this.data.valor || isNaN(this.data.valor)) {
+          this.showError = true; // Muestra el mensaje de error
+          return; // Detiene la ejecución si hay campos vacíos
+        }
+        result = {
+          entidadPerteneciente: entidadPerteneciente,
+          concepto: concepto,
+          valor: valor
         };
       } else {
         result = {

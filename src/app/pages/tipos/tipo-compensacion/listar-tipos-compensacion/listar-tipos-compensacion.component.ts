@@ -63,7 +63,7 @@ export class ListarTiposCompensacionComponent {
       console.log(params);
       this.tiposService.editTipoCompensacion(id, nombreTipo).subscribe((result:any) => {
         console.log(result);
-        if (result = "Tipo de compensacion editado")
+        if (result = "OK")
         {
           console.log("Tipo de compensacion editado");
           this.obtenerTiposCompensacion();
@@ -84,7 +84,7 @@ export class ListarTiposCompensacionComponent {
       console.log(id);
       this.tiposService.deleteTipoCompensacion(id).subscribe((result:any) => {
         console.log(result);
-        if (result = "Tipo de compensacion eliminado")
+        if (result = "OK")
         {
           console.log("Tipo de compensacion eliminado");
           this.obtenerTiposCompensacion();
@@ -110,7 +110,7 @@ export class ListarTiposCompensacionComponent {
       console.log(params);
       this.tiposService.postTiposCompensacion(params).subscribe((result:any) => {
         console.log(result);
-        if (result = "Tipo de compensacion guardado")
+        if (result = "OK")
         {
           console.log("Tipo de compensacion creado");
           this.obtenerTiposCompensacion();

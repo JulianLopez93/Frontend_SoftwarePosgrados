@@ -9,6 +9,11 @@ import { MatTableModule } from '@angular/material/table';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CrearPresupuestoComponent } from './crear-presupuesto/crear-presupuesto.component';
 import { IngresosModule } from '../ingresos/ingresos.module';
+import { DescuentosModule } from '../descuentos/descuentos.module';
+import { EgresosTransferenciasModule } from '../egresos/egresos-transferencias/egresos-transferencias.module';
+import { EgresosGeneralesModule } from '../egresos/egresos-generales/egresos-generales.module';
+import { EgresosOtrosModule } from '../egresos/egresos-otros/egresos-otros.module';
+import { EgresosServiciosNoDocenteModule } from '../egresos/egresos-servicios-no-docente/egresos-servicios-no-docente.module';
 
 
 @NgModule({
@@ -24,7 +29,12 @@ import { IngresosModule } from '../ingresos/ingresos.module';
     MatTableModule,
     NgxPaginationModule,
     ReactiveFormsModule,
-    IngresosModule
+    IngresosModule,
+    DescuentosModule,
+    EgresosTransferenciasModule,
+    EgresosGeneralesModule,
+    EgresosOtrosModule,
+    EgresosServiciosNoDocenteModule
   ]
 })
 export class PresupuestoModule { }

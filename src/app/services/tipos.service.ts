@@ -5,7 +5,9 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class TiposService {private baseUrl = 'http://localhost:8080';
+export class TiposService {
+  
+private baseUrl = 'http://localhost:8080';
 
 constructor(private http: HttpClient) {}
 

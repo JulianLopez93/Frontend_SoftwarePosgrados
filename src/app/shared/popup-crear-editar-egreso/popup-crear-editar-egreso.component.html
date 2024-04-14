@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>{{data.isEdit ? 'Editar' : 'Crear'}} {{data.modulo}}</h1>
+<div mat-dialog-content>
+  <mat-form-field *ngIf="data.modulo === 'egreso transferencia'">
+    <mat-label>Descripcion del {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.descripcion">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso general' || data.modulo === 'otro egreso'">
+    <mat-label>Concepto del {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.concepto">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso servicio no docente'">
+    <mat-label>Servicio del {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.servicio">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso transferencia'">
+    <mat-label>Porcentaje del {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.porcentaje" type="number">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso general' || data.modulo === 'otro egreso' 
+  || data.modulo === 'egreso servicio no docente'">
+    <mat-label>Valor unitario del {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.valorUnitario" type="number">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso general' || data.modulo === 'otro egreso'
+  || data.modulo === 'egreso servicio no docente'">
+    <mat-label>Cantidad del {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.cantidad" type="number">
+  </mat-form-field>
+  <div *ngIf="data.modulo === 'egreso transferencia' || data.modulo === 'egreso general' 
+  || data.modulo === 'otro egreso' || data.modulo === 'egreso servicio no docente'">
+    <span class="field-label">Seleccione {{data.modulo === 'egreso transferencia' ? 'tipo transferencia'
+    :data.modulo === 'egreso general' ? 'tipo costo':data.modulo === 'otro egreso' ? 'tipo costo'
+    :data.modulo === 'egreso servicio no docente' ? 'tipo costo':''}} perteneciente</span>
+    <select class="form-control" [(ngModel)]="entidadSeleccionada">
+        <option *ngFor="let item of this.listaPerteneciente" [value]="item.id">{{item.nombreTipo}}</option>
+    </select>
+  </div>
+</div>
+<div *ngIf="showError" class="error-message">
+  <span>Por favor, completa todos los campos requeridos.</span>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button (click)="onAccept()" cdkFocusInitial>{{data.isEdit ? 'Guardar' : 'Aceptar'}}</button>
+</div>

@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@app/material/material/material.module';
 import { MatTableModule } from '@angular/material/table';
 import { PopupCrearEditarComponent } from './popup-crear-editar/popup-crear-editar.component';
+import { PopupCrearEditarEgresoComponent } from './popup-crear-editar-egreso/popup-crear-editar-egreso.component';
 
 
 
@@ -13,7 +14,8 @@ import { PopupCrearEditarComponent } from './popup-crear-editar/popup-crear-edit
   declarations: [
     NavbarComponent,
     PopupEliminarComponent,
-    PopupCrearEditarComponent
+    PopupCrearEditarComponent,
+    PopupCrearEditarEgresoComponent
   ],
   imports: [
     CommonModule,

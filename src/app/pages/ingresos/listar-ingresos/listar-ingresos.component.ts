@@ -31,7 +31,7 @@ export class ListarIngresosComponent {
 
     this.idPresupuesto = localStorage.getItem('idPresupuesto');
     console.log(this.idPresupuesto);
-    localStorage.removeItem('idPresupuesto');
+    //localStorage.removeItem('idPresupuesto');
     this.obtenerIngresosPorPresupuesto();
     //this.obtenerIngresos();
     //this.obtenerPresupuestos();
@@ -155,6 +155,7 @@ export class ListarIngresosComponent {
       data: {
               modulo:modulo,
               concepto: ingreso ? ingreso.concepto : '',
+              valor: ingreso ? ingreso.valor : '',
               isEdit: !!ingreso,
             }
     });

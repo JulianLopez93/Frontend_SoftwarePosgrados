@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>{{data.isEdit ? 'Editar' : 'Crear'}} {{data.modulo}}</h1>
 <div mat-dialog-content>
-  <mat-form-field *ngIf="data.modulo !== 'ingreso'">
+  <mat-form-field *ngIf="data.modulo !== 'ingreso' && data.modulo !== 'descuento'">
     <mat-label>Nombre del {{data.modulo}}</mat-label>
     <input *ngIf="data.modulo != 'cohorte'" matInput [(ngModel)]="data.nombre">
     <input *ngIf="data.modulo == 'cohorte'" matInput [(ngModel)]="data.numero">
@@ -9,10 +9,18 @@
     <mat-label>Concepto del {{data.modulo}}</mat-label>
     <input matInput [(ngModel)]="data.concepto">
   </mat-form-field>
-  <mat-form-field *ngIf="data.modulo === 'ingreso'">
+  <mat-form-field *ngIf="data.modulo === 'ingreso' || data.modulo === 'descuento'">
     <mat-label>Valor del {{data.modulo}}</mat-label>
     <input matInput [(ngModel)]="data.valor" type="number">
-</mat-form-field>
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'descuento'">
+    <mat-label>Número de estudiantes</mat-label>
+    <input matInput [(ngModel)]="data.numEstudiantes" type="number">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'descuento'">
+    <mat-label>Número de periodos</mat-label>
+    <input matInput [(ngModel)]="data.numPeriodos" type="number">
+  </mat-form-field>
   <mat-form-field *ngIf="data.modulo == 'cohorte'">
     <input matInput [matDatepicker]="picker" placeholder="Fecha" [(ngModel)]="data.fecha">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -22,6 +30,12 @@
     <span class="field-label">Seleccione {{data.modulo === 'departamento' ? 'facultad' : data.modulo === 'programa' ? 'departamento' : data.modulo === 'cohorte' ? 'programa':''}} perteneciente</span>
     <select class="form-control" [(ngModel)]="entidadSeleccionada">
         <option *ngFor="let item of this.listaPerteneciente" [value]="item.id">{{item.nombre}}</option>
+    </select>
+  </div>
+  <div *ngIf="data.modulo === 'descuento'">
+    <span class="field-label">Seleccione {{data.modulo === 'descuento' ? 'tipo de descuento':''}} perteneciente</span>
+    <select class="form-control" [(ngModel)]="entidadSeleccionada">
+        <option *ngFor="let item of this.listaPerteneciente" [value]="item.id">{{item.nombreTipo}}</option>
     </select>
   </div>
 </div>

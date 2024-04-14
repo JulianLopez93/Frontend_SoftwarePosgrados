@@ -42,6 +42,61 @@
             
         </div>
       </div>
+      <div class="row mb-2 mt-2">
+        <div class="card">
+          <div class="row mr-1">
+            <h2>DATOS DE DESCUENTOS</h2>
+          </div>
+          <div class="row" *ngIf="idPresupuesto !== 0">
+               <app-listar-descuentos></app-listar-descuentos>
+          </div>
+            
+        </div>
+      </div>
+      <div class="row mb-2 mt-2">
+        <div class="card">
+          <div class="row mr-1">
+            <h2>DATOS DE EGRESOS GENERALES</h2>
+          </div>
+          <div class="row" *ngIf="idPresupuesto !== 0">
+               <app-listar-egresos-generales></app-listar-egresos-generales>
+          </div>
+            
+        </div>
+      </div>
+      <div class="row mb-2 mt-2">
+        <div class="card">
+          <div class="row mr-1">
+            <h2>DATOS DE EGRESOS POR TRANSFERENCIA</h2>
+          </div>
+          <div class="row" *ngIf="idPresupuesto !== 0">
+               <app-listar-egresos-transferencias></app-listar-egresos-transferencias>
+          </div>
+            
+        </div>
+      </div>
+      <div class="row mb-2 mt-2">
+        <div class="card">
+          <div class="row mr-1">
+            <h2>DATOS DE EGRESOS POR SERVICIOS NO DOCENTE</h2>
+          </div>
+          <div class="row" *ngIf="idPresupuesto !== 0">
+               <app-listar-egresos-servicios-no-docente></app-listar-egresos-servicios-no-docente>
+          </div>
+            
+        </div>
+      </div>
+      <div class="row mb-2 mt-2">
+        <div class="card">
+          <div class="row mr-1">
+            <h2>DATOS DE OTROS EGRESOS</h2>
+          </div>
+          <div class="row" *ngIf="idPresupuesto !== 0">
+               <app-listar-egresos-otros></app-listar-egresos-otros>
+          </div>
+            
+        </div>
+      </div>
       <div class="row">
         <button mat-raised-button color="primary" type="submit">Guardar Presupuesto</button>
       </div>    

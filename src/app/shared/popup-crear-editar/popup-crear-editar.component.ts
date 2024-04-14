@@ -35,6 +35,9 @@ export class PopupCrearEditarComponent {
         case 'cohorte':
           this.listaPerteneciente = data.listaProgramas;
           break;
+        case 'descuento':
+          this.listaPerteneciente = data.listaTiposDescuento;
+          break;
         default:
           this.listaPerteneciente = [];
           break;
@@ -52,6 +55,8 @@ export class PopupCrearEditarComponent {
       let fecha;
       let concepto;
       let valor;
+      let numEstudiantes;
+      let numPeriodos
 
       // Verifica si los campos están vacíos
       if (this.data.modulo === 'cohorte') {
@@ -64,7 +69,7 @@ export class PopupCrearEditarComponent {
       } else {
         if(this.data.modulo !== 'tipo de compensacion' && this.data.modulo !== 'tipo de costo' && this.data.modulo !== 'tipo de transferencia'
         && this.data.modulo !== 'tipo de descuento' && this.data.modulo !== 'tipo de inversion' && this.data.modulo !== 'ingreso'
-        )
+        && this.data.modulo !== 'descuento')
           {
             if (!this.data.nombre || this.entidadSeleccionada === 0) {
               this.showError = true; // Muestra el mensaje de error
@@ -79,10 +84,15 @@ export class PopupCrearEditarComponent {
       const entidadPerteneciente = this.entidadSeleccionada;
       valor = this.data.valor;
       concepto = this.data.concepto;
+      numEstudiantes = this.data.numEstudiantes;
+      numPeriodos = this.data.numPeriodos;
 
       console.log(nombre);
       console.log(entidadPerteneciente);
       console.log(fecha);
+      console.log(valor);
+      console.log(numEstudiantes);
+      console.log(numPeriodos);
 
       // Construye el objeto que se devuelve dependiendo del módulo
       let result;
@@ -103,7 +113,22 @@ export class PopupCrearEditarComponent {
           concepto: concepto,
           valor: valor
         };
-      } else {
+      }
+      if (this.data.modulo === 'descuento') {
+        if (!this.data.numEstudiantes || !this.data.numPeriodos || !this.data.valor 
+          || isNaN(this.data.valor) || isNaN(this.data.numEstudiantes) || isNaN(this.data.numPeriodos 
+            || this.entidadSeleccionada === 0)) {
+          this.showError = true; // Muestra el mensaje de error
+          return; // Detiene la ejecución si hay campos vacíos
+        }
+        result = {
+          entidadPerteneciente: entidadPerteneciente,
+          numEstudiantes: numEstudiantes,
+          numPeriodos: numPeriodos,
+          valor: valor
+        };
+      } 
+      else {
         result = {
           nombre: nombre,
           entidadPerteneciente: entidadPerteneciente

@@ -164,4 +164,162 @@ export class EgresosService {
     .set('idTipoCosto', idTipoCosto);
     return this.http.put(url, params, { responseType: 'text' });
   }
+
+  getEgresosOtrosServiciosDocente(): Observable<any> {
+    const url = `${this.baseUrl}/egresoOtrosServDocente/listar`;
+    return this.http.get(url);
+  }
+
+  getEgresosOtrosServiciosDocentePorPresupuesto(idPresupuesto:number): Observable<any> {
+    const url = `${this.baseUrl}/egresoOtrosServDocente/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
+    return this.http.get(url);
+  }
+
+  postEgresoOtrosServiciosDocente(params: any) {
+    const url = `${this.baseUrl}/egresoOtrosServDocente/crear`;
+    const body = new HttpParams()
+    .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
+    .set('servicio', params.servicio)
+    .set('descripcion', params.descripcion)
+    .set('numHoras', params.numHoras)
+    .set('valorTotal', params.valorTotal)
+    .set('idTipoCosto', params.idTipoCosto);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+
+    return this.http.post(url, body.toString(), { headers, responseType: 'text' });
+  }
+
+  deleteEgresoOtrosServiciosDocente(id: string) {
+    const url = `${this.baseUrl}/egresoOtrosServDocente/eliminar?id=${id}`;
+    return this.http.delete(url, { responseType: 'text' });
+  }
+
+  editEgresoOtrosServiciosDocente(id:number, servicio: string, descripcion:string, numHoras:number, valorTotal:number, idTipoCosto:number) {
+    const url = `${this.baseUrl}/egresoOtrosServDocente/actualizar`;
+    const params = new HttpParams()
+    .set('id', id)
+    .set('servicio', servicio)
+    .set('descripcion', descripcion)
+    .set('numHoras', numHoras)
+    .set('valorTotal', valorTotal)
+    .set('idTipoCosto', idTipoCosto);
+    return this.http.put(url, params, { responseType: 'text' });
+  }
+
+  getEgresosInversion(): Observable<any> {
+    const url = `${this.baseUrl}/egresoInversion/listar`;
+    return this.http.get(url);
+  }
+
+  getEgresosInversionPorPresupuesto(idPresupuesto:number): Observable<any> {
+    const url = `${this.baseUrl}/egresoInversion/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
+    return this.http.get(url);
+  }
+
+  postEgresoInversion(params: any) {
+    const url = `${this.baseUrl}/egresoInversion/crear`;
+    const body = new HttpParams()
+    .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
+    .set('concepto', params.concepto)
+    .set('valor', params.valor)
+    .set('idTipoInversion', params.idTipoInversion);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+
+    return this.http.post(url, body.toString(), { headers, responseType: 'text' });
+  }
+
+  deleteEgresoInversion(id: string) {
+    const url = `${this.baseUrl}/egresoInversion/eliminar?id=${id}`;
+    return this.http.delete(url, { responseType: 'text' });
+  }
+
+  editEgresoInversion(id:number, concepto: string, valor:number, idTipoInversion:number) {
+    const url = `${this.baseUrl}/egresoInversion/actualizar`;
+    const params = new HttpParams()
+    .set('id', id)
+    .set('concepto', concepto)
+    .set('valor', valor)
+    .set('idTipoInversion', idTipoInversion);
+    return this.http.put(url, params, { responseType: 'text' });
+  }
+  getEgresosRecurrentes(): Observable<any> {
+    const url = `${this.baseUrl}/egresoRecurrenteAdm/listar`;
+    return this.http.get(url);
+  }
+
+  getEgresosRecurrentesPorPresupuesto(idPresupuesto:number): Observable<any> {
+    const url = `${this.baseUrl}/egresoRecurrenteAdm/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
+    return this.http.get(url);
+  }
+
+  postEgresoRecurrente(params: any) {
+    const url = `${this.baseUrl}/egresoRecurrenteAdm/crear`;
+    const body = new HttpParams()
+    .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
+    .set('unidad', params.unidad)
+    .set('cargo', params.cargo)
+    .set('valorHora', params.valorHora)
+    .set('numHoras', params.numHoras);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+
+    return this.http.post(url, body.toString(), { headers, responseType: 'text' });
+  }
+
+  deleteEgresoRecurrente(id: string) {
+    const url = `${this.baseUrl}/egresoRecurrenteAdm/eliminar?id=${id}`;
+    return this.http.delete(url, { responseType: 'text' });
+  }
+
+  editEgresoRecurrente(id:number, unidad: string, cargo: string, valorHora:number, numHoras:number,) {
+    const url = `${this.baseUrl}/egresoRecurrenteAdm/actualizar`;
+    const params = new HttpParams()
+    .set('id', id)
+    .set('unidad', unidad)
+    .set('cargo', cargo)
+    .set('valorHora', valorHora)
+    .set('numHoras', numHoras);
+    return this.http.put(url, params, { responseType: 'text' });
+  }
+
+  getEgresosViajes(): Observable<any> {
+    const url = `${this.baseUrl}/egresoViaje/listar`;
+    return this.http.get(url);
+  }
+
+  getEgresosViajesPorPresupuesto(idPresupuesto:number): Observable<any> {
+    const url = `${this.baseUrl}/egresoViaje/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
+    return this.http.get(url);
+  }
+
+  postEgresoViajes(params: any) {
+    const url = `${this.baseUrl}/egresoViaje/crear`;
+    const body = new HttpParams()
+    .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
+    .set('descripcion', params.descripcion)
+    .set('numPersonas', params.numPersonas)
+    .set('apoyoDesplazamiento', params.apoyoDesplazamiento)
+    .set('numViajesPorPersona', params.numViajesPorPersona)
+    .set('valorTransporte', params.valorTransporte);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+
+    return this.http.post(url, body.toString(), { headers, responseType: 'text' });
+  }
+
+  deleteEgresoViajes(id: string) {
+    const url = `${this.baseUrl}/egresoViaje/eliminar?id=${id}`;
+    return this.http.delete(url, { responseType: 'text' });
+  }
+
+  editEgresoViajes(id:number, descripcion: string, numPersonas: number, 
+    apoyoDesplazamiento: number, numViajesPorPersona:number, valorTransporte: number) {
+    const url = `${this.baseUrl}/egresoViaje/actualizar`;
+    const params = new HttpParams()
+    .set('id', id)
+    .set('descripcion', descripcion)
+    .set('numPersonas', numPersonas)
+    .set('apoyoDesplazamiento', apoyoDesplazamiento)
+    .set('numViajesPorPersona', numViajesPorPersona)
+    .set('valorTransporte', valorTransporte);
+    return this.http.put(url, params, { responseType: 'text' });
+  }
 }

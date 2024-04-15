@@ -1,0 +1,54 @@
+<div class="container">
+    <!-- Contenedor para el botón y el campo de búsqueda -->
+    <div class="action-bar">
+      <button mat-raised-button color="primary"  (click)="openCreateDialog('egreso viaje')" class="create-button">Crear Egreso por viajes</button>
+      <!-- Campo de búsqueda -->
+      <mat-form-field class="example-full-width search-field" appearance="fill">
+          <input matInput [(ngModel)]="searchText" (ngModelChange)="applyFilter()" placeholder="Ingresa tu búsqueda">
+      </mat-form-field>
+  </div>
+<table mat-table [dataSource]="filteredEgresos| paginate: { itemsPerPage: 10, currentPage: p }" class="mat-elevation-z8" >
+  <!-- Columna de nombre -->
+  <ng-container matColumnDef="descripcion">
+    <th mat-header-cell *matHeaderCellDef> Descripción</th>
+    <td mat-cell *matCellDef="let egreso"> {{egreso.descripcion}} </td>
+  </ng-container>
+  <ng-container matColumnDef="numPersonas">
+    <th mat-header-cell *matHeaderCellDef> Número personas </th>
+    <td mat-cell *matCellDef="let egreso"> {{egreso.numPersonas}} </td>
+  </ng-container>
+  <ng-container matColumnDef="apoyoDesplazamiento">
+    <th mat-header-cell *matHeaderCellDef> Apoyo desplazamiento </th>
+    <td mat-cell *matCellDef="let egreso"> ${{egreso.apoyoDesplazamiento}}</td>
+  </ng-container>
+  <ng-container matColumnDef="numViajesPorPersona">
+    <th mat-header-cell *matHeaderCellDef> Número viajes por persona</th>
+    <td mat-cell *matCellDef="let egreso"> {{egreso.numViajesPorPersona}} </td>
+  </ng-container>
+  <ng-container matColumnDef="valorTransporte">
+    <th mat-header-cell *matHeaderCellDef> Valor transporte</th>
+    <td mat-cell *matCellDef="let egreso"> {{egreso.valorTransporte}} </td>
+  </ng-container>
+
+  <!-- Columna de acciones -->
+  <ng-container matColumnDef="acciones">
+    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+    <td mat-cell *matCellDef="let egreso">
+      <button mat-icon-button color="primary" (click)="openCreateDialog('egreso viaje', egreso)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="openDeleteDialog(egreso.id, 'egreso viaje')">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
+
+
+
+

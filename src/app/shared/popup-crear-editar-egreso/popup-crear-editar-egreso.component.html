@@ -1,14 +1,26 @@
 <h1 mat-dialog-title>{{data.isEdit ? 'Editar' : 'Crear'}} {{data.modulo}}</h1>
 <div mat-dialog-content>
-  <mat-form-field *ngIf="data.modulo === 'egreso transferencia'">
+  <mat-form-field *ngIf="data.modulo === 'egreso transferencia' 
+  || data.modulo === 'egreso otros servicios docente'
+  || data.modulo === 'egreso viaje'">
     <mat-label>Descripcion del {{data.modulo}}</mat-label>
     <input matInput [(ngModel)]="data.descripcion">
   </mat-form-field>
-  <mat-form-field *ngIf="data.modulo === 'egreso general' || data.modulo === 'otro egreso'">
+  <mat-form-field *ngIf="data.modulo === 'egreso general' 
+  || data.modulo === 'otro egreso' || data.modulo === 'egreso inversion'">
     <mat-label>Concepto del {{data.modulo}}</mat-label>
     <input matInput [(ngModel)]="data.concepto">
   </mat-form-field>
-  <mat-form-field *ngIf="data.modulo === 'egreso servicio no docente'">
+  <mat-form-field *ngIf="data.modulo === 'egreso recurrente'">
+    <mat-label>Unidad del {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.unidad">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso recurrente'">
+    <mat-label>Cargo del {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.cargo">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso servicio no docente'
+  || data.modulo === 'egreso otros servicios docente'">
     <mat-label>Servicio del {{data.modulo}}</mat-label>
     <input matInput [(ngModel)]="data.servicio">
   </mat-form-field>
@@ -16,10 +28,46 @@
     <mat-label>Porcentaje del {{data.modulo}}</mat-label>
     <input matInput [(ngModel)]="data.porcentaje" type="number">
   </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso viaje'">
+    <mat-label>Número de personas del {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.numPersonas" type="number">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso viaje'">
+    <mat-label>Apoyo desplazamiento del {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.apoyoDesplazamiento" type="number">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso viaje'">
+    <mat-label>Número de viajes por persona del {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.numViajesPorPersona" type="number">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso otros servicios docente'">
+    <mat-label>Número de horas del {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.numHoras" type="number">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso viaje'">
+    <mat-label>Valor del transporte del {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.valorTransporte" type="number">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso recurrente'">
+    <mat-label>Valor por hora {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.valorHora" type="number">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso recurrente'">
+    <mat-label>Número de horas {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.numHoras" type="number">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso inversion'">
+    <mat-label>Valor del {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.valor" type="number">
+  </mat-form-field>
   <mat-form-field *ngIf="data.modulo === 'egreso general' || data.modulo === 'otro egreso' 
   || data.modulo === 'egreso servicio no docente'">
     <mat-label>Valor unitario del {{data.modulo}}</mat-label>
     <input matInput [(ngModel)]="data.valorUnitario" type="number">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso otros servicios docente'">
+    <mat-label>Valor total del {{data.modulo}}</mat-label>
+    <input matInput [(ngModel)]="data.valorTotal" type="number">
   </mat-form-field>
   <mat-form-field *ngIf="data.modulo === 'egreso general' || data.modulo === 'otro egreso'
   || data.modulo === 'egreso servicio no docente'">
@@ -27,10 +75,14 @@
     <input matInput [(ngModel)]="data.cantidad" type="number">
   </mat-form-field>
   <div *ngIf="data.modulo === 'egreso transferencia' || data.modulo === 'egreso general' 
-  || data.modulo === 'otro egreso' || data.modulo === 'egreso servicio no docente'">
+  || data.modulo === 'otro egreso' || data.modulo === 'egreso servicio no docente'
+  || data.modulo === 'egreso otros servicios docente'
+  || data.modulo === 'egreso inversion'">
     <span class="field-label">Seleccione {{data.modulo === 'egreso transferencia' ? 'tipo transferencia'
     :data.modulo === 'egreso general' ? 'tipo costo':data.modulo === 'otro egreso' ? 'tipo costo'
-    :data.modulo === 'egreso servicio no docente' ? 'tipo costo':''}} perteneciente</span>
+    :data.modulo === 'egreso servicio no docente' ? 'tipo costo'
+    :data.modulo === 'egreso otros servicios docente' ? 'tipo costo'
+    :data.modulo === 'egreso inversion' ? 'tipo inversion':''}} perteneciente</span>
     <select class="form-control" [(ngModel)]="entidadSeleccionada">
         <option *ngFor="let item of this.listaPerteneciente" [value]="item.id">{{item.nombreTipo}}</option>
     </select>

@@ -1,0 +1,49 @@
+<div class="container">
+    <!-- Contenedor para el botón y el campo de búsqueda -->
+    <div class="action-bar">
+      <button mat-raised-button color="primary"  (click)="openCreateDialog('egreso recurrente')" class="create-button">Crear Egreso recurrente</button>
+      <!-- Campo de búsqueda -->
+      <mat-form-field class="example-full-width search-field" appearance="fill">
+          <input matInput [(ngModel)]="searchText" (ngModelChange)="applyFilter()" placeholder="Ingresa tu búsqueda">
+      </mat-form-field>
+  </div>
+<table mat-table [dataSource]="filteredEgresos| paginate: { itemsPerPage: 10, currentPage: p }" class="mat-elevation-z8" >
+  <!-- Columna de nombre -->
+  <ng-container matColumnDef="unidad">
+    <th mat-header-cell *matHeaderCellDef> Unidad </th>
+    <td mat-cell *matCellDef="let egreso"> {{egreso.unidad}} </td>
+  </ng-container>
+  <ng-container matColumnDef="cargo">
+    <th mat-header-cell *matHeaderCellDef> Cargo </th>
+    <td mat-cell *matCellDef="let egreso"> {{egreso.cargo}} </td>
+  </ng-container>
+  <ng-container matColumnDef="valor_hora">
+    <th mat-header-cell *matHeaderCellDef> Valor hora </th>
+    <td mat-cell *matCellDef="let egreso"> ${{egreso.valorHora}}</td>
+  </ng-container>
+  <ng-container matColumnDef="num_horas">
+    <th mat-header-cell *matHeaderCellDef> Número horas </th>
+    <td mat-cell *matCellDef="let egreso"> {{egreso.numHoras}} </td>
+  </ng-container>
+
+  <!-- Columna de acciones -->
+  <ng-container matColumnDef="acciones">
+    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+    <td mat-cell *matCellDef="let egreso">
+      <button mat-icon-button color="primary" (click)="openCreateDialog('egreso recurrente', egreso)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="openDeleteDialog(egreso.id, 'egreso recurrente')">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
+
+
+

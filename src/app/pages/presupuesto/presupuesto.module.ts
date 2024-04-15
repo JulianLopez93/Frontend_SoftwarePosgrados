@@ -14,7 +14,10 @@ import { EgresosTransferenciasModule } from '../egresos/egresos-transferencias/e
 import { EgresosGeneralesModule } from '../egresos/egresos-generales/egresos-generales.module';
 import { EgresosOtrosModule } from '../egresos/egresos-otros/egresos-otros.module';
 import { EgresosServiciosNoDocenteModule } from '../egresos/egresos-servicios-no-docente/egresos-servicios-no-docente.module';
-
+import { EgresosOtrosServiciosDocenteModule } from '../egresos/egresos-otros-servicios-docente/egresos-otros-servicios-docente.module';
+import { EgresosInversionModule } from '../egresos/egresos-inversion/egresos-inversion.module';
+import { EgresosRecurrentesModule } from '../egresos/egresos-recurrentes/egresos-recurrentes.module';
+import { EgresosViajesModule } from '../egresos/egresos-viajes/egresos-viajes.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,11 @@ import { EgresosServiciosNoDocenteModule } from '../egresos/egresos-servicios-no
     EgresosTransferenciasModule,
     EgresosGeneralesModule,
     EgresosOtrosModule,
-    EgresosServiciosNoDocenteModule
+    EgresosServiciosNoDocenteModule,
+    EgresosOtrosServiciosDocenteModule,
+    EgresosInversionModule,
+    EgresosRecurrentesModule,
+    EgresosViajesModule
   ]
 })
 export class PresupuestoModule { }

@@ -78,6 +78,50 @@
       <div class="row mb-2 mt-2">
         <div class="card">
           <div class="row mr-1">
+            <h2>DATOS DE EGRESOS POR INVERSIÓN</h2>
+          </div>
+          <div class="row" *ngIf="idPresupuesto !== 0">
+               <app-listar-egresos-inversion></app-listar-egresos-inversion>
+          </div>
+            
+        </div>
+      </div>
+      <div class="row mb-2 mt-2">
+        <div class="card">
+          <div class="row mr-1">
+            <h2>DATOS DE EGRESOS RECURRENTES</h2>
+          </div>
+          <div class="row" *ngIf="idPresupuesto !== 0">
+               <app-listar-egresos-recurrentes></app-listar-egresos-recurrentes>
+          </div>
+            
+        </div>
+      </div>
+      <div class="row mb-2 mt-2">
+        <div class="card">
+          <div class="row mr-1">
+            <h2>DATOS DE EGRESOS POR VIAJES</h2>
+          </div>
+          <div class="row" *ngIf="idPresupuesto !== 0">
+               <app-listar-egresos-viajes></app-listar-egresos-viajes>
+          </div>
+            
+        </div>
+      </div>
+      <div class="row mb-2 mt-2">
+        <div class="card">
+          <div class="row mr-1">
+            <h2>DATOS DE EGRESOS POR OTROS SERVICIOS DOCENTE</h2>
+          </div>
+          <div class="row" *ngIf="idPresupuesto !== 0">
+               <app-listar-otros-servicios-docente></app-listar-otros-servicios-docente>
+          </div>
+            
+        </div>
+      </div>
+      <div class="row mb-2 mt-2">
+        <div class="card">
+          <div class="row mr-1">
             <h2>DATOS DE EGRESOS POR SERVICIOS NO DOCENTE</h2>
           </div>
           <div class="row" *ngIf="idPresupuesto !== 0">

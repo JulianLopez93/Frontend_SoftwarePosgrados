@@ -42,25 +42,56 @@ export class PopupCrearEditarEgresoComponent {
       let descripcion;
       let porcentaje;
       let concepto;
+      let unidad;
+      let cargo;
+      let valor;
+      let valorHora;
       let valorUnitario;
+      let valorTotal;
+      let valorTransporte;
       let cantidad;
       let servicio;
+      let numHoras;
+      let numPersonas;
+      let apoyoDesplazamiento;
+      let numViajesPorPersona;
 
       const entidadPerteneciente = this.entidadSeleccionada;
       descripcion = this.data.descripcion;
       porcentaje = this.data.porcentaje;
       concepto = this.data.concepto;
+      unidad = this.data.unidad;
+      cargo = this.data.cargo;
+      valorHora = this.data.valorHora;
       valorUnitario = this.data.valorUnitario;
       cantidad = this.data.cantidad;
       servicio = this.data.servicio;
+      numHoras = this.data.numHoras;
+      numPersonas = this.data.numPersonas;
+      numViajesPorPersona = this.data.numViajesPorPersona;
+      apoyoDesplazamiento = this.data.apoyoDesplazamiento;
+      valorTotal = this.data.valorTotal;
+      valorTransporte = this.data.valorTransporte;
+      valor = this.data.valor;
 
       console.log(entidadPerteneciente);
       console.log(descripcion);
       console.log(porcentaje);
+      console.log(unidad);
+      console.log(cargo);
       console.log(concepto);
+      console.log(valorHora);
+      console.log(valor);
       console.log(valorUnitario);
+      console.log(valorTotal);
+      console.log(numHoras);
       console.log(cantidad);
       console.log(servicio);
+      console.log(numPersonas);
+      console.log(numViajesPorPersona);
+      console.log(apoyoDesplazamiento);
+      console.log(valorTransporte);
+
 
       // Construye el objeto que se devuelve dependiendo del módulo
       let result;
@@ -102,6 +133,63 @@ export class PopupCrearEditarEgresoComponent {
           servicio: servicio,
           valorUnitario: valorUnitario,
           cantidad: cantidad
+        };
+      } 
+      if (this.data.modulo === 'egreso otros servicios docente') {
+        if (!this.data.servicio || !this.data.valorTotal || this.entidadSeleccionada === 0
+          || !this.data.descripcion || !this.data.numHoras
+          || isNaN(this.data.valorTotal) || isNaN(this.data.numHoras)) {
+          this.showError = true; // Muestra el mensaje de error
+          return; // Detiene la ejecución si hay campos vacíos
+        }
+        result = {
+          entidadPerteneciente: entidadPerteneciente,
+          servicio: servicio,
+          descripcion: descripcion,
+          numHoras: numHoras,
+          valorTotal: valorTotal,
+        };
+      } 
+      if (this.data.modulo === 'egreso inversion') {
+        if (!this.data.concepto || !this.data.valor || this.entidadSeleccionada === 0
+          || isNaN(this.data.valor)) {
+          this.showError = true; // Muestra el mensaje de error
+          return; // Detiene la ejecución si hay campos vacíos
+        }
+        result = {
+          entidadPerteneciente: entidadPerteneciente,
+          concepto: concepto,
+          valor: valor,
+        };
+      }
+      if (this.data.modulo === 'egreso recurrente') {
+        if (!this.data.unidad || !this.data.cargo || !this.data.valorHora 
+          || !this.data.numHoras
+          || isNaN(this.data.valorHora) || isNaN(this.data.numHoras)) {
+          this.showError = true; // Muestra el mensaje de error
+          return; // Detiene la ejecución si hay campos vacíos
+        }
+        result = {
+          unidad: unidad,
+          cargo: cargo,
+          numHoras: numHoras,
+          valorHora: valorHora,
+        };
+      } 
+      if (this.data.modulo === 'egreso viaje') {
+        if (!this.data.descripcion || !this.data.numPersonas || !this.data.apoyoDesplazamiento 
+          || !this.data.numViajesPorPersona || !this.data.valorTransporte
+          || isNaN(this.data.numPersonas) || isNaN(this.data.numViajesPorPersona)
+          || isNaN(this.data.apoyoDesplazamiento) || isNaN(this.data.valorTransporte)) {
+          this.showError = true; // Muestra el mensaje de error
+          return; // Detiene la ejecución si hay campos vacíos
+        }
+        result = {
+          descripcion: descripcion,
+          numPersonas: numPersonas,
+          apoyoDesplazamiento: apoyoDesplazamiento,
+          numViajesPorPersona: numViajesPorPersona,
+          valorTransporte: valorTransporte
         };
       } 
       else {

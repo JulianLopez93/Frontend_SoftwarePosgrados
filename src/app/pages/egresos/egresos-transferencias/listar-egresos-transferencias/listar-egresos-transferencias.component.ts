@@ -14,7 +14,7 @@ import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-elimina
 export class ListarEgresosTransferenciasComponent {
 
   egresos: any[] = [];
-  displayedColumns: string[] = ['descripcion','porcentaje','tipo_transferencia','acciones'];
+  displayedColumns: string[] = ['descripcion','porcentaje','tipo_transferencia', 'valorTotal','acciones'];
   form!: FormGroup;
   nombre:string='';
   p: number = 1;

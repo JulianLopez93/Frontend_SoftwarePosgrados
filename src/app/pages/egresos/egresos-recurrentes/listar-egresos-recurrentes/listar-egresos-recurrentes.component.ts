@@ -13,7 +13,7 @@ import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-elimina
 export class ListarEgresosRecurrentesComponent {
 
   egresos: any[] = [];
-  displayedColumns: string[] = ['unidad','cargo','valor_hora', 'num_horas','acciones'];
+  displayedColumns: string[] = ['unidad','cargo','valor_hora', 'num_horas', 'valorTotal','acciones'];
   form!: FormGroup;
   nombre:string='';
   p: number = 1;

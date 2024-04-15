@@ -14,7 +14,7 @@ import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-elimina
 export class ListarDescuentosComponent {
 
   descuentos: any[] = [];
-  displayedColumns: string[] = ['cantidad_estudiantes','valor','numero_periodos','tipo_descuento','acciones'];
+  displayedColumns: string[] = ['cantidad_estudiantes','valor','numero_periodos','tipo_descuento','totalDescuento','acciones'];
   //listadoPresupuestos:any[] = [];
   form!: FormGroup;
   nombre:string='';

@@ -18,6 +18,7 @@ import { EgresosOtrosServiciosDocenteModule } from '../egresos/egresos-otros-ser
 import { EgresosInversionModule } from '../egresos/egresos-inversion/egresos-inversion.module';
 import { EgresosRecurrentesModule } from '../egresos/egresos-recurrentes/egresos-recurrentes.module';
 import { EgresosViajesModule } from '../egresos/egresos-viajes/egresos-viajes.module';
+import { EgresosServiciosDocentesModule } from '../egresos/egresos-servicios-docentes/egresos-servicios-docentes.module';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { EgresosViajesModule } from '../egresos/egresos-viajes/egresos-viajes.mo
     EgresosOtrosServiciosDocenteModule,
     EgresosInversionModule,
     EgresosRecurrentesModule,
-    EgresosViajesModule
+    EgresosViajesModule,
+    EgresosServiciosDocentesModule
   ]
 })
 export class PresupuestoModule { }

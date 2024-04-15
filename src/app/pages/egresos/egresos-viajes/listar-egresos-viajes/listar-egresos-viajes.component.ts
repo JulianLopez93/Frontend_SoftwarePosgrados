@@ -14,7 +14,7 @@ export class ListarEgresosViajesComponent {
 
   egresos: any[] = [];
   displayedColumns: string[] = ['descripcion','numPersonas','apoyoDesplazamiento', 
-  'numViajesPorPersona', 'valorTransporte','acciones'];
+  'numViajesPorPersona', 'valorTransporte','valorTotal','acciones'];
   form!: FormGroup;
   nombre:string='';
   p: number = 1;

@@ -74,15 +74,52 @@
     <mat-label>Cantidad del {{data.modulo}}</mat-label>
     <input matInput [(ngModel)]="data.cantidad" type="number">
   </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso servicio docente'">
+    <mat-label>Nombre materia</mat-label>
+    <input matInput [(ngModel)]="data.nombreMateria">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso servicio docente'">
+    <mat-label>Es docente de planta?</mat-label>
+    <mat-select [(ngModel)]="data.esDocentePlanta">
+      <mat-option [value]="true">Sí</mat-option>
+      <mat-option [value]="false">No</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso servicio docente'">
+    <mat-label>Nombre Docente</mat-label>
+    <input matInput [(ngModel)]="data.nombreDocente">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso servicio docente'">
+    <mat-label>Escalafón</mat-label>
+    <input matInput [(ngModel)]="data.escalafon">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso servicio docente'">
+    <mat-label>Título</mat-label>
+    <input matInput [(ngModel)]="data.titulo">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso servicio docente'">
+    <mat-label>Horas teóricas</mat-label>
+    <input matInput [(ngModel)]="data.horasTeoricasMat" type="number">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso servicio docente'">
+    <mat-label>Horas prácticas</mat-label>
+    <input matInput [(ngModel)]="data.horasPracticasMat" type="number">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'egreso servicio docente'">
+    <mat-label>Valor hora profesor</mat-label>
+    <input matInput [(ngModel)]="data.valorHoraProfesor" type="number">
+  </mat-form-field>
   <div *ngIf="data.modulo === 'egreso transferencia' || data.modulo === 'egreso general' 
   || data.modulo === 'otro egreso' || data.modulo === 'egreso servicio no docente'
   || data.modulo === 'egreso otros servicios docente'
-  || data.modulo === 'egreso inversion'">
+  || data.modulo === 'egreso inversion'
+  || data.modulo === 'egreso servicio docente'">
     <span class="field-label">Seleccione {{data.modulo === 'egreso transferencia' ? 'tipo transferencia'
     :data.modulo === 'egreso general' ? 'tipo costo':data.modulo === 'otro egreso' ? 'tipo costo'
     :data.modulo === 'egreso servicio no docente' ? 'tipo costo'
     :data.modulo === 'egreso otros servicios docente' ? 'tipo costo'
-    :data.modulo === 'egreso inversion' ? 'tipo inversion':''}} perteneciente</span>
+    :data.modulo === 'egreso inversion' ? 'tipo inversion'
+    :data.modulo === 'egreso servicio docente' ? 'tipo compensacion':''}} perteneciente</span>
     <select class="form-control" [(ngModel)]="entidadSeleccionada">
         <option *ngFor="let item of this.listaPerteneciente" [value]="item.id">{{item.nombreTipo}}</option>
     </select>

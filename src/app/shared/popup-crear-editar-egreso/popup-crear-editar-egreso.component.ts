@@ -56,6 +56,16 @@ export class PopupCrearEditarEgresoComponent {
       let apoyoDesplazamiento;
       let numViajesPorPersona;
 
+      //Campos egresos servicios docentes
+      let nombreMateria;
+      let esDocentePlanta;
+      let nombreDocente;
+      let escalafon;
+      let titulo;
+      let horasTeoricasMat;
+      let horasPracticasMat;
+      let valorHoraProfesor;
+
       const entidadPerteneciente = this.entidadSeleccionada;
       descripcion = this.data.descripcion;
       porcentaje = this.data.porcentaje;
@@ -73,6 +83,16 @@ export class PopupCrearEditarEgresoComponent {
       valorTotal = this.data.valorTotal;
       valorTransporte = this.data.valorTransporte;
       valor = this.data.valor;
+
+      //Egresos servicios docentes
+      nombreMateria = this.data.nombreMateria;
+      esDocentePlanta = this.data.esDocentePlanta;
+      nombreDocente = this.data.nombreDocente;
+      escalafon = this.data.escalafon;
+      titulo = this.data.titulo;
+      horasTeoricasMat = this.data.horasTeoricasMat;
+      horasPracticasMat = this.data.horasPracticasMat;
+      valorHoraProfesor = this.data.valorHoraProfesor;
 
       console.log(entidadPerteneciente);
       console.log(descripcion);
@@ -92,6 +112,15 @@ export class PopupCrearEditarEgresoComponent {
       console.log(apoyoDesplazamiento);
       console.log(valorTransporte);
 
+      //Egresos servicios docentes
+      console.log(nombreMateria);
+      console.log(esDocentePlanta);
+      console.log(nombreDocente);
+      console.log(escalafon);
+      console.log(titulo);
+      console.log(horasTeoricasMat);
+      console.log(horasPracticasMat);
+      console.log(valorHoraProfesor);
 
       // Construye el objeto que se devuelve dependiendo del módulo
       let result;
@@ -106,10 +135,8 @@ export class PopupCrearEditarEgresoComponent {
           descripcion: descripcion,
           porcentaje: porcentaje
         };
-      } 
-      else {
       }
-      if (this.data.modulo === 'egreso general' || this.data.modulo === 'otro egreso') {
+      else if (this.data.modulo === 'egreso general' || this.data.modulo === 'otro egreso') {
         if (!this.data.concepto || !this.data.valorUnitario || this.entidadSeleccionada === 0
           || isNaN(this.data.valorUnitario) || isNaN(this.data.cantidad)) {
           this.showError = true; // Muestra el mensaje de error
@@ -122,7 +149,7 @@ export class PopupCrearEditarEgresoComponent {
           cantidad: cantidad
         };
       } 
-      if (this.data.modulo === 'egreso servicio no docente') {
+      else if (this.data.modulo === 'egreso servicio no docente') {
         if (!this.data.servicio|| !this.data.valorUnitario || this.entidadSeleccionada === 0
           || isNaN(this.data.valorUnitario) || isNaN(this.data.cantidad)) {
           this.showError = true; // Muestra el mensaje de error
@@ -135,7 +162,7 @@ export class PopupCrearEditarEgresoComponent {
           cantidad: cantidad
         };
       } 
-      if (this.data.modulo === 'egreso otros servicios docente') {
+      else if (this.data.modulo === 'egreso otros servicios docente') {
         if (!this.data.servicio || !this.data.valorTotal || this.entidadSeleccionada === 0
           || !this.data.descripcion || !this.data.numHoras
           || isNaN(this.data.valorTotal) || isNaN(this.data.numHoras)) {
@@ -150,7 +177,7 @@ export class PopupCrearEditarEgresoComponent {
           valorTotal: valorTotal,
         };
       } 
-      if (this.data.modulo === 'egreso inversion') {
+      else if (this.data.modulo === 'egreso inversion') {
         if (!this.data.concepto || !this.data.valor || this.entidadSeleccionada === 0
           || isNaN(this.data.valor)) {
           this.showError = true; // Muestra el mensaje de error
@@ -162,7 +189,7 @@ export class PopupCrearEditarEgresoComponent {
           valor: valor,
         };
       }
-      if (this.data.modulo === 'egreso recurrente') {
+      else if (this.data.modulo === 'egreso recurrente') {
         if (!this.data.unidad || !this.data.cargo || !this.data.valorHora 
           || !this.data.numHoras
           || isNaN(this.data.valorHora) || isNaN(this.data.numHoras)) {
@@ -176,7 +203,7 @@ export class PopupCrearEditarEgresoComponent {
           valorHora: valorHora,
         };
       } 
-      if (this.data.modulo === 'egreso viaje') {
+      else if (this.data.modulo === 'egreso viaje') {
         if (!this.data.descripcion || !this.data.numPersonas || !this.data.apoyoDesplazamiento 
           || !this.data.numViajesPorPersona || !this.data.valorTransporte
           || isNaN(this.data.numPersonas) || isNaN(this.data.numViajesPorPersona)
@@ -191,7 +218,29 @@ export class PopupCrearEditarEgresoComponent {
           numViajesPorPersona: numViajesPorPersona,
           valorTransporte: valorTransporte
         };
-      } 
+      }
+      else if (this.data.modulo === 'egreso servicio docente') {
+        if (!this.data.nombreMateria || !this.data.nombreDocente 
+          || !this.data.escalafon || !this.data.titulo || !this.data.horasTeoricasMat
+          || !this.data.horasPracticasMat || !this.data.valorHoraProfesor
+          || this.entidadSeleccionada === 0
+          || isNaN(this.data.horasTeoricasMat) || isNaN(this.data.horasPracticasMat)
+          || isNaN(this.data.valorHoraProfesor)) {
+          this.showError = true; // Muestra el mensaje de error
+          return; // Detiene la ejecución si hay campos vacíos
+        }
+        result = {
+          entidadPerteneciente: entidadPerteneciente,
+          nombreMateria: nombreMateria,
+          esDocentePlanta: esDocentePlanta,
+          nombreDocente: nombreDocente,
+          escalafon: escalafon,
+          titulo: titulo,
+          horasTeoricasMat: horasTeoricasMat,
+          horasPracticasMat: horasPracticasMat,
+          valorHoraProfesor: valorHoraProfesor
+        };
+      }
       else {
       }
 

@@ -322,4 +322,56 @@ export class EgresosService {
     .set('valorTransporte', valorTransporte);
     return this.http.put(url, params, { responseType: 'text' });
   }
+  getEgresosServiciosDocentes(): Observable<any> {
+    const url = `${this.baseUrl}/egresoServDocente/listar`;
+    return this.http.get(url);
+  }
+
+  getEgresosServiciosDocentesPorPresupuesto(idPresupuesto:number): Observable<any> {
+    const url = `${this.baseUrl}/egresoServDocente/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
+    return this.http.get(url);
+  }
+
+  postEgresoServiciosDocentes(params: any) {
+    const url = `${this.baseUrl}/egresoServDocente/crear`;
+    const body = new HttpParams()
+    .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
+    .set('nombreMateria', params.nombreMateria)
+    .set('esDocentePlanta', params.esDocentePlanta)
+    .set('nombreDocente', params.nombreDocente)
+    .set('escalafon', params.escalafon)
+    .set('titulo', params.titulo)
+    .set('horasTeoricasMat', params.horasTeoricasMat)
+    .set('horasPracticasMat', params.horasPracticasMat)
+    .set('valorHoraProfesor', params.valorHoraProfesor)
+    .set('idTipoCompensacion', params.idTipoCompensacion);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+
+    return this.http.post(url, body.toString(), { headers, responseType: 'text' });
+  }
+
+  editEgresoServiciosDocentes(id:number, nombreMateria: string, 
+    esDocentePlanta:boolean, nombreDocente: string, 
+    escalafon:string, titulo:string, horasTeoricasMat: number,
+    horasPracticasMat: number, valorHoraProfesor: number, 
+    idTipoCompensacion:number) {
+    const url = `${this.baseUrl}/egresoServDocente/actualizar`;
+    const params = new HttpParams()
+    .set('id', id)
+    .set('nombreMateria', nombreMateria)
+    .set('esDocentePlanta', esDocentePlanta)
+    .set('nombreDocente', nombreDocente)
+    .set('escalafon', escalafon)
+    .set('titulo', titulo)
+    .set('horasTeoricasMat', horasTeoricasMat)
+    .set('horasPracticasMat', horasPracticasMat)
+    .set('valorHoraProfesor', valorHoraProfesor)
+    .set('idTipoCompensacion', idTipoCompensacion);
+    return this.http.put(url, params, { responseType: 'text' });
+  }
+
+  deleteEgresoServiciosDocentes(id: string) {
+    const url = `${this.baseUrl}/egresoServDocente/eliminar?id=${id}`;
+    return this.http.delete(url, { responseType: 'text' });
+  }
 }

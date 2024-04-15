@@ -15,7 +15,7 @@ import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-elimina
 export class ListarEgresosServiciosNoDocenteComponent {
 
   egresos: any[] = [];
-  displayedColumns: string[] = ['servicio','valor_unitario','cantidad','tipo_costo','acciones'];
+  displayedColumns: string[] = ['servicio','valor_unitario','cantidad','tipo_costo','valorTotal','acciones'];
   form!: FormGroup;
   nombre:string='';
   p: number = 1;

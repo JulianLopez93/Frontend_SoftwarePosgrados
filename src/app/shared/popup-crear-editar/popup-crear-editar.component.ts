@@ -50,6 +50,7 @@ export class PopupCrearEditarComponent {
     onAccept():void {
       this.showError = false;
 
+      const entidadPerteneciente = this.entidadSeleccionada;
       let nombre;
       let numero;
       let fecha;
@@ -57,6 +58,7 @@ export class PopupCrearEditarComponent {
       let valor;
       let numEstudiantes;
       let numPeriodos
+      let result;
 
       // Verifica si los campos están vacíos
       if (this.data.modulo === 'cohorte') {
@@ -66,7 +68,14 @@ export class PopupCrearEditarComponent {
         }
         numero = this.data.numero;
         fecha = this.data.fecha ? this.formatDate(new Date(this.data.fecha)) : undefined;
-      } else {
+
+        result = {
+          entidadPerteneciente: entidadPerteneciente,
+          numero: numero,
+          fecha: fecha
+        };
+      } 
+      else {
         if(this.data.modulo !== 'tipo de compensacion' && this.data.modulo !== 'tipo de costo' && this.data.modulo !== 'tipo de transferencia'
         && this.data.modulo !== 'tipo de descuento' && this.data.modulo !== 'tipo de inversion' && this.data.modulo !== 'ingreso'
         && this.data.modulo !== 'descuento')
@@ -81,7 +90,7 @@ export class PopupCrearEditarComponent {
         nombre = this.data.nombre;
       }
 
-      const entidadPerteneciente = this.entidadSeleccionada;
+      
       valor = this.data.valor;
       concepto = this.data.concepto;
       numEstudiantes = this.data.numEstudiantes;
@@ -93,18 +102,14 @@ export class PopupCrearEditarComponent {
       console.log(valor);
       console.log(numEstudiantes);
       console.log(numPeriodos);
+      console.log(concepto);
 
       // Construye el objeto que se devuelve dependiendo del módulo
-      let result;
-      if (this.data.modulo === 'cohorte') {
-        result = {
-          entidadPerteneciente: entidadPerteneciente,
-          numero: numero,
-          fecha: fecha
-        };
-      }
+      
       if (this.data.modulo === 'ingreso') {
+        console.log("Entra if de ingreso");
         if (!this.data.concepto || !this.data.valor || isNaN(this.data.valor)) {
+          console.log('Entra validacion ingreso');
           this.showError = true; // Muestra el mensaje de error
           return; // Detiene la ejecución si hay campos vacíos
         }
@@ -114,7 +119,7 @@ export class PopupCrearEditarComponent {
           valor: valor
         };
       }
-      if (this.data.modulo === 'descuento') {
+      else if (this.data.modulo === 'descuento') {
         if (!this.data.numEstudiantes || !this.data.numPeriodos || !this.data.valor 
           || isNaN(this.data.valor) || isNaN(this.data.numEstudiantes) || isNaN(this.data.numPeriodos 
             || this.entidadSeleccionada === 0)) {

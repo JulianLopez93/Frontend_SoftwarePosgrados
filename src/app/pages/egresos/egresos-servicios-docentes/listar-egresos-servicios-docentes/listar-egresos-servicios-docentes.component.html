@@ -1,7 +1,7 @@
 <div class="container">
     <!-- Contenedor para el botón y el campo de búsqueda -->
     <div class="action-bar">
-      <button mat-raised-button color="primary"  (click)="openCreateDialog('egreso servicio docente')" class="create-button">Crear Egreso por servicios docentes</button>
+      <button mat-raised-button style="background-color: #003b70; color: white;"  (click)="openCreateDialog('egreso servicio docente')" class="create-button">Crear Egreso por servicios docentes</button>
       <!-- Campo de búsqueda -->
       <mat-form-field class="example-full-width search-field" appearance="fill">
           <input matInput [(ngModel)]="searchText" (ngModelChange)="applyFilter()" placeholder="Ingresa tu búsqueda">
@@ -10,49 +10,49 @@
 <table mat-table [dataSource]="filteredEgresos| paginate: { itemsPerPage: 10, currentPage: p }" class="mat-elevation-z8" >
   <!-- Columna de nombre -->
   <ng-container matColumnDef="nombreMateria">
-    <th mat-header-cell *matHeaderCellDef> Nombre Materia </th>
+    <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Nombre Materia </th>
     <td mat-cell *matCellDef="let egreso"> {{egreso.nombreMateria}} </td>
   </ng-container>
   <ng-container matColumnDef="esDocentePlanta">
-    <th mat-header-cell *matHeaderCellDef>Es docente planta</th>
+    <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;">Es docente planta</th>
     <td mat-cell *matCellDef="let egreso">{{ egreso.esDocentePlanta ? 'Sí' : 'No' }}</td>
   </ng-container>
   <ng-container matColumnDef="nombreDocente">
-    <th mat-header-cell *matHeaderCellDef> Nombre Docente </th>
+    <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Nombre Docente </th>
     <td mat-cell *matCellDef="let egreso">{{egreso.nombreDocente}}</td>
   </ng-container>
   <ng-container matColumnDef="escalafon">
-    <th mat-header-cell *matHeaderCellDef> Escalafón </th>
+    <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Escalafón </th>
     <td mat-cell *matCellDef="let egreso"> {{egreso.escalafon}}</td>
   </ng-container>
   <ng-container matColumnDef="titulo">
-    <th mat-header-cell *matHeaderCellDef> Título </th>
+    <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Título </th>
     <td mat-cell *matCellDef="let egreso"> {{egreso.titulo}}</td>
   </ng-container>
   <ng-container matColumnDef="horasTeoricasMat">
-    <th mat-header-cell *matHeaderCellDef> Horas teóricas </th>
+    <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Horas teóricas </th>
     <td mat-cell *matCellDef="let egreso"> {{egreso.horasTeoricasMat}}</td>
   </ng-container>
   <ng-container matColumnDef="horasPracticasMat">
-    <th mat-header-cell *matHeaderCellDef> Horas prácticas </th>
+    <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Horas prácticas </th>
     <td mat-cell *matCellDef="let egreso"> {{egreso.horasPracticasMat}}</td>
   </ng-container>
   <ng-container matColumnDef="valorHoraProfesor">
-    <th mat-header-cell *matHeaderCellDef> Valor hora profesor </th>
+    <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Valor hora profesor </th>
     <td mat-cell *matCellDef="let egreso"> ${{egreso.valorHoraProfesor}}</td>
   </ng-container>
   <ng-container matColumnDef="tipoCompensacion">
-    <th mat-header-cell *matHeaderCellDef> Tipo compensación </th>
+    <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Tipo compensación </th>
     <td mat-cell *matCellDef="let egreso"> {{egreso.tipoCompensacion.nombreTipo}} </td>
   </ng-container>
   <ng-container matColumnDef="totalPagoProfesor">
-    <th mat-header-cell *matHeaderCellDef> Pago total </th>
+    <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Pago total </th>
     <td mat-cell *matCellDef="let egreso"> ${{egreso.totalPagoProfesor}} </td>
   </ng-container>
 
   <!-- Columna de acciones -->
   <ng-container matColumnDef="acciones">
-    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+    <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Acciones </th>
     <td mat-cell *matCellDef="let egreso">
       <button mat-icon-button color="primary" (click)="openCreateDialog('egreso servicio docente', egreso)">
         <mat-icon>edit</mat-icon>

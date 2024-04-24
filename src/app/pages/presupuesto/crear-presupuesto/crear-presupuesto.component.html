@@ -4,7 +4,7 @@
         <div class="row mb-2 mt-2">
           <div class="card">
             <div class="row mr-1">
-              <h2>INFORMACIÓN GENERAL</h2>
+              <h2 class="section-title-text">INFORMACIÓN GENERAL</h2>
             </div>
             <div class="row">
               <div class="col-3">
@@ -43,7 +43,7 @@
         <div class="row mb-2 mt-2">
           <div class="card">
             <div class="row mr-1">
-              <h2>DATOS DE INGRESOS</h2>
+              <h2 class="section-title-text">DATOS DE INGRESOS</h2>
             </div>
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-ingresos></app-listar-ingresos>
@@ -53,7 +53,7 @@
         <div class="row mb-2 mt-2">
           <div class="card">
             <div class="row mr-1">
-              <h2>DATOS DE DESCUENTOS</h2>
+              <h2 class="section-title-text">DATOS DE DESCUENTOS</h2>
             </div>
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-descuentos></app-listar-descuentos>
@@ -65,7 +65,7 @@
 
           </div>
           <div class="col-md-3 d-flex justify-content-end">
-            <button mat-raised-button color="primary" (click)="cambiarPagina(1)">Siguiente</button>
+            <button mat-raised-button style="background-color: #003b70; color: white;" (click)="cambiarPagina(1)">Siguiente</button>
           </div>
         </div>
         
@@ -74,7 +74,7 @@
         <div class="row mb-2 mt-2">
           <div class="card">
             <div class="row mr-1">
-              <h2>DATOS DE EGRESOS POR VIAJES</h2>
+              <h2 class="section-title-text">DATOS DE EGRESOS POR VIAJES</h2>
             </div>
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-egresos-viajes></app-listar-egresos-viajes>
@@ -85,7 +85,7 @@
         <div class="row mb-2 mt-2">
           <div class="card">
             <div class="row mr-1">
-              <h2>DATOS DE EGRESOS POR TRANSFERENCIA</h2>
+              <h2 class="section-title-text">DATOS DE EGRESOS POR TRANSFERENCIA</h2>
             </div>
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-egresos-transferencias></app-listar-egresos-transferencias>
@@ -96,7 +96,7 @@
         <div class="row mb-2 mt-2">
           <div class="card">
             <div class="row mr-1">
-              <h2>DATOS DE EGRESOS POR INVERSIÓN</h2>
+              <h2 class="section-title-text">DATOS DE EGRESOS POR INVERSIÓN</h2>
             </div>
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-egresos-inversion></app-listar-egresos-inversion>
@@ -107,7 +107,7 @@
         <div class="row mb-2 mt-2">
           <div class="card">
             <div class="row mr-1">
-              <h2>DATOS DE EGRESOS RECURRENTES POR ADMINISTRACIÓN</h2>
+              <h2 class="section-title-text">DATOS DE EGRESOS RECURRENTES POR ADMINISTRACIÓN</h2>
             </div>
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-egresos-recurrentes></app-listar-egresos-recurrentes>
@@ -119,7 +119,7 @@
         <div class="row mb-2 mt-2">
           <div class="card">
             <div class="row mr-1">
-              <h2>DATOS DE OTROS EGRESOS</h2>
+              <h2 class="section-title-text">DATOS DE OTROS EGRESOS</h2>
             </div>
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-egresos-otros></app-listar-egresos-otros>
@@ -131,14 +131,14 @@
         <div class="row">
           <div class="col-md-3">
             <div class="col-md-3 d-flex justify-content-start">
-              <button mat-raised-button color="primary" (click)="cambiarPagina(-1)">Anterior</button>
+              <button mat-raised-button style="background-color: #003b70; color: white;" (click)="cambiarPagina(-1)">Anterior</button>
             </div>
           </div>
           <div class="col-md-6">
 
           </div>
           <div class="col-md-3 d-flex justify-content-end">
-            <button mat-raised-button color="primary" (click)="cambiarPagina(1)">Siguiente</button>
+            <button mat-raised-button style="background-color: #003b70; color: white;" (click)="cambiarPagina(1)">Siguiente</button>
           </div>
         </div>
       </div>
@@ -146,7 +146,7 @@
         <div class="row mb-2 mt-2">
           <div class="card">
             <div class="row mr-1">
-              <h2>DATOS DE EGRESOS POR SERVICIOS DOCENTES</h2>
+              <h2 class="section-title-text">DATOS DE EGRESOS POR SERVICIOS DOCENTES</h2>
             </div>
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-egresos-servicios-docentes></app-listar-egresos-servicios-docentes>
@@ -156,7 +156,7 @@
         <div class="row mb-2 mt-2">
           <div class="card">
             <div class="row mr-1">
-              <h2>DATOS DE EGRESOS POR OTROS SERVICIOS DOCENTES</h2>
+              <h2 class="section-title-text">DATOS DE EGRESOS POR OTROS SERVICIOS DOCENTES</h2>
             </div>
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-otros-servicios-docente></app-listar-otros-servicios-docente>
@@ -166,7 +166,7 @@
         <div class="row mb-2 mt-2">
           <div class="card">
             <div class="row mr-1">
-              <h2>DATOS DE EGRESOS POR SERVICIOS NO DOCENTES</h2>
+              <h2 class="section-title-text">DATOS DE EGRESOS POR SERVICIOS NO DOCENTES</h2>
             </div>
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-egresos-servicios-no-docente></app-listar-egresos-servicios-no-docente>
@@ -176,7 +176,7 @@
         <div class="row mb-2 mt-2">
           <div class="card">
             <div class="row mr-1">
-              <h2>DATOS DE EGRESOS GENERALES</h2>
+              <h2 class="section-title-text">DATOS DE EGRESOS GENERALES</h2>
             </div>
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-egresos-generales></app-listar-egresos-generales>
@@ -188,14 +188,14 @@
         <div class="row">
           <div class="col-md-3">
             <div class="col-md-3 d-flex justify-content-start">
-              <button mat-raised-button color="primary" (click)="cambiarPagina(-1)">Anterior</button>
+              <button mat-raised-button style="background-color: #003b70; color: white;" (click)="cambiarPagina(-1)">Anterior</button>
             </div>
           </div>
           <div class="col-md-6">
 
           </div>
           <div class="col-md-3 d-flex justify-content-end">
-            <button mat-raised-button color="primary" (click)="cambiarPagina(1)">Siguiente</button>
+            <button mat-raised-button style="background-color: #003b70; color: white;" (click)="cambiarPagina(1)">Siguiente</button>
           </div>
         </div>
       </div>
@@ -203,7 +203,7 @@
         <div class="row mb-2 mt-2">
           <div class="card">
             <div class="row mr-1">
-              <h2>RESUMEN</h2>
+              <h2 class="section-title-text">RESUMEN</h2>
             </div>
             <div class="row main-summary-font">
               <div class="col-3">
@@ -354,7 +354,7 @@
           <div class="card">
             <div class="card-body">
               <div class="row mr-1">
-                <h4>Observaciones</h4>
+                <h4 class="section-title-text">Observaciones</h4>
                 <mat-form-field appearance="fill">
                   <mat-label>Observaciones</mat-label>
                   <textarea matInput formControlName="observaciones"></textarea>
@@ -366,7 +366,7 @@
         <div class="row">
           <div class="col-md-3">
             <div class="col-md-3 d-flex justify-content-start">
-              <button mat-raised-button color="primary" (click)="cambiarPagina(-1)">Anterior</button>
+              <button mat-raised-button style="background-color: #003b70; color: white;" (click)="cambiarPagina(-1)">Anterior</button>
             </div>
           </div>
           <div class="col-md-6">
@@ -381,7 +381,7 @@
         </div>
       </div>
        <div class="row">
-        <button mat-raised-button color="primary" type="submit" (click)="redirectTo()">Guardar Presupuesto</button>
+        <button mat-raised-button style="background-color: orange;" type="submit" (click)="redirectTo()">Guardar Presupuesto</button>
       </div>    
     </form>    
 </div>

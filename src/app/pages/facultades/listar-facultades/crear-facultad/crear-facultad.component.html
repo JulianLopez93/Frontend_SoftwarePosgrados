@@ -1,11 +1,11 @@
-<h1 mat-dialog-title>{{data.isEdit ? 'Editar' : 'Crear'}} Facultad</h1>
+<h1 mat-dialog-title class="dialog-title">{{data.isEdit ? 'Editar' : 'Crear'}} Facultad</h1>
 <div mat-dialog-content>
   <mat-form-field>
     <mat-label>Nombre de la facultad</mat-label>
     <input matInput [(ngModel)]="data.nombre">
   </mat-form-field>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button [mat-dialog-close]="data.nombre" cdkFocusInitial>{{data.isEdit ? 'Guardar' : 'Aceptar'}}</button>
+<div mat-dialog-actions style="display: flex; justify-content: space-between;">
+  <button mat-button style="background-color: #f02032; color: white;" (click)="onNoClick()">Cancelar</button>
+  <button mat-button style="background-color: #0a7c0a; color: white;" [mat-dialog-close]="data.nombre" cdkFocusInitial>{{data.isEdit ? 'Guardar' : 'Aceptar'}}</button>
 </div>

@@ -1,157 +1,387 @@
 <div class="container">
     <form [formGroup]="presupuestoForm">
-      <div class="row mb-2 mt-2">
-        <div class="card">
-          <div class="row mr-1">
-            <h2>INFORMACIÓN GENERAL</h2>
-          </div>
-          <div class="row">
-            <div class="col-5">
-              <mat-form-field appearance="fill">
-                <mat-label>Numero cohorte</mat-label>
-                <input matInput readonly [value]="numeroCohorte">
-              </mat-form-field>
+      <div *ngIf="paginaActual === 1" class="mb-1">
+        <div class="row mb-2 mt-2">
+          <div class="card">
+            <div class="row mr-1">
+              <h2>INFORMACIÓN GENERAL</h2>
             </div>
-            <div class="col-5">
-              <mat-form-field appearance="fill">
-                <mat-label>Programa</mat-label>
-                <input matInput readonly [value]="programaCohorte">
-              </mat-form-field>
+            <div class="row">
+              <div class="col-3">
+                <mat-form-field appearance="fill">
+                  <mat-label>Numero cohorte</mat-label>
+                  <input matInput readonly [value]="numeroCohorte">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field appearance="fill">
+                  <mat-label>Programa</mat-label>
+                  <input matInput readonly [value]="programaCohorte">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field appearance="fill">
+                  <mat-label>Departamento</mat-label>
+                  <input matInput readonly [value]="departamentoCohorte">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field appearance="fill">
+                  <mat-label>Facultad</mat-label>
+                  <input matInput readonly [value]="facultadCohorte">
+                </mat-form-field>
+              </div>
+              <!-- <div class="col-7">
+                <mat-form-field appearance="fill">
+                  <mat-label>Observaciones</mat-label>
+                  <textarea matInput formControlName="observaciones"></textarea>
+                </mat-form-field>
+              </div>     -->
+            </div>   
+          </div>
+        </div>
+        <div class="row mb-2 mt-2">
+          <div class="card">
+            <div class="row mr-1">
+              <h2>DATOS DE INGRESOS</h2>
             </div>
-            <div class="col-2">
-             <span>Ingresos Totales: {{ingresosTotales}}</span>
+            <div class="row" *ngIf="idPresupuesto !== 0">
+                 <app-listar-ingresos></app-listar-ingresos>
+            </div>      
+          </div>
+        </div>
+        <div class="row mb-2 mt-2">
+          <div class="card">
+            <div class="row mr-1">
+              <h2>DATOS DE DESCUENTOS</h2>
             </div>
-            <!-- <div class="col-7">
-              <mat-form-field appearance="fill">
-                <mat-label>Observaciones</mat-label>
-                <textarea matInput formControlName="observaciones"></textarea>
-              </mat-form-field>
-            </div>     -->
+            <div class="row" *ngIf="idPresupuesto !== 0">
+                 <app-listar-descuentos></app-listar-descuentos>
+            </div>    
           </div>
-            
+        </div>
+        <div class="row">
+          <div class="col-md-9">
+
+          </div>
+          <div class="col-md-3 d-flex justify-content-end">
+            <button mat-raised-button color="primary" (click)="cambiarPagina(1)">Siguiente</button>
+          </div>
+        </div>
+        
+      </div>
+      <div *ngIf="paginaActual === 3" class="mb-1">
+        <div class="row mb-2 mt-2">
+          <div class="card">
+            <div class="row mr-1">
+              <h2>DATOS DE EGRESOS POR VIAJES</h2>
+            </div>
+            <div class="row" *ngIf="idPresupuesto !== 0">
+                 <app-listar-egresos-viajes></app-listar-egresos-viajes>
+            </div>
+              
+          </div>
+        </div>
+        <div class="row mb-2 mt-2">
+          <div class="card">
+            <div class="row mr-1">
+              <h2>DATOS DE EGRESOS POR TRANSFERENCIA</h2>
+            </div>
+            <div class="row" *ngIf="idPresupuesto !== 0">
+                 <app-listar-egresos-transferencias></app-listar-egresos-transferencias>
+            </div>
+              
+          </div>
+        </div>
+        <div class="row mb-2 mt-2">
+          <div class="card">
+            <div class="row mr-1">
+              <h2>DATOS DE EGRESOS POR INVERSIÓN</h2>
+            </div>
+            <div class="row" *ngIf="idPresupuesto !== 0">
+                 <app-listar-egresos-inversion></app-listar-egresos-inversion>
+            </div>
+              
+          </div>
+        </div>
+        <div class="row mb-2 mt-2">
+          <div class="card">
+            <div class="row mr-1">
+              <h2>DATOS DE EGRESOS RECURRENTES POR ADMINISTRACIÓN</h2>
+            </div>
+            <div class="row" *ngIf="idPresupuesto !== 0">
+                 <app-listar-egresos-recurrentes></app-listar-egresos-recurrentes>
+            </div>
+              
+          </div>
+        </div>
+        
+        <div class="row mb-2 mt-2">
+          <div class="card">
+            <div class="row mr-1">
+              <h2>DATOS DE OTROS EGRESOS</h2>
+            </div>
+            <div class="row" *ngIf="idPresupuesto !== 0">
+                 <app-listar-egresos-otros></app-listar-egresos-otros>
+            </div>
+              
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-3">
+            <div class="col-md-3 d-flex justify-content-start">
+              <button mat-raised-button color="primary" (click)="cambiarPagina(-1)">Anterior</button>
+            </div>
+          </div>
+          <div class="col-md-6">
+
+          </div>
+          <div class="col-md-3 d-flex justify-content-end">
+            <button mat-raised-button color="primary" (click)="cambiarPagina(1)">Siguiente</button>
+          </div>
         </div>
       </div>
-      <div class="row mb-2 mt-2">
-        <div class="card">
-          <div class="row mr-1">
-            <h2>DATOS DE INGRESOS</h2>
+      <div *ngIf="paginaActual === 2" class="mb-1">
+        <div class="row mb-2 mt-2">
+          <div class="card">
+            <div class="row mr-1">
+              <h2>DATOS DE EGRESOS POR SERVICIOS DOCENTES</h2>
+            </div>
+            <div class="row" *ngIf="idPresupuesto !== 0">
+                 <app-listar-egresos-servicios-docentes></app-listar-egresos-servicios-docentes>
+            </div>   
           </div>
-          <div class="row" *ngIf="idPresupuesto !== 0">
-               <app-listar-ingresos></app-listar-ingresos>
+        </div>
+        <div class="row mb-2 mt-2">
+          <div class="card">
+            <div class="row mr-1">
+              <h2>DATOS DE EGRESOS POR OTROS SERVICIOS DOCENTES</h2>
+            </div>
+            <div class="row" *ngIf="idPresupuesto !== 0">
+                 <app-listar-otros-servicios-docente></app-listar-otros-servicios-docente>
+            </div>   
+          </div>          
+        </div>
+        <div class="row mb-2 mt-2">
+          <div class="card">
+            <div class="row mr-1">
+              <h2>DATOS DE EGRESOS POR SERVICIOS NO DOCENTES</h2>
+            </div>
+            <div class="row" *ngIf="idPresupuesto !== 0">
+                 <app-listar-egresos-servicios-no-docente></app-listar-egresos-servicios-no-docente>
+            </div>   
           </div>
-            
+        </div>
+        <div class="row mb-2 mt-2">
+          <div class="card">
+            <div class="row mr-1">
+              <h2>DATOS DE EGRESOS GENERALES</h2>
+            </div>
+            <div class="row" *ngIf="idPresupuesto !== 0">
+                 <app-listar-egresos-generales></app-listar-egresos-generales>
+            </div>
+              
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-3">
+            <div class="col-md-3 d-flex justify-content-start">
+              <button mat-raised-button color="primary" (click)="cambiarPagina(-1)">Anterior</button>
+            </div>
+          </div>
+          <div class="col-md-6">
+
+          </div>
+          <div class="col-md-3 d-flex justify-content-end">
+            <button mat-raised-button color="primary" (click)="cambiarPagina(1)">Siguiente</button>
+          </div>
         </div>
       </div>
-      <div class="row mb-2 mt-2">
-        <div class="card">
-          <div class="row mr-1">
-            <h2>DATOS DE DESCUENTOS</h2>
+      <div *ngIf="paginaActual === 4" class="mb-1">
+        <div class="row mb-2 mt-2">
+          <div class="card">
+            <div class="row mr-1">
+              <h2>RESUMEN</h2>
+            </div>
+            <div class="row main-summary-font">
+              <div class="col-3">
+               <span>Ingresos Totales</span>
+              </div>
+              <div class="col-6">
+
+               </div>
+               <div class="col-3">
+                <span>${{ingresosTotales}}</span>
+               </div>
+            </div>
+            <div class="row main-summary-font">
+              <div class="col-3">
+               <span>Egresos Totales Programa</span>
+              </div>
+              <div class="col-6">
+
+              </div>
+              <div class="col-3">
+                <span>${{egresosTotalesPrograma}}</span>
+               </div>
+            </div>  
+            <div class="row main-summary-font">
+              <div class="col-3">
+               <span>Egresos Totales Recurrentes</span>
+              </div>
+              <div class="col-6">
+
+              </div>
+              <div class="col-3">
+                <span>${{egresosTotalesRecurrentes}}</span>
+               </div>
+            </div>  
+            <div class="row main-summary-font" style="font-weight: bold;">
+              <div class="col-3">
+               <span>Balance General</span>
+              </div>
+              <div class="col-6">
+
+              </div>
+              <div class="col-3">
+                <span [ngStyle]="{'color': balanceGeneral > 0 ? 'green' : 'red'}">${{balanceGeneral | number:'1.0-2'}}</span>
+               </div>
+            </div>             
+            <div class="row">
+              <div class="col-3">
+                <span>Total Egresos Servicios Docentes</span>
+              </div>
+              <div class="col-6">
+
+              </div>
+              <div class="col-3">
+                <span>${{totalEgresosServDocentes}}</span>
+               </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                <span>Total Egresos Otros servicios docentes</span>
+              </div>
+              <div class="col-6">
+
+              </div>
+              <div class="col-3">
+                <span>${{totalEgresosOtrosServDocentes}}</span>
+               </div>
+            </div> 
+            <div class="row">
+              <div class="col-3">
+                <span>Total Egresos Servicios no docentes</span>
+              </div>
+              <div class="col-6">
+
+              </div>
+              <div class="col-3">
+                <span>${{totalEgresosServNoDocentes}}</span>
+               </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                <span>Total Egresos Generales</span>
+              </div>
+              <div class="col-6">
+
+              </div>
+              <div class="col-3">
+                <span>${{totalEgresosGenerales}}</span>
+               </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                <span>Total Egresos Viajes</span>
+              </div>
+              <div class="col-6">
+
+              </div>
+              <div class="col-3">
+                <span>${{totalEgresosViajes}}</span>
+               </div>
+            </div> 
+            <div class="row">
+              <div class="col-3">
+                <span>Total Egresos Transferencia</span>
+              </div>
+              <div class="col-6">
+
+              </div>
+              <div class="col-3">
+                <span>${{totalEgresosTransferencia}}</span>
+               </div>
+            </div> 
+            <div class="row">
+              <div class="col-3">
+                <span>Total Egresos por Inversión</span>
+              </div>
+              <div class="col-6">
+
+              </div>
+              <div class="col-3">
+                <span>${{totalEgresosInversiones}}</span>
+               </div>
+            </div> 
+            <div class="row">
+              <div class="col-3">
+                <span>Total Egresos Recurrentes</span>
+              </div>
+              <div class="col-6">
+
+              </div>
+              <div class="col-3">
+                <span>${{totalEgresosRecurrentes}}</span>
+               </div>
+            </div>  
+            <div class="row">
+              <div class="col-3">
+                <span>Total Otros Egresos</span>
+              </div>
+              <div class="col-6">
+
+              </div>
+              <div class="col-3">
+                <span>${{totalEgresosOtros}}</span>
+               </div>
+            </div>           
           </div>
-          <div class="row" *ngIf="idPresupuesto !== 0">
-               <app-listar-descuentos></app-listar-descuentos>
+        </div>
+        <div class="row mb-2 mt-2">
+          <div class="card">
+            <div class="card-body">
+              <div class="row mr-1">
+                <h4>Observaciones</h4>
+                <mat-form-field appearance="fill">
+                  <mat-label>Observaciones</mat-label>
+                  <textarea matInput formControlName="observaciones"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
           </div>
-            
+        </div>        
+        <div class="row">
+          <div class="col-md-3">
+            <div class="col-md-3 d-flex justify-content-start">
+              <button mat-raised-button color="primary" (click)="cambiarPagina(-1)">Anterior</button>
+            </div>
+          </div>
+          <div class="col-md-6">
+
+          </div>
+          <div class="col-md-3 d-flex justify-content-end">
+            <button mat-raised-button color="warn" (click)="enviarParaRevision()">Enviar para revisión</button>
+          </div>
+          <!-- <div class="col-md-3 d-flex justify-content-end">
+            <button mat-raised-button color="primary" (click)="cambiarPagina(1)">Siguiente</button>
+          </div> -->
         </div>
       </div>
-      <div class="row mb-2 mt-2">
-        <div class="card">
-          <div class="row mr-1">
-            <h2>DATOS DE EGRESOS GENERALES</h2>
-          </div>
-          <div class="row" *ngIf="idPresupuesto !== 0">
-               <app-listar-egresos-generales></app-listar-egresos-generales>
-          </div>
-            
-        </div>
-      </div>
-      <div class="row mb-2 mt-2">
-        <div class="card">
-          <div class="row mr-1">
-            <h2>DATOS DE EGRESOS POR TRANSFERENCIA</h2>
-          </div>
-          <div class="row" *ngIf="idPresupuesto !== 0">
-               <app-listar-egresos-transferencias></app-listar-egresos-transferencias>
-          </div>
-            
-        </div>
-      </div>
-      <div class="row mb-2 mt-2">
-        <div class="card">
-          <div class="row mr-1">
-            <h2>DATOS DE EGRESOS POR INVERSIÓN</h2>
-          </div>
-          <div class="row" *ngIf="idPresupuesto !== 0">
-               <app-listar-egresos-inversion></app-listar-egresos-inversion>
-          </div>
-            
-        </div>
-      </div>
-      <div class="row mb-2 mt-2">
-        <div class="card">
-          <div class="row mr-1">
-            <h2>DATOS DE EGRESOS RECURRENTES POR ADMINISTRACIÓN</h2>
-          </div>
-          <div class="row" *ngIf="idPresupuesto !== 0">
-               <app-listar-egresos-recurrentes></app-listar-egresos-recurrentes>
-          </div>
-            
-        </div>
-      </div>
-      <div class="row mb-2 mt-2">
-        <div class="card">
-          <div class="row mr-1">
-            <h2>DATOS DE EGRESOS POR VIAJES</h2>
-          </div>
-          <div class="row" *ngIf="idPresupuesto !== 0">
-               <app-listar-egresos-viajes></app-listar-egresos-viajes>
-          </div>
-            
-        </div>
-      </div>
-      <div class="row mb-2 mt-2">
-        <div class="card">
-          <div class="row mr-1">
-            <h2>DATOS DE EGRESOS POR SERVICIOS DOCENTES</h2>
-          </div>
-          <div class="row" *ngIf="idPresupuesto !== 0">
-               <app-listar-egresos-servicios-docentes></app-listar-egresos-servicios-docentes>
-          </div>   
-        </div>
-      </div>
-      <div class="row mb-2 mt-2">
-        <div class="card">
-          <div class="row mr-1">
-            <h2>DATOS DE EGRESOS POR OTROS SERVICIOS DOCENTES</h2>
-          </div>
-          <div class="row" *ngIf="idPresupuesto !== 0">
-               <app-listar-otros-servicios-docente></app-listar-otros-servicios-docente>
-          </div>   
-        </div>
-      </div>
-      <div class="row mb-2 mt-2">
-        <div class="card">
-          <div class="row mr-1">
-            <h2>DATOS DE EGRESOS POR SERVICIOS NO DOCENTE</h2>
-          </div>
-          <div class="row" *ngIf="idPresupuesto !== 0">
-               <app-listar-egresos-servicios-no-docente></app-listar-egresos-servicios-no-docente>
-          </div>
-            
-        </div>
-      </div>
-      <div class="row mb-2 mt-2">
-        <div class="card">
-          <div class="row mr-1">
-            <h2>DATOS DE OTROS EGRESOS</h2>
-          </div>
-          <div class="row" *ngIf="idPresupuesto !== 0">
-               <app-listar-egresos-otros></app-listar-egresos-otros>
-          </div>
-            
-        </div>
-      </div>
-      <div class="row">
-        <button mat-raised-button color="primary" type="submit">Guardar Presupuesto</button>
+       <div class="row">
+        <button mat-raised-button color="primary" type="submit" (click)="redirectTo()">Guardar Presupuesto</button>
       </div>    
     </form>    
 </div>

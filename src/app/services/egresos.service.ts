@@ -21,6 +21,11 @@ export class EgresosService {
     return this.http.get(url);
   }
 
+  getTotalEgresosTransferencia(idPresupuesto:number): Observable<any> {
+    const url = `${this.baseUrl}/egresoTransferencia/totalEgresosTransferencias?idPresupuesto=${idPresupuesto}`;
+    return this.http.get(url);
+  }
+
   postEgresoTransferencia(params: any) {
     const url = `${this.baseUrl}/egresoTransferencia/crear`;
     const body = new HttpParams()
@@ -50,6 +55,11 @@ export class EgresosService {
 
   getEgresosGenerales(): Observable<any> {
     const url = `${this.baseUrl}/egresoGeneral/listar`;
+    return this.http.get(url);
+  }
+
+  getTotalEgresosGenerales(idPresupuesto:number): Observable<any> {
+    const url = `${this.baseUrl}/egresoGeneral/totalEgresosGenerales?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
 
@@ -92,6 +102,11 @@ export class EgresosService {
     return this.http.get(url);
   }
 
+  getTotalEgresosOtros(idPresupuesto:number): Observable<any> {
+    const url = `${this.baseUrl}/egresoOtro/totalEgresosOtros?idPresupuesto=${idPresupuesto}`;
+    return this.http.get(url);
+  }
+
   getEgresosOtrosPorPresupuesto(idPresupuesto:number): Observable<any> {
     const url = `${this.baseUrl}/egresoOtro/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
@@ -131,6 +146,11 @@ export class EgresosService {
     return this.http.get(url);
   }
 
+  getTotalEgresosServiciosNoDocentes(idPresupuesto:number): Observable<any> {
+    const url = `${this.baseUrl}/egresoServNoDocente/totalEgresosServNoDocentes?idPresupuesto=${idPresupuesto}`;
+    return this.http.get(url);
+  }
+
   getEgresosServiciosNoDocentePorPresupuesto(idPresupuesto:number): Observable<any> {
     const url = `${this.baseUrl}/egresoServNoDocente/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
@@ -167,6 +187,11 @@ export class EgresosService {
 
   getEgresosOtrosServiciosDocente(): Observable<any> {
     const url = `${this.baseUrl}/egresoOtrosServDocente/listar`;
+    return this.http.get(url);
+  }
+
+  getTotalEgresosOtrosServiciosDocentes(idPresupuesto:number): Observable<any> {
+    const url = `${this.baseUrl}/egresoOtrosServDocente/totalEgresosOtrosServDocentes?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
 
@@ -211,6 +236,11 @@ export class EgresosService {
     return this.http.get(url);
   }
 
+  getTotalEgresosInversiones(idPresupuesto:number): Observable<any> {
+    const url = `${this.baseUrl}/egresoInversion/totalEgresosInversiones?idPresupuesto=${idPresupuesto}`;
+    return this.http.get(url);
+  }
+
   getEgresosInversionPorPresupuesto(idPresupuesto:number): Observable<any> {
     const url = `${this.baseUrl}/egresoInversion/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
@@ -244,6 +274,11 @@ export class EgresosService {
   }
   getEgresosRecurrentes(): Observable<any> {
     const url = `${this.baseUrl}/egresoRecurrenteAdm/listar`;
+    return this.http.get(url);
+  }
+
+  getTotalEgresosRecurrentes(idPresupuesto:number): Observable<any> {
+    const url = `${this.baseUrl}/egresoRecurrenteAdm/totalEgresosRecurrentesAdm?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
 
@@ -286,6 +321,11 @@ export class EgresosService {
     return this.http.get(url);
   }
 
+  getTotalEgresosViajes(idPresupuesto:number): Observable<any> {
+    const url = `${this.baseUrl}/egresoViaje/totalEgresosViajes?idPresupuesto=${idPresupuesto}`;
+    return this.http.get(url);
+  }
+
   getEgresosViajesPorPresupuesto(idPresupuesto:number): Observable<any> {
     const url = `${this.baseUrl}/egresoViaje/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
@@ -324,6 +364,11 @@ export class EgresosService {
   }
   getEgresosServiciosDocentes(): Observable<any> {
     const url = `${this.baseUrl}/egresoServDocente/listar`;
+    return this.http.get(url);
+  }
+
+  getTotalEgresosServiciosDocentes(idPresupuesto:number): Observable<any> {
+    const url = `${this.baseUrl}/egresoServDocente/totalEgresosServDocentes?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
 

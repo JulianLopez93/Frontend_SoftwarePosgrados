@@ -8,3 +8,11 @@
   color: red;
   display: block; /* Hace que el span se comporte como un bloque y respete el centrado */
 }
+
+.dialog-title {
+  font-weight: bold;
+  background-color: #003b70;
+  color: white;
+  text-align: center;
+  padding-bottom: 20px;
+}

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CohortesService } from '@app/services/cohortes.service';
 import { PresupuestosService } from '@app/services/presupuestos.service';
 import { IngresosService } from '@app/services/ingresos.service';
+import { EgresosService } from '@app/services/egresos.service';
 
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -23,17 +24,33 @@ export class CrearPresupuestoComponent {
   idPresupuestoString:any;
   numeroCohorte:any;
   programaCohorte:any;
+  departamentoCohorte:any;
+  facultadCohorte:any;
   ingresosTotales:any;
+  egresosTotalesPrograma:any;
+  egresosTotalesRecurrentes:any;  
+  balanceGeneral:any;
+
+  totalEgresosTransferencia:any;
+  totalEgresosGenerales:any;
+  totalEgresosOtros:any;
+  totalEgresosServNoDocentes:any;
+  totalEgresosOtrosServDocentes:any;
+  totalEgresosInversiones:any;
+  totalEgresosRecurrentes:any;
+  totalEgresosViajes:any;
+  totalEgresosServDocentes:any;
+  paginaActual = 1;
 
   constructor(private cohortesService: CohortesService,
     private route:ActivatedRoute,
     private presupuestosServices: PresupuestosService,
     private ingresosServices: IngresosService,
+    private egresosServices: EgresosService,
     public dialog: MatDialog,
     private router2: Router,
     private formBuilder: FormBuilder) {
       this.presupuestoForm = this.formBuilder.group({
-        idCohorte: '',
         observaciones: '',
       });
     }
@@ -42,7 +59,18 @@ export class CrearPresupuestoComponent {
     {
       this.idPresupuestoString = localStorage.getItem('idPresupuesto');
       console.log(this.idPresupuestoString);
-      localStorage.removeItem('idPresupuesto');
+      console.log(this.paginaActual);
+      
+      if(sessionStorage.getItem('paginaPresupuesto') == '' || Number(sessionStorage.getItem('paginaPresupuesto')) == 0)
+        {
+          this.paginaActual = 1;
+        }
+      else
+        {
+          this.paginaActual = Number(sessionStorage.getItem('paginaPresupuesto'));
+        }
+      console.log(this.paginaActual);
+      //localStorage.removeItem('idPresupuesto');
       this.idCohorte = parseInt(this.route.snapshot.paramMap.get('idCohorte') || '');
 
       if(this.idPresupuestoString === null)
@@ -59,6 +87,20 @@ export class CrearPresupuestoComponent {
 
     }
 
+    /*
+    ngOnDestroy()
+    {
+      //console.log('Entra al ng On destroy');
+      sessionStorage.setItem('paginaPresupuesto', '');
+    }
+    */
+
+    cambiarPagina(valor: number) {
+      this.paginaActual += valor;
+      sessionStorage.setItem('paginaPresupuesto', this.paginaActual.toString());
+      location.reload();
+    }
+
     obtenerCohortes() {
       this.cohortesService.getCohortes().subscribe(
         (result) => {
@@ -70,6 +112,106 @@ export class CrearPresupuestoComponent {
         }
       );
     }
+
+    enviarParaRevision()
+    {
+      this.presupuestosServices.sendPresupuestoForReview(this.idPresupuesto).subscribe((result: any)=>{
+        console.log(result);
+        if (result == 'OK')
+          {
+            console.log("Presupuesto guardado");
+            this.router2.navigate(['cohortes/listar-cohortes']);
+          }
+      })
+    }
+
+    redirectTo()
+    {
+      this.router2.navigate(['cohortes/listar-cohortes']);
+
+    }
+
+    obtenerTotalEgresosTransferencia()
+    {
+      console.log(this.idPresupuesto);
+      this.egresosServices.getTotalEgresosTransferencia(this.idPresupuesto).subscribe((result:any) =>{
+        console.log(result);
+        this.totalEgresosTransferencia = result;
+      }) 
+    }
+
+    obtenerTotalEgresosGenerales()
+    {
+      console.log(this.idPresupuesto);
+      this.egresosServices.getTotalEgresosGenerales(this.idPresupuesto).subscribe((result:any) =>{
+        console.log(result);
+        this.totalEgresosGenerales = result;
+      }) 
+    }
+
+    obtenerTotalEgresosOtros()
+    {
+      console.log(this.idPresupuesto);
+      this.egresosServices.getTotalEgresosOtros(this.idPresupuesto).subscribe((result:any) =>{
+        console.log(result);
+        this.totalEgresosOtros = result;
+      }) 
+    }
+
+    obtenerTotalEgresosServiciosNoDocentes()
+    {
+      console.log(this.idPresupuesto);
+      this.egresosServices.getTotalEgresosServiciosNoDocentes(this.idPresupuesto).subscribe((result:any) =>{
+        console.log(result);
+        this.totalEgresosServNoDocentes = result;
+      }) 
+    }
+
+    obtenerTotalEgresosOtrosServiciosDocentes()
+    {
+      console.log(this.idPresupuesto);
+      this.egresosServices.getTotalEgresosOtrosServiciosDocentes(this.idPresupuesto).subscribe((result:any) =>{
+        console.log(result);
+        this.totalEgresosOtrosServDocentes = result;
+      }) 
+    }
+
+    obtenerTotalEgresosInversiones()
+    {
+      console.log(this.idPresupuesto);
+      this.egresosServices.getTotalEgresosInversiones(this.idPresupuesto).subscribe((result:any) =>{
+        console.log(result);
+        this.totalEgresosInversiones = result;
+      }) 
+    }
+
+    obtenerTotalEgresosRecurrentes()
+    {
+      console.log(this.idPresupuesto);
+      this.egresosServices.getTotalEgresosRecurrentes(this.idPresupuesto).subscribe((result:any) =>{
+        console.log(result);
+        this.totalEgresosRecurrentes = result;
+      }) 
+    }
+
+    obtenerTotalEgresosViajes()
+    {
+      console.log(this.idPresupuesto);
+      this.egresosServices.getTotalEgresosViajes(this.idPresupuesto).subscribe((result:any) =>{
+        console.log(result);
+        this.totalEgresosViajes = result;
+      }) 
+    }
+
+    obtenerTotalEgresosServiciosDocentes()
+    {
+      console.log(this.idPresupuesto);
+      this.egresosServices.getTotalEgresosServiciosDocentes(this.idPresupuesto).subscribe((result:any) =>{
+        console.log(result);
+        this.totalEgresosServDocentes = result;
+      }) 
+    }
+
 
     crearPresupuesto(idCohorte:any)
   {
@@ -110,12 +252,32 @@ export class CrearPresupuestoComponent {
           this.idPresupuesto = result.id;
           this.numeroCohorte = result.cohorte.numero;
           this.programaCohorte = result.cohorte.programa.nombre;
+          this.departamentoCohorte = result.cohorte.programa.departamento.nombre;
+          this.facultadCohorte = result.cohorte.programa.departamento.facultad.nombre;
           this.ingresosTotales = result.ingresosTotales;
+          this.egresosTotalesPrograma = result.egresosProgramaTotales;
+          this.egresosTotalesRecurrentes = result
+          .egresosRecurrentesUniversidadTotales;
+          this.balanceGeneral = result.balanceGeneral;
+
+          this.obtenerTotalEgresosTransferencia();
+          this.obtenerTotalEgresosGenerales();
+          this.obtenerTotalEgresosInversiones();
+          this.obtenerTotalEgresosOtros();
+          this.obtenerTotalEgresosOtrosServiciosDocentes();
+          this.obtenerTotalEgresosRecurrentes();
+          this.obtenerTotalEgresosServiciosNoDocentes();
+          this.obtenerTotalEgresosViajes();
+          this.obtenerTotalEgresosServiciosDocentes();
+
 
           console.log(this.idPresupuesto);
           console.log(this.numeroCohorte);
           console.log(this.programaCohorte);
           console.log(this.ingresosTotales);
+          console.log(this.egresosTotalesPrograma);
+          console.log(this.egresosTotalesRecurrentes);
+          console.log(this.balanceGeneral);
 
           console.log(result.id);
           localStorage.setItem('idPresupuesto', result.id);

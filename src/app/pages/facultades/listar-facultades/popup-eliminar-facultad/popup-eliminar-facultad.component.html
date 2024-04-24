@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>Eliminar Facultad</h1>
-<div mat-dialog-content>
+<h1 mat-dialog-title class="dialog-title">Eliminar Facultad</h1>
+<div mat-dialog-content style="font-weight: bold; margin-top: 20px;">
   ¿Estás seguro de que quieres eliminar esta facultad?
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No</button>
-  <button mat-button [mat-dialog-close]="data.id" cdkFocusInitial>Sí</button>
+<div mat-dialog-actions style="display: flex; justify-content: space-between;">
+  <button mat-button style="background-color: #0a7c0a; color: white;" (click)="onNoClick()">No</button>
+  <button mat-button style="background-color: #f02032; color: white;" [mat-dialog-close]="data.id" cdkFocusInitial>Sí</button>
 </div>

@@ -25,6 +25,13 @@ export class PresupuestosService {
     return this.http.post(url, body.toString(), { headers, responseType: 'text' });
   }
 
+  sendPresupuestoForReview(id:number)
+  {
+    const url = `${this.baseUrl}/enviarParaRevision?id=${id}`;
+    return this.http.put(url, id.toString());
+
+  }
+
   getPresupuestoPorCohorte(idCohorte:number)
   {
     const url = `${this.baseUrl}/buscarPorCohorte?idCohorte=${idCohorte}`;

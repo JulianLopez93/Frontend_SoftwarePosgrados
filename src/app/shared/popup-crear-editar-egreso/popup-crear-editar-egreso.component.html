@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{data.isEdit ? 'Editar' : 'Crear'}} {{data.modulo}}</h1>
+<h1 mat-dialog-title class="dialog-title">{{data.isEdit ? 'Editar' : 'Crear'}} {{data.modulo}}</h1>
 <div mat-dialog-content>
   <mat-form-field *ngIf="data.modulo === 'egreso transferencia' 
   || data.modulo === 'egreso otros servicios docente'
@@ -128,7 +128,7 @@
 <div *ngIf="showError" class="error-message">
   <span>Por favor, completa todos los campos requeridos.</span>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button (click)="onAccept()" cdkFocusInitial>{{data.isEdit ? 'Guardar' : 'Aceptar'}}</button>
+<div mat-dialog-actions style="display: flex; justify-content: space-between;">
+  <button mat-button style="background-color: #f02032; color: white;" (click)="onNoClick()">Cancelar</button>
+  <button mat-button style="background-color: #0a7c0a; color: white;" (click)="onAccept()" cdkFocusInitial>{{data.isEdit ? 'Guardar' : 'Aceptar'}}</button>
 </div>

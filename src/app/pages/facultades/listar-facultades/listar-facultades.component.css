@@ -14,3 +14,8 @@
 .create-button {
   margin-top: 20px;  /* Ajusta esto al margen que desees */
 }
+
+.button-primary {
+  background-color: #003b70;
+  color: white;
+}

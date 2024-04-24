@@ -34,6 +34,7 @@ export class ListarCohortesComponent {
               public dialog: MatDialog) {}
 
   ngOnInit() {
+    sessionStorage.removeItem('paginaPresupuesto');
     this.obtenerCohortes();
     this.obtenerProgramas();
     

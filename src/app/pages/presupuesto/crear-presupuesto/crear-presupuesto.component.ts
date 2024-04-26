@@ -125,6 +125,14 @@ export class CrearPresupuestoComponent {
       })
     }
 
+    /*
+    guardarBorrador()
+    {
+      this.observaciones = this.presupuestoForm.value
+      this.presupuestosServices.editPresupuesto(this.idPresupuesto,)
+    }
+    */
+
     redirectTo()
     {
       this.router2.navigate(['cohortes/listar-cohortes']);

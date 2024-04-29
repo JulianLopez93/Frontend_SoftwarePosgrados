@@ -1,7 +1,8 @@
 <h1 mat-dialog-title class="dialog-title">{{data.isEdit ? 'Editar' : 'Crear'}} {{data.modulo}}</h1>
 <div mat-dialog-content>
   <mat-form-field *ngIf="data.modulo !== 'ingreso' && data.modulo !== 'descuento'">
-    <mat-label>Nombre del {{data.modulo}}</mat-label>
+    <mat-label *ngIf="data.modulo != 'cohorte'">Nombre del {{data.modulo}}</mat-label>
+    <mat-label *ngIf="data.modulo == 'cohorte'">Número de {{data.modulo}}</mat-label>
     <input *ngIf="data.modulo != 'cohorte'" matInput [(ngModel)]="data.nombre">
     <input *ngIf="data.modulo == 'cohorte'" matInput [(ngModel)]="data.numero">
   </mat-form-field>

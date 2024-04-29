@@ -43,14 +43,11 @@ export class PresupuestosService {
     return this.http.delete(url, { responseType: 'text' });
   }
 
-  editPresupuesto(numero: string, fecha: string, idCohorte: string,  idPrograma:number) {
+  editPresupuesto(id:number, observaciones:string) {
     const url = `${this.baseUrl}/actualizar`;
-    const fechaFormateada = new Date(fecha).toISOString().split('T')[0];
     const params = new HttpParams()
-    .set('numero', numero)
-    .set('fecha', fechaFormateada)
-    .set('idCohorte', idCohorte.toString())     
-    .set('idPrograma', idPrograma.toString());
+    .set('id', id)
+    .set('observaciones', observaciones)
   return this.http.put(url, params.toString(), { params: params, responseType: 'text' });
   }
 }

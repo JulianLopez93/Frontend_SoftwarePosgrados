@@ -117,23 +117,378 @@ export class CrearPresupuestoComponent {
       .subscribe((result: any) => {
         console.log(result);
         if (result == 'OK') {
-          console.log("Presupuesto guardado");
+          console.log('Presupuesto guardado');
           this.router2.navigate(['cohortes/listar-cohortes']);
         }
-      })
+      });
+  }
+
+  imprimirReporteEgresos() {
+    this.presupuestosServices
+      .getPresupuestoPorCohorte(this.idCohorte)
+      .subscribe((result: any) => {
+        // Define el encabezado de la tabla
+        let encabezadoIngresos = ['Concepto', 'Valor'];
+        let encabezadoDescuentos = [
+          'Cantidad estudiantes',
+          'Valor',
+          'Número periodos',
+          'Tipo descuento',
+          'Total descuento',
+        ];
+        let encabezadoServDocentes = [
+          'Nombre materia',
+          'Es docente planta',
+          'Nombre docente',
+          'Escalafón',
+          'Título',
+          'Horas teóricas',
+          'Horas prácticas',
+          'Valor hora profesor',
+          'Tipo compensación',
+          'Pago total',
+        ];
+        let encabezadoOtrosServDocentes = [
+          'Servicio',
+          'Descripción',
+          'Número horas',
+          'Valor total',
+          'Tipo costo',
+        ];
+        let encabezadoServNoDocentes = [
+          'Servicio',
+          'Valor Unitario',
+          'Cantidad',
+          'Tipo costo',
+          'Valor total',
+        ];
+        let encabezadoGenerales = [
+          'Concepto',
+          'Valor unitario',
+          'Cantidad',
+          'Tipo costo',
+          'Valor total',
+        ];
+        let encabezadoViajes = [
+          'Descripción',
+          'Número personas',
+          'Apoyo desplazamiento',
+          'Número viajes por persona',
+          'Valor transporte',
+          'Valor total',
+        ];
+        let encabezadoTransferencia = [
+          'Descripción',
+          'Porcentaje',
+          'Tipo transferencia',
+          'Valor total',
+        ];
+        let encabezadoInversion = ['Concepto', 'Valor', 'Tipo inversión'];
+        let encabezadoRecurrentesAdm = [
+          'Unidad',
+          'Cargo',
+          'Valor hora',
+          'Número horas',
+          'Valor total',
+        ];
+        let encabezadoOtros = [
+          'Concepto',
+          'Valor unitario',
+          'Cantidad',
+          'Tipo costo',
+          'Valor total',
+        ];
+
+        // Recopila los datos de todos los egresos
+        let datosTodosEgresos = [
+          {
+            encabezado: encabezadoIngresos,
+            cuerpo: this.formatIngresos(result.ingresos),
+            titulo: 'Ingresos',
+            total: this.ingresosTotales,
+          },
+          {
+            encabezado: encabezadoDescuentos,
+            cuerpo: this.formatEgresosDescuentos(result.egresosDescuentos),
+            titulo: 'Egresos de descuentos',
+            total: 0,
+          },
+          {
+            encabezado: encabezadoServDocentes,
+            cuerpo: this.formatEgresosServDocentes(result.egresosServDocentes),
+            titulo: 'Egresos de servicios Docentes',
+            total: this.totalEgresosServDocentes,
+          },
+          {
+            encabezado: encabezadoOtrosServDocentes,
+            cuerpo: this.formatEgresosOtrosServDocentes(
+              result.egresosOtrosServDocentes
+            ),
+            titulo: 'Egresos de otros servicios docentes',
+            total: this.totalEgresosOtrosServDocentes,
+          },
+          {
+            encabezado: encabezadoServNoDocentes,
+            cuerpo: this.formatEgresosServNoDocentes(
+              result.egresosServNoDocentes
+            ),
+            titulo: 'Egresos de servicios no docentes',
+            total: this.totalEgresosServNoDocentes,
+          },
+          {
+            encabezado: encabezadoGenerales,
+            cuerpo: this.formatEgresosGenerales(result.egresosGenerales),
+            titulo: 'Egresos generales',
+            total: this.totalEgresosGenerales,
+          },
+          {
+            encabezado: encabezadoViajes,
+            cuerpo: this.formatEgresosViajes(result.egresosViaje),
+            titulo: 'Egresos de viajes',
+            total: this.totalEgresosViajes,
+          },
+          {
+            encabezado: encabezadoTransferencia,
+            cuerpo: this.formatEgresosTransferencias(
+              result.egresosTransferencias
+            ),
+            titulo: 'Egresos de transferencias',
+            total: this.totalEgresosTransferencia,
+          },
+          {
+            encabezado: encabezadoInversion,
+            cuerpo: this.formatEgresosInversiones(result.egresosInversiones),
+            titulo: 'Egresos de inversiones',
+            total: this.totalEgresosInversiones,
+          },
+          {
+            encabezado: encabezadoRecurrentesAdm,
+            cuerpo: this.formatEgresosRecurrentesAdm(
+              result.egresosRecurrentesAdm
+            ),
+            titulo: 'Egresos recurrentes administrativos',
+            total: this.totalEgresosRecurrentes,
+          },
+          {
+            encabezado: encabezadoOtros,
+            cuerpo: this.formatEgresosOtros(result.egresosOtros),
+            titulo: 'Otros egresos',
+            total: this.totalEgresosOtros,
+          },
+        ];
+
+        // Llama al método imprimir del servicio de impresión
+        this.impresionService.imprimir(
+          datosTodosEgresos.filter((egreso) => egreso.cuerpo.length > 0),
+          result,
+          true
+        );
+      });
+  }
+
+  formatIngresos(ingresos: any[]) {
+    let datosIngresos = [];
+    for (let ingreso of ingresos) {
+      let filaIngreso = [ingreso.concepto, ingreso.valor];
+      datosIngresos.push(filaIngreso);
+    }
+    datosIngresos.push(['', '']);
+    datosIngresos.push(['Total', this.ingresosTotales]);
+    return datosIngresos;
+  }
+
+
+  formatEgresosGenerales(egresosGenerales: any[]) {
+    let datosEgresos = [];
+    for (let egreso of egresosGenerales) {
+      let filaEgreso = [
+        egreso.concepto,
+        egreso.valorUnitario,
+        egreso.cantidad,
+        egreso.tipoCosto.nombreTipo,
+        egreso.valorTotal,
+      ];
+      datosEgresos.push(filaEgreso);
+    }
+    datosEgresos.push(['', '', '', '', '']);
+    datosEgresos.push(['Total', '', '', '', this.totalEgresosGenerales]);
+    return datosEgresos;
+  }
+
+  formatEgresosDescuentos(egresosDescuentos: any[]) {
+    let datosEgresos = [];
+    for (let egreso of egresosDescuentos) {
+      let filaEgreso = [
+        egreso.numEstudiantes,
+        egreso.valor,
+        egreso.numPeriodos,
+        egreso.tipoDescuento.nombreTipo,
+        egreso.totalDescuento,
+      ];
+      datosEgresos.push(filaEgreso);
+    }
+    datosEgresos.push(['', '', '', '', '']);
+    datosEgresos.push(['Total', '', '', '', 0]);
+    return datosEgresos;
+  }
+
+  formatEgresosServDocentes(egresosServDocentes: any[]) {
+    let datosEgresos = [];
+    for (let egreso of egresosServDocentes) {
+      let filaEgreso = [
+        egreso.nombreMateria,
+        egreso.esDocentePlanta,
+        egreso.nombreDocente,
+        egreso.escalafon,
+        egreso.titulo,
+        egreso.horasTeoricasMat,
+        egreso.horasPracticasMat,
+        egreso.valorHoraProfesor,
+        egreso.tipoCompensacion.nombreTipo,
+        egreso.totalPagoProfesor,
+      ];
+      datosEgresos.push(filaEgreso);
+    }
+    datosEgresos.push(['', '', '', '', '', '', '', '', '', '']);
+    datosEgresos.push(['Total', '', '', '', '', '', '', '', '', this.totalEgresosServDocentes]);
+    return datosEgresos;
+  }
+
+  formatEgresosOtrosServDocentes(egresosOtrosServDocentes: any[]) {
+    let datosEgresos = [];
+    for (let egreso of egresosOtrosServDocentes) {
+      let filaEgreso = [
+        egreso.servicio,
+        egreso.descripcion,
+        egreso.numHoras,
+        egreso.valorTotal,
+        egreso.tipoCosto.nombreTipo,
+      ];
+      datosEgresos.push(filaEgreso);
+    }
+    datosEgresos.push(['', '', '', '', '']);
+    datosEgresos.push(['Total', '', '', '', this.totalEgresosOtrosServDocentes]);
+    return datosEgresos;
+  }
+
+  formatEgresosServNoDocentes(egresosServNoDocentes: any[]) {
+    let datosEgresos = [];
+
+    for (let egreso of egresosServNoDocentes) {
+      let filaEgreso = [
+        egreso.servicio,
+        egreso.valorUnitario,
+        egreso.cantidad,
+        egreso.tipoCosto.nombreTipo,
+        egreso.valorTotal,
+      ];
+      datosEgresos.push(filaEgreso);
+    }
+    datosEgresos.push(['', '', '', '', '']);
+    datosEgresos.push(['Total', '', '', '', this.totalEgresosServNoDocentes]);
+    return datosEgresos;
+  }
+
+  formatEgresosViajes(egresosViajes: any[]) {
+    let datosEgresos = [];
+
+    for (let egreso of egresosViajes) {
+      let filaEgreso = [
+        egreso.descripcion,
+        egreso.numPersonas,
+        egreso.apoyoDesplazamiento,
+        egreso.numViajesPersona,
+        egreso.valorTransporte,
+        egreso.valorTotal,
+      ];
+      datosEgresos.push(filaEgreso);
+    }
+    datosEgresos.push(['', '', '', '', '', '']);
+    datosEgresos.push(['Total', '', '', '', '', this.totalEgresosViajes]);
+    return datosEgresos;
+  }
+
+  formatEgresosTransferencias(egresosTransferencias: any[]) {
+    let datosEgresos = [];
+
+    for (let egreso of egresosTransferencias) {
+      let filaEgreso = [
+        egreso.descripcion,
+        egreso.porcentaje,
+        egreso.tipoTransferencia.nombreTipo,
+        egreso.valorTotal,
+      ];
+      datosEgresos.push(filaEgreso);
+    }
+    datosEgresos.push(['', '', '', '']);
+    datosEgresos.push(['Total', '', '', this.totalEgresosTransferencia]);
+    return datosEgresos;
+  }
+
+  formatEgresosInversiones(egresosInversiones: any[]) {
+    let datosEgresos = [];
+
+    for (let egreso of egresosInversiones) {
+      let filaEgreso = [
+        egreso.concepto,
+        egreso.valor,
+        egreso.tipoInversion.nombreTipo,
+      ];
+      datosEgresos.push(filaEgreso);
+    }
+    datosEgresos.push(['', '', '']);
+    datosEgresos.push(['Total', this.totalEgresosInversiones]);
+    return datosEgresos;
+  }
+
+  formatEgresosRecurrentesAdm(egresosRecurrentesAdm: any[]) {
+    let datosEgresos = [];
+
+    for (let egreso of egresosRecurrentesAdm) {
+      let filaEgreso = [
+        egreso.unidad,
+        egreso.cargo,
+        egreso.valorHora,
+        egreso.numHoras,
+        egreso.valorTotal,
+      ];
+      datosEgresos.push(filaEgreso);
+    }
+    datosEgresos.push(['', '', '', '', ''])
+    datosEgresos.push(['Total', '', '', '', this.totalEgresosRecurrentes]);
+    return datosEgresos;
+  }
+
+  formatEgresosOtros(egresosOtros: any[]) {
+    let datosEgresos = [];
+
+    for (let egreso of egresosOtros) {
+      let filaEgreso = [
+        egreso.concepto,
+        egreso.valorUnitario,
+        egreso.cantidad,
+        egreso.tipoCosto.nombreTipo,
+        egreso.valorTotal,
+      ];
+      datosEgresos.push(filaEgreso);
+    }
+    datosEgresos.push(['', '', '', '', '']);
+    datosEgresos.push(['Total', '', '', '', this.totalEgresosOtros]);
+    return datosEgresos;
   }
 
   redirectTo() {
     this.router2.navigate(['cohortes/listar-cohortes']);
-
   }
 
   obtenerTotalEgresosTransferencia() {
     console.log(this.idPresupuesto);
-    this.egresosServices.getTotalEgresosTransferencia(this.idPresupuesto).subscribe((result: any) => {
-      console.log(result);
-      this.totalEgresosTransferencia = result;
-    });
+    this.egresosServices
+      .getTotalEgresosTransferencia(this.idPresupuesto)
+      .subscribe((result: any) => {
+        console.log(result);
+        this.totalEgresosTransferencia = result;
+      });
   }
 
   obtenerTotalEgresosGenerales() {

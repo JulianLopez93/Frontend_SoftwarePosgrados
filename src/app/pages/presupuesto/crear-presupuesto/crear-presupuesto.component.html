@@ -37,7 +37,7 @@
                   <textarea matInput formControlName="observaciones"></textarea>
                 </mat-form-field>
               </div>     -->
-            </div>   
+            </div>
           </div>
         </div>
         <div class="row mb-2 mt-2">
@@ -47,7 +47,7 @@
             </div>
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-ingresos></app-listar-ingresos>
-            </div>      
+            </div>
           </div>
         </div>
         <div class="row mb-2 mt-2">
@@ -57,7 +57,7 @@
             </div>
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-descuentos></app-listar-descuentos>
-            </div>    
+            </div>
           </div>
         </div>
         <div class="row">
@@ -68,7 +68,7 @@
             <button mat-raised-button style="background-color: #003b70; color: white;" (click)="cambiarPagina(1)">Siguiente</button>
           </div>
         </div>
-        
+
       </div>
       <div *ngIf="paginaActual === 3" class="mb-1">
         <div class="row mb-2 mt-2">
@@ -79,7 +79,7 @@
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-egresos-viajes></app-listar-egresos-viajes>
             </div>
-              
+
           </div>
         </div>
         <div class="row mb-2 mt-2">
@@ -90,7 +90,7 @@
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-egresos-transferencias></app-listar-egresos-transferencias>
             </div>
-              
+
           </div>
         </div>
         <div class="row mb-2 mt-2">
@@ -101,7 +101,7 @@
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-egresos-inversion></app-listar-egresos-inversion>
             </div>
-              
+
           </div>
         </div>
         <div class="row mb-2 mt-2">
@@ -112,10 +112,10 @@
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-egresos-recurrentes></app-listar-egresos-recurrentes>
             </div>
-              
+
           </div>
         </div>
-        
+
         <div class="row mb-2 mt-2">
           <div class="card">
             <div class="row mr-1">
@@ -124,10 +124,10 @@
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-egresos-otros></app-listar-egresos-otros>
             </div>
-              
+
           </div>
         </div>
-        
+
         <div class="row">
           <div class="col-md-3">
             <div class="col-md-3 d-flex justify-content-start">
@@ -150,7 +150,7 @@
             </div>
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-egresos-servicios-docentes></app-listar-egresos-servicios-docentes>
-            </div>   
+            </div>
           </div>
         </div>
         <div class="row mb-2 mt-2">
@@ -160,8 +160,8 @@
             </div>
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-otros-servicios-docente></app-listar-otros-servicios-docente>
-            </div>   
-          </div>          
+            </div>
+          </div>
         </div>
         <div class="row mb-2 mt-2">
           <div class="card">
@@ -170,7 +170,7 @@
             </div>
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-egresos-servicios-no-docente></app-listar-egresos-servicios-no-docente>
-            </div>   
+            </div>
           </div>
         </div>
         <div class="row mb-2 mt-2">
@@ -181,10 +181,10 @@
             <div class="row" *ngIf="idPresupuesto !== 0">
                  <app-listar-egresos-generales></app-listar-egresos-generales>
             </div>
-              
+
           </div>
         </div>
-        
+
         <div class="row">
           <div class="col-md-3">
             <div class="col-md-3 d-flex justify-content-start">
@@ -226,7 +226,7 @@
               <div class="col-3">
                 <span>${{egresosTotalesPrograma}}</span>
                </div>
-            </div>  
+            </div>
             <div class="row main-summary-font">
               <div class="col-3">
                <span>Egresos Totales Recurrentes</span>
@@ -237,7 +237,7 @@
               <div class="col-3">
                 <span>${{egresosTotalesRecurrentes}}</span>
                </div>
-            </div>  
+            </div>
             <div class="row main-summary-font" style="font-weight: bold;">
               <div class="col-3">
                <span>Balance General</span>
@@ -248,7 +248,7 @@
               <div class="col-3">
                 <span [ngStyle]="{'color': balanceGeneral > 0 ? 'green' : 'red'}">${{balanceGeneral | number:'1.0-2'}}</span>
                </div>
-            </div>             
+            </div>
             <div class="row">
               <div class="col-3">
                 <span>Total Egresos Servicios Docentes</span>
@@ -270,7 +270,7 @@
               <div class="col-3">
                 <span>${{totalEgresosOtrosServDocentes}}</span>
                </div>
-            </div> 
+            </div>
             <div class="row">
               <div class="col-3">
                 <span>Total Egresos Servicios no docentes</span>
@@ -303,7 +303,7 @@
               <div class="col-3">
                 <span>${{totalEgresosViajes}}</span>
                </div>
-            </div> 
+            </div>
             <div class="row">
               <div class="col-3">
                 <span>Total Egresos Transferencia</span>
@@ -314,7 +314,7 @@
               <div class="col-3">
                 <span>${{totalEgresosTransferencia}}</span>
                </div>
-            </div> 
+            </div>
             <div class="row">
               <div class="col-3">
                 <span>Total Egresos por Inversión</span>
@@ -325,7 +325,7 @@
               <div class="col-3">
                 <span>${{totalEgresosInversiones}}</span>
                </div>
-            </div> 
+            </div>
             <div class="row">
               <div class="col-3">
                 <span>Total Egresos Recurrentes</span>
@@ -336,7 +336,7 @@
               <div class="col-3">
                 <span>${{totalEgresosRecurrentes}}</span>
                </div>
-            </div>  
+            </div>
             <div class="row">
               <div class="col-3">
                 <span>Total Otros Egresos</span>
@@ -347,7 +347,7 @@
               <div class="col-3">
                 <span>${{totalEgresosOtros}}</span>
                </div>
-            </div>           
+            </div>
           </div>
         </div>
         <div class="row mb-2 mt-2">
@@ -362,7 +362,7 @@
               </div>
             </div>
           </div>
-        </div>        
+        </div>
         <div class="row">
           <div class="col-md-3">
             <div class="col-md-3 d-flex justify-content-start">
@@ -373,7 +373,7 @@
 
           </div>
           <div class="col-md-3 d-flex justify-content-end">
-            <button mat-raised-button color="warn" (click)="enviarParaRevision()">Enviar para revisión</button>
+            <button mat-raised-button color="warn" (click)="enviarParaRevision(); imprimirReporteEgresos()">Enviar para revisión</button>
           </div>
           <!-- <div class="col-md-3 d-flex justify-content-end">
             <button mat-raised-button color="primary" (click)="cambiarPagina(1)">Siguiente</button>
@@ -382,6 +382,6 @@
       </div>
        <div class="row">
         <button mat-raised-button style="background-color: orange;" type="submit" (click)="redirectTo()">Guardar Presupuesto</button>
-      </div>    
-    </form>    
+      </div>
+    </form>
 </div>

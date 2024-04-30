@@ -61,7 +61,7 @@ export class CrearPresupuestoComponent {
   }
 
   ngOnInit() {
-    this.idPresupuestoString = localStorage.getItem('idPresupuesto');
+    this.idPresupuestoString = sessionStorage.getItem('idPresupuesto');
     console.log(this.idPresupuestoString);
     console.log(this.paginaActual);
 
@@ -655,7 +655,7 @@ export class CrearPresupuestoComponent {
 
 
         console.log(result.id);
-        localStorage.setItem('idPresupuesto', result.id);
+        sessionStorage.setItem('idPresupuesto', result.id);
 
         console.log(this.idPresupuesto);
       },

@@ -62,7 +62,7 @@ export class ListarCohortesComponent {
           console.log("Entra condicional");
           this.presupuesto = result;
           console.log(this.presupuesto);
-          localStorage.setItem('idPresupuesto', this.presupuesto.id);
+          sessionStorage.setItem('idPresupuesto', this.presupuesto.id);
           this.route.navigate(['presupuestos/crear-presupuesto',cohorte.id.toString()]);
 
         }

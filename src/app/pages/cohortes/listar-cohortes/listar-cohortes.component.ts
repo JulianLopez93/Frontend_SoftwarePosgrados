@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 })
 export class ListarCohortesComponent {
   programas: any[] = [];
-  displayedColumns: string[] = ['numero','fecha','programa','departamento', 'facultad','acciones'];
+  displayedColumns: string[] = ['numero','fecha','programa','facultad','acciones'];
   listadoProgramas:any[] = [];
   form!: FormGroup;
   nombre:string='';
@@ -81,12 +81,41 @@ export class ListarCohortesComponent {
         cohorte.numero.toLowerCase().includes(this.searchText.toLowerCase()) ||
         cohorte.fecha.toLowerCase().includes(this.searchText.toLowerCase()) ||
         cohorte.programa.nombre.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        cohorte.programa.departamento.nombre.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        cohorte.programa.departamento.facultad.nombre.toLowerCase().includes(this.searchText.toLowerCase())
+        cohorte.programa.departamento.nombre.toLowerCase().includes(this.searchText.toLowerCase())
       );
     } else {
       this.filteredCohortes = this.cohortes;
     }
+  }
+  
+  crearCohorte(numero:string, fecha:any, programa:any)
+  {
+    try
+    {
+      console.log(numero);
+      console.log(fecha)
+      console.log(programa);
+      const params =
+      {
+        numero: numero,
+        fecha: fecha,
+        idPrograma: programa
+      }
+      console.log(params);
+      this.cohortesService.postCohortes(params).subscribe((result:any) => {
+        console.log(result);
+        if (result = "OK")
+        {
+          console.log("Cohorte guardada");
+          this.obtenerCohortes();
+        }
+
+      });
+    }
+    catch(error)
+      {
+
+      }
   }
 
   editarCohorte(idCohorte:string, numero:string, fecha:any, idPrograma:any)
@@ -143,35 +172,7 @@ export class ListarCohortesComponent {
       }
 
   }
-  crearCohorte(numero:string, fecha:any, programa:any)
-  {
-    try
-    {
-      console.log(numero);
-      console.log(fecha)
-      console.log(programa);
-      const params =
-      {
-        numero: numero,
-        fecha: fecha,
-        idPrograma: programa
-      }
-      console.log(params);
-      this.cohortesService.postCohortes(params).subscribe((result:any) => {
-        console.log(result);
-        if (result = "OK")
-        {
-          console.log("Cohorte guardada");
-          this.obtenerCohortes();
-        }
-
-      });
-    }
-    catch(error)
-      {
-
-      }
-  }
+  
 
   openBudgetForm(idCohorte:number)
   {

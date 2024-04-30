@@ -30,7 +30,7 @@ export class PopupCrearEditarComponent {
           this.listaPerteneciente = data.listaFacultades;
           break;
         case 'programa':
-          this.listaPerteneciente = data.listaDepartamentos;
+          this.listaPerteneciente = data.listaFacultades;
           break;
         case 'cohorte':
           this.listaPerteneciente = data.listaProgramas;

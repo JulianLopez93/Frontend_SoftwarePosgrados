@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { DepartamentosService } from '@app/services/departamentos.service';
+import { FacultadesServicioService } from '@app/services/facultades-servicio.service';
 import { ProgramasService } from '@app/services/programas.service';
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
 import { PopupCrearEditarComponent } from '@app/shared/popup-crear-editar/popup-crear-editar.component';
@@ -13,8 +13,8 @@ import { PopupCrearEditarComponent } from '@app/shared/popup-crear-editar/popup-
 })
 export class ListarProgramasComponent {
   departamentos: any[] = [];
-  displayedColumns: string[] = ['nombre','departamento','facultad','acciones'];
-  listadoDepartamentos:any[] = [];
+  displayedColumns: string[] = ['nombre','facultad','acciones'];
+  listadoFacultades:any[] = [];
 
   form!: FormGroup;
   nombre:string='';
@@ -24,12 +24,12 @@ export class ListarProgramasComponent {
   filteredProgramas: any[] = [];
 
   constructor(private programasService: ProgramasService,
-    private departamentosService: DepartamentosService,
+    private facultadesService: FacultadesServicioService,
               public dialog: MatDialog) {}
 
   ngOnInit() {
     this.obtenerProgramas();
-    this.obtenerDepartamentos();
+    this.obtenerFacultades();
   }
 
 
@@ -46,6 +46,18 @@ export class ListarProgramasComponent {
     );
   }
 
+  obtenerFacultades() {
+    this.facultadesService.getFacultades().subscribe(
+      (result) => {
+        this.listadoFacultades = result;
+
+      },
+      (error) => {
+        console.error('Error al obtener los departamentos:', error);
+      }
+    );
+  }
+
   applyFilter() {
     if (this.searchText) {
       this.filteredProgramas = this.programas.filter(programa =>
@@ -58,20 +70,48 @@ export class ListarProgramasComponent {
     }
   }
 
-  editarPrograma(idPrograma:string, nombre:string, idDepartamento:number)
+  crearPrograma(nombre:string, facultad:any)
+  {
+    try
+    {
+      console.log(nombre);
+      console.log(facultad);
+      const params =
+      {
+        nombre: nombre,
+        idFacultad: facultad
+      }
+      console.log(params);
+      this.programasService.postPrograma(params).subscribe((result:any) => {
+        console.log(result);
+        if (result = "OK")
+        {
+          console.log("Programa guardado");
+          this.obtenerProgramas();
+        }
+
+      });
+    }
+    catch(error)
+      {
+
+      }
+  }
+
+  editarPrograma(idPrograma:string, nombre:string, idFacultad:number)
   {
     try
     {
       console.log(idPrograma);
-      console.log(idDepartamento)
+      console.log(idFacultad)
       console.log(nombre);
       const params =
       {
         nombre: nombre,
-        idDepartamento: idDepartamento
+        idFacultad: idFacultad
       }
       console.log(params);
-      this.programasService.editPrograma(nombre, idPrograma, idDepartamento).subscribe((result:any) => {
+      this.programasService.editPrograma(nombre, idPrograma, idFacultad).subscribe((result:any) => {
         console.log(result);
         if (result = "OK")
         {
@@ -87,6 +127,7 @@ export class ListarProgramasComponent {
       }
 
   }
+
   eliminarPrograma(idPrograma:string)
   {
     try
@@ -108,33 +149,7 @@ export class ListarProgramasComponent {
       }
 
   }
-  crearPrograma(nombre:string, departamento:any)
-  {
-    try
-    {
-      console.log(nombre);
-      console.log(departamento);
-      const params =
-      {
-        nombre: nombre,
-        idDepartamento: departamento
-      }
-      console.log(params);
-      this.programasService.postPrograma(params).subscribe((result:any) => {
-        console.log(result);
-        if (result = "OK")
-        {
-          console.log("Programa guardado");
-          this.obtenerProgramas();
-        }
-
-      });
-    }
-    catch(error)
-      {
-
-      }
-  }
+  
 
 
   openCreateDialog(modulo:string, programa?: any ): void {
@@ -146,7 +161,7 @@ export class ListarProgramasComponent {
               modulo:modulo,
               nombre: programa ? programa.nombre : '',
               isEdit: !!programa,
-              listaDepartamentos: this.listadoDepartamentos
+              listaFacultades: this.listadoFacultades
             }
     });
 
@@ -184,16 +199,6 @@ export class ListarProgramasComponent {
 
   }
 
-  obtenerDepartamentos() {
-    this.departamentosService.getDepartamentos().subscribe(
-      (result) => {
-        this.listadoDepartamentos = result;
-
-      },
-      (error) => {
-        console.error('Error al obtener los departamentos:', error);
-      }
-    );
-  }
+  
 
 }

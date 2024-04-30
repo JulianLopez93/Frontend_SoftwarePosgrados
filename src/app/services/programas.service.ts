@@ -20,7 +20,7 @@ export class ProgramasService {
     const url = `${this.baseUrl}/crear`;
     const body = new HttpParams()
       .set('nombre', params.nombre)
-      .set('idDepartamento', params.idDepartamento);
+      .set('idFacultad', params.idFacultad);
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
   
     return this.http.post(url, body.toString(), { headers, responseType: 'text' });
@@ -31,12 +31,12 @@ export class ProgramasService {
     return this.http.delete(url, { responseType: 'text' });
   }
 
-  editPrograma(nombre: string, idPrograma: string,  idDepartamento:number) {
+  editPrograma(nombre: string, idPrograma: string,  idFacultad:number) {
     const url = `${this.baseUrl}/actualizar`;
     const params = new HttpParams()
     .set('nombre', nombre)
     .set('idPrograma', idPrograma)     
-    .set('idDepartamento', idDepartamento);
+    .set('idFacultad', idFacultad);
     return this.http.put(url, params, { responseType: 'text' });
   }
 }

@@ -616,21 +616,21 @@ export class CrearPresupuestoComponent {
   }
 
   obtenerPresupuestoPorCohorte(idCohorte: number) {
+    console.log(idCohorte);
     this.presupuestosServices
       .getPresupuestoPorCohorte(idCohorte)
-      .subscribe((result: any) => {
+      .subscribe((result?: any) => {
         console.log(result);
-        this.idPresupuesto = result.id;
-        this.numeroCohorte = result.cohorte.numero;
-        this.programaCohorte = result.cohorte.programa.nombre;
-        this.departamentoCohorte = result.cohorte.programa.departamento.nombre;
+        this.idPresupuesto = result?.id;
+        this.numeroCohorte = result?.cohorte.numero;
+        this.programaCohorte = result?.cohorte.programa.nombre;
         this.facultadCohorte =
-          result.cohorte.programa.departamento.facultad.nombre;
-        this.ingresosTotales = result.ingresosTotales;
-        this.egresosTotalesPrograma = result.egresosProgramaTotales;
+          result?.cohorte.programa.facultad.nombre;
+        this.ingresosTotales = result?.ingresosTotales;
+        this.egresosTotalesPrograma = result?.egresosProgramaTotales;
         this.egresosTotalesRecurrentes =
-          result.egresosRecurrentesUniversidadTotales;
-        this.balanceGeneral = result.balanceGeneral;
+          result?.egresosRecurrentesUniversidadTotales;
+        this.balanceGeneral = result?.balanceGeneral;
 
 
         this.obtenerTotalEgresosTransferencia();
@@ -658,6 +658,10 @@ export class CrearPresupuestoComponent {
         localStorage.setItem('idPresupuesto', result.id);
 
         console.log(this.idPresupuesto);
+      },
+      (error) => {
+        console.error('Error al obtener el presupuesto:', error);
+        // Aquí puedes tomar medidas para manejar el error, como mostrar un mensaje al usuario o hacer alguna acción para recuperarse.
       });
   }
 }

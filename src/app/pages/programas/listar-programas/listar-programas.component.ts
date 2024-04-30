@@ -62,8 +62,7 @@ export class ListarProgramasComponent {
     if (this.searchText) {
       this.filteredProgramas = this.programas.filter(programa =>
         programa.nombre.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        programa.departamento.nombre.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        programa.departamento.facultad.nombre.toLowerCase().includes(this.searchText.toLowerCase())
+        programa.facultad.nombre.toLowerCase().includes(this.searchText.toLowerCase())
       );
     } else {
       this.filteredProgramas = this.programas;

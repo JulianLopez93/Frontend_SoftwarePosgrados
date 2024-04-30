@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@app/material/material/material.module';
 import { MatTableModule } from '@angular/material/table';
 import { NgxPaginationModule } from 'ngx-pagination';
-
 @NgModule({
   declarations: [
     ListarIngresosComponent
@@ -21,7 +20,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgxPaginationModule,
     ReactiveFormsModule
   ],
-  exports:[
+  exports: [
     ListarIngresosComponent
   ]
 })

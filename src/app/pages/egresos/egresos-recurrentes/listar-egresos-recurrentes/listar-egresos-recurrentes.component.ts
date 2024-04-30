@@ -13,175 +13,183 @@ import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-elimina
 export class ListarEgresosRecurrentesComponent {
 
   egresos: any[] = [];
-  displayedColumns: string[] = ['unidad','cargo','valor_hora', 'num_horas', 'valorTotal','acciones'];
+  displayedColumns: string[] = ['unidad', 'cargo', 'valor_hora', 'num_horas', 'valorTotal', 'acciones'];
   form!: FormGroup;
-  nombre:string='';
+  nombre: string = '';
   p: number = 1;
   searchText: string = '';
   filteredEgresos: any[] = [];
-  idPresupuesto:any;
+  idPresupuesto: any;
+  totalEgresos = 0;
 
   constructor(private egresosService: EgresosService,
-    public dialog: MatDialog) {}
+    public dialog: MatDialog) { }
 
-    ngOnInit() {
+  ngOnInit() {
 
-      this.idPresupuesto = localStorage.getItem('idPresupuesto');
-      console.log(this.idPresupuesto);
-      //localStorage.removeItem('idPresupuesto');
-      this.obtenerEgresosRecurrentesPorPresupuesto();
-      //this.obtenerIngresos();
-      //this.obtenerPresupuestos();
-    }
+    this.idPresupuesto = localStorage.getItem('idPresupuesto');
+    console.log(this.idPresupuesto);
+    //localStorage.removeItem('idPresupuesto');
+    this.obtenerEgresosRecurrentesPorPresupuesto();
+    //this.obtenerIngresos();
+    //this.obtenerPresupuestos();
+  }
 
-    obtenerEgresosRecurrentesPorPresupuesto()
-    {
-      this.egresosService.getEgresosRecurrentesPorPresupuesto(this.idPresupuesto).subscribe((result) =>{
-        console.log(result);
-        this.egresos = result;
-        this.applyFilter();
-      },
+  obtenerTotalEgresos() {
+    this.egresosService.getTotalEgresosRecurrentes(this.idPresupuesto).subscribe((result) => {
+      console.log(result);
+      this.totalEgresos = result;
+
+    },
+      (error) => {
+        console.error('Error al obtener el total de egresos recurrentes adm:', error);
+      }
+    )
+  }
+
+  obtenerEgresosRecurrentesPorPresupuesto() {
+    this.egresosService.getEgresosRecurrentesPorPresupuesto(this.idPresupuesto).subscribe((result) => {
+      console.log(result);
+      this.egresos = result;
+      this.applyFilter();
+      this.obtenerTotalEgresos();
+    },
       (error) => {
         console.error('Error al obtener los ingresos:', error);
       }
     )
+  }
+
+  applyFilter() {
+    if (this.searchText) {
+      this.filteredEgresos = this.egresos.filter(egreso =>
+        egreso.unidad.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        egreso.cargo.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    } else {
+      this.filteredEgresos = this.egresos;
     }
-  
-    applyFilter() {
-      if (this.searchText) {
-        this.filteredEgresos = this.egresos.filter(egreso =>
-          egreso.unidad.toLowerCase().includes(this.searchText.toLowerCase()) ||
-          egreso.cargo.toLowerCase().includes(this.searchText.toLowerCase())
-        );
-      } else {
-        this.filteredEgresos = this.egresos;
-      }
+  }
+
+
+  crearEgresoRecurrente(idPresupuestoEjecucion: number, unidad: string, cargo: string, valorHora: number, numHoras: number) {
+    try {
+      console.log(idPresupuestoEjecucion);
+      console.log(unidad);
+      console.log(cargo);
+      console.log(valorHora);
+      console.log(numHoras);
+      const params = {
+        idPresupuestoEjecucion: idPresupuestoEjecucion,
+        unidad: unidad,
+        cargo: cargo,
+        valorHora: valorHora,
+        numHoras: numHoras
+      };
+      console.log(params);
+      this.egresosService.postEgresoRecurrente(params).subscribe((result: any) => {
+        console.log(result);
+        if (result == "OK") {
+          console.log("Egreso guardado");
+          this.obtenerEgresosRecurrentesPorPresupuesto();
+          this.obtenerTotalEgresos();
+        }
+      });
+    } catch (error) {
+      console.error('Error al crear el egreso:', error);
+    }
+  }
+  editarEgresoRecurrente(id: number, unidad: string, cargo: string, valorHora: number, numHoras: number) {
+    try {
+      console.log(id);
+      console.log(unidad);
+      console.log(cargo);
+      console.log(valorHora);
+      console.log(numHoras);
+
+      this.egresosService.editEgresoRecurrente(id, unidad, cargo, valorHora, numHoras).subscribe((result: any) => {
+        console.log(result);
+        if (result = "OK") {
+          console.log("Egreso editado");
+          this.obtenerEgresosRecurrentesPorPresupuesto();
+          this.obtenerTotalEgresos();
+        }
+
+      });
+    }
+    catch (error) {
+
     }
 
-  
-    crearEgresoRecurrente(idPresupuestoEjecucion: number, unidad: string, cargo: string, valorHora: number, numHoras:number) {
-      try {
-        console.log(idPresupuestoEjecucion);
-        console.log(unidad);
-        console.log(cargo);
-        console.log(valorHora);
-        console.log(numHoras);
-        const params = {
-          idPresupuestoEjecucion: idPresupuestoEjecucion,
-          unidad: unidad,
-          cargo: cargo,
-          valorHora: valorHora,
-          numHoras: numHoras
-        };
-        console.log(params);
-        this.egresosService.postEgresoRecurrente(params).subscribe((result: any) => {
-          console.log(result);
-          if (result == "OK") {
-            console.log("Egreso guardado");
-            this.obtenerEgresosRecurrentesPorPresupuesto();
-          }
-        });
-      } catch (error) {
-        console.error('Error al crear el egreso:', error);
+  }
+
+  eliminarEgresoRecurrente(id: string) {
+    try {
+      console.log(id);
+      this.egresosService.deleteEgresoRecurrente(id).subscribe((result: any) => {
+        console.log(result);
+        if (result = "OK") {
+          console.log("egreso eliminado");
+          this.obtenerEgresosRecurrentesPorPresupuesto();
+          this.obtenerTotalEgresos();
+        }
+
+      });
+    }
+    catch (error) {
+
+    }
+
+  }
+
+  openCreateDialog(modulo: string, egreso?: any): void {
+    console.log(egreso);
+    console.log(this.idPresupuesto);
+
+    const dialogRef = this.dialog.open(PopupCrearEditarEgresoComponent, {
+      width: '350px',
+      data: {
+        modulo: modulo,
+        unidad: egreso ? egreso.unidad : '',
+        cargo: egreso ? egreso.cargo : '',
+        valorHora: egreso ? egreso.valorHora : '',
+        numHoras: egreso ? egreso.numHoras : '',
+        isEdit: !!egreso,
       }
-    }
-    editarEgresoRecurrente(id:number, unidad: string, cargo: string, valorHora: number, numHoras:number)
-    {
-      try
-      {
-        console.log(id);
-        console.log(unidad);
-        console.log(cargo);
-        console.log(valorHora);
-        console.log(numHoras);
-  
-        this.egresosService.editEgresoRecurrente(id, unidad, cargo, valorHora, numHoras).subscribe((result:any) => {
-          console.log(result);
-          if (result = "OK")
-          {
-            console.log("Egreso editado");
-            this.obtenerEgresosRecurrentesPorPresupuesto();
-          }
-  
-        });
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('El diálogo se cerró');
+      console.log('Resultado:', result);
+      if (result) {
+        if (egreso) {
+          console.log("Edita egreso");
+          this.editarEgresoRecurrente(egreso.id, result.unidad, result.cargo, result.valorHora, result.numHoras);
+        } else {
+          console.log("Crea egreso");
+          this.crearEgresoRecurrente(this.idPresupuesto, result.unidad, result.cargo, result.valorHora, result.numHoras);
+        }
       }
-      catch(error)
-        {
-  
-        }
-  
-    }
-  
-    eliminarEgresoRecurrente(id:string)
-    {
-      try
-      {
-        console.log(id);
-        this.egresosService.deleteEgresoRecurrente(id).subscribe((result:any) => {
-          console.log(result);
-          if (result = "OK")
-          {
-            console.log("egreso eliminado");
-            this.obtenerEgresosRecurrentesPorPresupuesto();
-          }
-  
-        });
+
+    });
+  }
+
+  openDeleteDialog(egresoId: string, modulo: string): void {
+    const dialogRef = this.dialog.open(PopupEliminarComponent, {
+      width: '300px',
+      data: {
+        modulo: modulo,
+        id: egresoId
+
       }
-      catch(error)
-        {
-  
-        }
-  
-    }
-  
-    openCreateDialog(modulo:string, egreso?: any): void {
-      console.log(egreso);
-      console.log(this.idPresupuesto);
-  
-      const dialogRef = this.dialog.open(PopupCrearEditarEgresoComponent , {
-        width:'350px',
-        data: {
-                modulo:modulo,
-                unidad: egreso ? egreso.unidad : '',
-                cargo: egreso ? egreso.cargo : '',
-                valorHora: egreso ? egreso.valorHora : '',
-                numHoras: egreso ? egreso.numHoras : '',
-                isEdit: !!egreso,
-              }
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('El diálogo se cerró');
-        console.log('Resultado:', result);
-        if (result) {
-          if (egreso) {
-            console.log("Edita egreso");
-            this.editarEgresoRecurrente(egreso.id, result.unidad, result.cargo, result.valorHora, result.numHoras);
-          } else {
-            console.log("Crea egreso");
-            this.crearEgresoRecurrente(this.idPresupuesto, result.unidad, result.cargo, result.valorHora, result.numHoras);
-          }
-        }
-  
-      });
-    }
-  
-    openDeleteDialog(egresoId: string, modulo:string):void{
-      const dialogRef = this.dialog.open(PopupEliminarComponent , {
-        width:'300px',
-        data:{
-          modulo: modulo,
-          id: egresoId
-  
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.eliminarEgresoRecurrente(egresoId);
-        }
-      });
-  
-  
-    }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.eliminarEgresoRecurrente(egresoId);
+      }
+    });
+
+
+  }
 
 }

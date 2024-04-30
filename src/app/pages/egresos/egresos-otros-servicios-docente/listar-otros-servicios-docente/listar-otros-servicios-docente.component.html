@@ -1,7 +1,7 @@
 <div class="container">
     <!-- Contenedor para el botón y el campo de búsqueda -->
     <div class="action-bar">
-      <button mat-raised-button style="background-color: #003b70; color: white;"  (click)="openCreateDialog('egreso otros servicios docente')" 
+      <button mat-raised-button style="background-color: #003b70; color: white;"  (click)="openCreateDialog('egreso otros servicios docente')"
       class="create-button">Crear Egreso por Otros Servicios Docente</button>
       <!-- Campo de búsqueda -->
       <mat-form-field class="example-full-width search-field" appearance="fill">
@@ -47,6 +47,11 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+<tr class="total-row">
+  <td colspan="2" style="text-align: right; font-weight: bold;">Total: </td>
+  <td style="font-weight: bold;">${{totalEgresos}}</td>
+  <td></td>
+</tr>
 <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>
 

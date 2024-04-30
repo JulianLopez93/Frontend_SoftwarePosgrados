@@ -47,6 +47,11 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+<tr class="total-row">
+  <td colspan="2" style="text-align: right; font-weight: bold;">Total: </td>
+  <td style="font-weight: bold;">${{totalEgresos}}</td>
+  <td></td>
+</tr>
 <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>
 

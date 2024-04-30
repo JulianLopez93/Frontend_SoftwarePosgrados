@@ -14,19 +14,20 @@ import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-elimina
 export class ListarEgresosGeneralesComponent {
 
   egresos: any[] = [];
-  displayedColumns: string[] = ['concepto','valor_unitario','cantidad','tipo_costo', 
-  'valorTotal','acciones'];
+  displayedColumns: string[] = ['concepto', 'valor_unitario', 'cantidad', 'tipo_costo',
+    'valorTotal', 'acciones'];
   form!: FormGroup;
-  nombre:string='';
+  nombre: string = '';
   p: number = 1;
   searchText: string = '';
   filteredEgresos: any[] = [];
-  idPresupuesto:any;
-  listadoTipoPerteneciente:any[] = [];
+  idPresupuesto: any;
+  listadoTipoPerteneciente: any[] = [];
+  totalEgresos = 0;
 
   constructor(private egresosService: EgresosService,
     private tiposService: TiposService,
-    public dialog: MatDialog) {}
+    public dialog: MatDialog) { }
 
   ngOnInit() {
 
@@ -39,17 +40,29 @@ export class ListarEgresosGeneralesComponent {
     //this.obtenerPresupuestos();
   }
 
-  obtenerEgresosGeneralesPorPresupuesto()
-  {
-    this.egresosService.getEgresosGeneralesPorPresupuesto(this.idPresupuesto).subscribe((result) =>{
+  obtenerTotalEgresos() {
+    this.egresosService.getTotalEgresosGenerales(this.idPresupuesto).subscribe((result) => {
+      console.log(result);
+      this.totalEgresos = result;
+
+    },
+      (error) => {
+        console.error('Error al obtener el total de egresos generales:', error);
+      }
+    )
+  }
+
+  obtenerEgresosGeneralesPorPresupuesto() {
+    this.egresosService.getEgresosGeneralesPorPresupuesto(this.idPresupuesto).subscribe((result) => {
       console.log(result);
       this.egresos = result;
       this.applyFilter();
+      this.obtenerTotalEgresos();
     },
-    (error) => {
-      console.error('Error al obtener los ingresos:', error);
-    }
-  )
+      (error) => {
+        console.error('Error al obtener los ingresos:', error);
+      }
+    )
   }
 
   applyFilter() {
@@ -75,7 +88,7 @@ export class ListarEgresosGeneralesComponent {
     );
   }
 
-  crearEgresoGeneral(idPresupuestoEjecucion: number, concepto: string, valorUnitario: number, cantidad: number, idTipoCosto:number) {
+  crearEgresoGeneral(idPresupuestoEjecucion: number, concepto: string, valorUnitario: number, cantidad: number, idTipoCosto: number) {
     try {
       console.log(idPresupuestoEjecucion);
       console.log(concepto);
@@ -95,75 +108,70 @@ export class ListarEgresosGeneralesComponent {
         if (result == "OK") {
           console.log("Egreso guardado");
           this.obtenerEgresosGeneralesPorPresupuesto();
+          this.obtenerTotalEgresos();
         }
       });
     } catch (error) {
       console.error('Error al crear el egreso:', error);
     }
   }
-  editarEgresoGeneral(id:number, concepto: string, valorUnitario: number, cantidad: number, idTipoCosto:number)
-  {
-    try
-    {
+  editarEgresoGeneral(id: number, concepto: string, valorUnitario: number, cantidad: number, idTipoCosto: number) {
+    try {
       console.log(id);
       console.log(concepto);
       console.log(valorUnitario);
       console.log(cantidad);
       console.log(idTipoCosto);
 
-      this.egresosService.editEgresoGeneral(id, concepto, valorUnitario, cantidad, idTipoCosto).subscribe((result:any) => {
+      this.egresosService.editEgresoGeneral(id, concepto, valorUnitario, cantidad, idTipoCosto).subscribe((result: any) => {
         console.log(result);
-        if (result = "OK")
-        {
+        if (result = "OK") {
           console.log("Egreso editado");
           this.obtenerEgresosGeneralesPorPresupuesto();
+          this.obtenerTotalEgresos();
         }
 
       });
     }
-    catch(error)
-      {
+    catch (error) {
 
-      }
+    }
 
   }
 
-  eliminarEgresoGeneral(id:string)
-  {
-    try
-    {
+  eliminarEgresoGeneral(id: string) {
+    try {
       console.log(id);
-      this.egresosService.deleteEgresoGeneral(id).subscribe((result:any) => {
+      this.egresosService.deleteEgresoGeneral(id).subscribe((result: any) => {
         console.log(result);
-        if (result = "OK")
-        {
+        if (result = "OK") {
           console.log("egreso eliminado");
           this.obtenerEgresosGeneralesPorPresupuesto();
+          this.obtenerTotalEgresos();
         }
 
       });
     }
-    catch(error)
-      {
+    catch (error) {
 
-      }
+    }
 
   }
 
-  openCreateDialog(modulo:string, egreso?: any): void {
+  openCreateDialog(modulo: string, egreso?: any): void {
     console.log(egreso);
     console.log(this.idPresupuesto);
 
-    const dialogRef = this.dialog.open(PopupCrearEditarEgresoComponent , {
-      width:'350px',
+    const dialogRef = this.dialog.open(PopupCrearEditarEgresoComponent, {
+      width: '350px',
       data: {
-              modulo:modulo,
-              concepto: egreso ? egreso.concepto : '',
-              valorUnitario: egreso ? egreso.valorUnitario : '',
-              cantidad: egreso ? egreso.cantidad : '',
-              isEdit: !!egreso,
-              listaTipoPerteneciente: this.listadoTipoPerteneciente
-            }
+        modulo: modulo,
+        concepto: egreso ? egreso.concepto : '',
+        valorUnitario: egreso ? egreso.valorUnitario : '',
+        cantidad: egreso ? egreso.cantidad : '',
+        isEdit: !!egreso,
+        listaTipoPerteneciente: this.listadoTipoPerteneciente
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -182,10 +190,10 @@ export class ListarEgresosGeneralesComponent {
     });
   }
 
-  openDeleteDialog(egresoId: string, modulo:string):void{
-    const dialogRef = this.dialog.open(PopupEliminarComponent , {
-      width:'300px',
-      data:{
+  openDeleteDialog(egresoId: string, modulo: string): void {
+    const dialogRef = this.dialog.open(PopupEliminarComponent, {
+      width: '300px',
+      data: {
         modulo: modulo,
         id: egresoId
 

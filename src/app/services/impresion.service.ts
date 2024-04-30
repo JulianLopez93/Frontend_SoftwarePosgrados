@@ -36,7 +36,7 @@ export class ImpresionService {
     doc.text("Universidad de Caldas", 20, 90);
     doc.text("Vicerrectoría de Investigaciones y Posgrados", 20, 105);
     doc.text("Presupuesto y costos de programas, proyectos y servicios institucionales", 20, 120);
-    doc.text("Facultad: " + presupuesto.cohorte.programa.departamento.facultad.nombre, 20, 135);
+    doc.text("Facultad: " + presupuesto.cohorte.programa.facultad.nombre, 20, 135);
     doc.text("Programa: " + presupuesto.cohorte.programa.nombre, 20, 150);
     doc.text("Cohorte: " + presupuesto.cohorte.numero, 20, 165);
     doc.text("Fecha de inicio: " + presupuesto.cohorte.fecha, 20, 180);

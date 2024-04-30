@@ -14,18 +14,19 @@ import { PresupuestosService } from '@app/services/presupuestos.service';
 export class ListarIngresosComponent {
 
   ingresos: any[] = [];
-  displayedColumns: string[] = ['concepto','valor','acciones'];
+  displayedColumns: string[] = ['concepto', 'valor', 'acciones'];
   //listadoPresupuestos:any[] = [];
   form!: FormGroup;
-  nombre:string='';
+  nombre: string = '';
   p: number = 1;
   searchText: string = '';
   filteredIngresos: any[] = [];
-  idPresupuesto:any;
+  idPresupuesto: any;
+  totalIngresos = 0;
 
   constructor(private ingresosService: IngresosService,
-              private presupuestosService: PresupuestosService,
-              public dialog: MatDialog) {}
+    private presupuestosService: PresupuestosService,
+    public dialog: MatDialog) { }
 
   ngOnInit() {
 
@@ -52,17 +53,30 @@ export class ListarIngresosComponent {
     );
   }
   */
-  obtenerIngresosPorPresupuesto()
-  {
-    this.ingresosService.getIngresosPorPresupuesto(this.idPresupuesto).subscribe((result) =>{
+
+  obtenerTotalIngresos() {
+    this.ingresosService.getTotalIngresos(this.idPresupuesto).subscribe((result) => {
+      console.log(result);
+      this.totalIngresos = result;
+
+    },
+      (error) => {
+        console.error('Error al obtener el total de ingresos:', error);
+      }
+    )
+  }
+
+  obtenerIngresosPorPresupuesto() {
+    this.ingresosService.getIngresosPorPresupuesto(this.idPresupuesto).subscribe((result) => {
       console.log(result);
       this.ingresos = result;
       this.applyFilter();
+      this.obtenerTotalIngresos();
     },
-    (error) => {
-      console.error('Error al obtener los ingresos:', error);
-    }
-  )
+      (error) => {
+        console.error('Error al obtener los ingresos:', error);
+      }
+    )
   }
 
   applyFilter() {
@@ -75,49 +89,43 @@ export class ListarIngresosComponent {
     }
   }
 
-  editarIngreso(id:number, concepto:string, valor:number)
-  {
-    try
-    {
+  editarIngreso(id: number, concepto: string, valor: number) {
+    try {
       console.log(id)
       console.log(concepto);
       console.log(valor);
 
-      this.ingresosService.editIngreso(id, concepto, valor).subscribe((result:any) => {
+      this.ingresosService.editIngreso(id, concepto, valor).subscribe((result: any) => {
         console.log(result);
-        if (result = "OK")
-        {
+        if (result = "OK") {
           console.log("Ingreso editado");
           this.obtenerIngresosPorPresupuesto();
+          this.obtenerTotalIngresos();
         }
 
       });
     }
-    catch(error)
-      {
+    catch (error) {
 
-      }
+    }
 
   }
-  eliminarIngreso(id:string)
-  {
-    try
-    {
+  eliminarIngreso(id: string) {
+    try {
       console.log(id);
-      this.ingresosService.deleteIngreso(id).subscribe((result:any) => {
+      this.ingresosService.deleteIngreso(id).subscribe((result: any) => {
         console.log(result);
-        if (result = "OK")
-        {
+        if (result = "OK") {
           console.log("Ingreso eliminado");
           this.obtenerIngresosPorPresupuesto();
+          this.obtenerTotalIngresos();
         }
 
       });
     }
-    catch(error)
-      {
+    catch (error) {
 
-      }
+    }
 
   }
   crearIngreso(idPresupuestoEjecucion: number, concepto: string, valor: number) {
@@ -137,7 +145,9 @@ export class ListarIngresosComponent {
         console.log(result);
         if (result == "OK") {
           console.log("Ingreso guardado");
+
           this.obtenerIngresosPorPresupuesto();
+          this.obtenerTotalIngresos();
         }
       });
     } catch (error) {
@@ -146,18 +156,18 @@ export class ListarIngresosComponent {
   }
 
 
-  openCreateDialog(modulo:string, ingreso?: any): void {
+  openCreateDialog(modulo: string, ingreso?: any): void {
     console.log(ingreso);
     console.log(this.idPresupuesto);
 
-    const dialogRef = this.dialog.open(PopupCrearEditarComponent , {
-      width:'350px',
+    const dialogRef = this.dialog.open(PopupCrearEditarComponent, {
+      width: '350px',
       data: {
-              modulo:modulo,
-              concepto: ingreso ? ingreso.concepto : '',
-              valor: ingreso ? ingreso.valor : '',
-              isEdit: !!ingreso,
-            }
+        modulo: modulo,
+        concepto: ingreso ? ingreso.concepto : '',
+        valor: ingreso ? ingreso.valor : '',
+        isEdit: !!ingreso,
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -175,10 +185,10 @@ export class ListarIngresosComponent {
 
     });
   }
-  openDeleteDialog(ingresoId: string, modulo:string):void{
-    const dialogRef = this.dialog.open(PopupEliminarComponent , {
-      width:'300px',
-      data:{
+  openDeleteDialog(ingresoId: string, modulo: string): void {
+    const dialogRef = this.dialog.open(PopupEliminarComponent, {
+      width: '300px',
+      data: {
         modulo: modulo,
         id: ingresoId
 

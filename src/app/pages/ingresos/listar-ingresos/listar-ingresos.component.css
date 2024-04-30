@@ -4,13 +4,24 @@
     align-items: center;
     gap: 10px;  /* Espacio entre el botón y el campo de búsqueda */
   }
-  
+
   .search-field {
     width: 80%;
     display: block;
     margin: 0 auto;
   }
-  
+
   .create-button {
     margin-top: 20px;  /* Ajusta esto al margen que desees */
   }
+
+  .total-row {
+    display: flex;
+    justify-content: flex-end;
+    font-weight: bold;
+    font-size: 1.3em; /* Ajusta el tamaño del texto */
+    margin-right: 20px; /* Ajusta este valor para mover el texto hacia la derecha */
+    margin-top: 20px; /* Ajusta este valor para mover el texto hacia abajo */
+  }
+
+

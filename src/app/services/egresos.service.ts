@@ -16,12 +16,12 @@ export class EgresosService {
     return this.http.get(url);
   }
 
-  getEgresosTransferenciaPorPresupuesto(idPresupuesto:number): Observable<any> {
+  getEgresosTransferenciaPorPresupuesto(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoTransferencia/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
 
-  getTotalEgresosTransferencia(idPresupuesto:number): Observable<any> {
+  getTotalEgresosTransferencia(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoTransferencia/totalEgresosTransferencias?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
@@ -29,10 +29,10 @@ export class EgresosService {
   postEgresoTransferencia(params: any) {
     const url = `${this.baseUrl}/egresoTransferencia/crear`;
     const body = new HttpParams()
-    .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
-    .set('descripcion', params.descripcion)
-    .set('porcentaje', params.porcentaje)
-    .set('idTipoTransferencia', params.idTipoTransferencia);
+      .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
+      .set('descripcion', params.descripcion)
+      .set('porcentaje', params.porcentaje)
+      .set('idTipoTransferencia', params.idTipoTransferencia);
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
     return this.http.post(url, body.toString(), { headers, responseType: 'text' });
@@ -43,13 +43,13 @@ export class EgresosService {
     return this.http.delete(url, { responseType: 'text' });
   }
 
-  editEgresoTransferencia(id:number, descripcion: string, porcentaje:number, idTipoTransferencia:number) {
+  editEgresoTransferencia(id: number, descripcion: string, porcentaje: number, idTipoTransferencia: number) {
     const url = `${this.baseUrl}/egresoTransferencia/actualizar`;
     const params = new HttpParams()
       .set('id', id)
       .set('descripcion', descripcion)
-    .set('porcentaje', porcentaje)
-    .set('idTipoTransferencia', idTipoTransferencia);
+      .set('porcentaje', porcentaje)
+      .set('idTipoTransferencia', idTipoTransferencia);
     return this.http.put(url, params, { responseType: 'text' });
   }
 
@@ -58,12 +58,12 @@ export class EgresosService {
     return this.http.get(url);
   }
 
-  getTotalEgresosGenerales(idPresupuesto:number): Observable<any> {
+  getTotalEgresosGenerales(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoGeneral/totalEgresosGenerales?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
 
-  getEgresosGeneralesPorPresupuesto(idPresupuesto:number): Observable<any> {
+  getEgresosGeneralesPorPresupuesto(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoGeneral/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
@@ -71,11 +71,11 @@ export class EgresosService {
   postEgresoGeneral(params: any) {
     const url = `${this.baseUrl}/egresoGeneral/crear`;
     const body = new HttpParams()
-    .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
-    .set('concepto', params.concepto)
-    .set('valorUnitario', params.valorUnitario)
-    .set('cantidad', params.cantidad)
-    .set('idTipoCosto', params.idTipoCosto);
+      .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
+      .set('concepto', params.concepto)
+      .set('valorUnitario', params.valorUnitario)
+      .set('cantidad', params.cantidad)
+      .set('idTipoCosto', params.idTipoCosto);
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
     return this.http.post(url, body.toString(), { headers, responseType: 'text' });
@@ -86,14 +86,14 @@ export class EgresosService {
     return this.http.delete(url, { responseType: 'text' });
   }
 
-  editEgresoGeneral(id:number, concepto: string, valorUnitario:number, cantidad:number, idTipoCosto:number) {
+  editEgresoGeneral(id: number, concepto: string, valorUnitario: number, cantidad: number, idTipoCosto: number) {
     const url = `${this.baseUrl}/egresoGeneral/actualizar`;
     const params = new HttpParams()
-    .set('id', id)
-    .set('concepto', concepto)
-    .set('valorUnitario', valorUnitario)
-    .set('cantidad', cantidad)
-    .set('idTipoCosto', idTipoCosto);
+      .set('id', id)
+      .set('concepto', concepto)
+      .set('valorUnitario', valorUnitario)
+      .set('cantidad', cantidad)
+      .set('idTipoCosto', idTipoCosto);
     return this.http.put(url, params, { responseType: 'text' });
   }
 
@@ -102,12 +102,12 @@ export class EgresosService {
     return this.http.get(url);
   }
 
-  getTotalEgresosOtros(idPresupuesto:number): Observable<any> {
+  getTotalEgresosOtros(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoOtro/totalEgresosOtros?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
 
-  getEgresosOtrosPorPresupuesto(idPresupuesto:number): Observable<any> {
+  getEgresosOtrosPorPresupuesto(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoOtro/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
@@ -115,11 +115,11 @@ export class EgresosService {
   postEgresoOtros(params: any) {
     const url = `${this.baseUrl}/egresoOtro/crear`;
     const body = new HttpParams()
-    .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
-    .set('concepto', params.concepto)
-    .set('valorUnitario', params.valorUnitario)
-    .set('cantidad', params.cantidad)
-    .set('idTipoCosto', params.idTipoCosto);
+      .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
+      .set('concepto', params.concepto)
+      .set('valorUnitario', params.valorUnitario)
+      .set('cantidad', params.cantidad)
+      .set('idTipoCosto', params.idTipoCosto);
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
     return this.http.post(url, body.toString(), { headers, responseType: 'text' });
@@ -130,14 +130,14 @@ export class EgresosService {
     return this.http.delete(url, { responseType: 'text' });
   }
 
-  editEgresoOtros(id:number, concepto: string, valorUnitario:number, cantidad:number, idTipoCosto:number) {
+  editEgresoOtros(id: number, concepto: string, valorUnitario: number, cantidad: number, idTipoCosto: number) {
     const url = `${this.baseUrl}/egresoOtro/actualizar`;
     const params = new HttpParams()
-    .set('id', id)
-    .set('concepto', concepto)
-    .set('valorUnitario', valorUnitario)
-    .set('cantidad', cantidad)
-    .set('idTipoCosto', idTipoCosto);
+      .set('id', id)
+      .set('concepto', concepto)
+      .set('valorUnitario', valorUnitario)
+      .set('cantidad', cantidad)
+      .set('idTipoCosto', idTipoCosto);
     return this.http.put(url, params, { responseType: 'text' });
   }
 
@@ -146,12 +146,12 @@ export class EgresosService {
     return this.http.get(url);
   }
 
-  getTotalEgresosServiciosNoDocentes(idPresupuesto:number): Observable<any> {
+  getTotalEgresosServiciosNoDocentes(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoServNoDocente/totalEgresosServNoDocentes?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
 
-  getEgresosServiciosNoDocentePorPresupuesto(idPresupuesto:number): Observable<any> {
+  getEgresosServiciosNoDocentePorPresupuesto(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoServNoDocente/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
@@ -159,11 +159,11 @@ export class EgresosService {
   postEgresoServiciosNoDocente(params: any) {
     const url = `${this.baseUrl}/egresoServNoDocente/crear`;
     const body = new HttpParams()
-    .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
-    .set('servicio', params.servicio)
-    .set('valorUnitario', params.valorUnitario)
-    .set('cantidad', params.cantidad)
-    .set('idTipoCosto', params.idTipoCosto);
+      .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
+      .set('servicio', params.servicio)
+      .set('valorUnitario', params.valorUnitario)
+      .set('cantidad', params.cantidad)
+      .set('idTipoCosto', params.idTipoCosto);
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
     return this.http.post(url, body.toString(), { headers, responseType: 'text' });
@@ -174,14 +174,14 @@ export class EgresosService {
     return this.http.delete(url, { responseType: 'text' });
   }
 
-  editEgresoServiciosNoDocente(id:number, servicio: string, valorUnitario:number, cantidad:number, idTipoCosto:number) {
+  editEgresoServiciosNoDocente(id: number, servicio: string, valorUnitario: number, cantidad: number, idTipoCosto: number) {
     const url = `${this.baseUrl}/egresoServNoDocente/actualizar`;
     const params = new HttpParams()
-    .set('id', id)
-    .set('servicio', servicio)
-    .set('valorUnitario', valorUnitario)
-    .set('cantidad', cantidad)
-    .set('idTipoCosto', idTipoCosto);
+      .set('id', id)
+      .set('servicio', servicio)
+      .set('valorUnitario', valorUnitario)
+      .set('cantidad', cantidad)
+      .set('idTipoCosto', idTipoCosto);
     return this.http.put(url, params, { responseType: 'text' });
   }
 
@@ -190,12 +190,12 @@ export class EgresosService {
     return this.http.get(url);
   }
 
-  getTotalEgresosOtrosServiciosDocentes(idPresupuesto:number): Observable<any> {
+  getTotalEgresosOtrosServiciosDocentes(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoOtrosServDocente/totalEgresosOtrosServDocentes?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
 
-  getEgresosOtrosServiciosDocentePorPresupuesto(idPresupuesto:number): Observable<any> {
+  getEgresosOtrosServiciosDocentePorPresupuesto(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoOtrosServDocente/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
@@ -203,12 +203,12 @@ export class EgresosService {
   postEgresoOtrosServiciosDocente(params: any) {
     const url = `${this.baseUrl}/egresoOtrosServDocente/crear`;
     const body = new HttpParams()
-    .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
-    .set('servicio', params.servicio)
-    .set('descripcion', params.descripcion)
-    .set('numHoras', params.numHoras)
-    .set('valorTotal', params.valorTotal)
-    .set('idTipoCosto', params.idTipoCosto);
+      .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
+      .set('servicio', params.servicio)
+      .set('descripcion', params.descripcion)
+      .set('numHoras', params.numHoras)
+      .set('valorTotal', params.valorTotal)
+      .set('idTipoCosto', params.idTipoCosto);
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
     return this.http.post(url, body.toString(), { headers, responseType: 'text' });
@@ -219,15 +219,15 @@ export class EgresosService {
     return this.http.delete(url, { responseType: 'text' });
   }
 
-  editEgresoOtrosServiciosDocente(id:number, servicio: string, descripcion:string, numHoras:number, valorTotal:number, idTipoCosto:number) {
+  editEgresoOtrosServiciosDocente(id: number, servicio: string, descripcion: string, numHoras: number, valorTotal: number, idTipoCosto: number) {
     const url = `${this.baseUrl}/egresoOtrosServDocente/actualizar`;
     const params = new HttpParams()
-    .set('id', id)
-    .set('servicio', servicio)
-    .set('descripcion', descripcion)
-    .set('numHoras', numHoras)
-    .set('valorTotal', valorTotal)
-    .set('idTipoCosto', idTipoCosto);
+      .set('id', id)
+      .set('servicio', servicio)
+      .set('descripcion', descripcion)
+      .set('numHoras', numHoras)
+      .set('valorTotal', valorTotal)
+      .set('idTipoCosto', idTipoCosto);
     return this.http.put(url, params, { responseType: 'text' });
   }
 
@@ -236,12 +236,12 @@ export class EgresosService {
     return this.http.get(url);
   }
 
-  getTotalEgresosInversiones(idPresupuesto:number): Observable<any> {
+  getTotalEgresosInversiones(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoInversion/totalEgresosInversiones?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
 
-  getEgresosInversionPorPresupuesto(idPresupuesto:number): Observable<any> {
+  getEgresosInversionPorPresupuesto(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoInversion/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
@@ -249,10 +249,10 @@ export class EgresosService {
   postEgresoInversion(params: any) {
     const url = `${this.baseUrl}/egresoInversion/crear`;
     const body = new HttpParams()
-    .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
-    .set('concepto', params.concepto)
-    .set('valor', params.valor)
-    .set('idTipoInversion', params.idTipoInversion);
+      .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
+      .set('concepto', params.concepto)
+      .set('valor', params.valor)
+      .set('idTipoInversion', params.idTipoInversion);
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
     return this.http.post(url, body.toString(), { headers, responseType: 'text' });
@@ -263,13 +263,13 @@ export class EgresosService {
     return this.http.delete(url, { responseType: 'text' });
   }
 
-  editEgresoInversion(id:number, concepto: string, valor:number, idTipoInversion:number) {
+  editEgresoInversion(id: number, concepto: string, valor: number, idTipoInversion: number) {
     const url = `${this.baseUrl}/egresoInversion/actualizar`;
     const params = new HttpParams()
-    .set('id', id)
-    .set('concepto', concepto)
-    .set('valor', valor)
-    .set('idTipoInversion', idTipoInversion);
+      .set('id', id)
+      .set('concepto', concepto)
+      .set('valor', valor)
+      .set('idTipoInversion', idTipoInversion);
     return this.http.put(url, params, { responseType: 'text' });
   }
   getEgresosRecurrentes(): Observable<any> {
@@ -277,12 +277,12 @@ export class EgresosService {
     return this.http.get(url);
   }
 
-  getTotalEgresosRecurrentes(idPresupuesto:number): Observable<any> {
+  getTotalEgresosRecurrentes(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoRecurrenteAdm/totalEgresosRecurrentesAdm?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
 
-  getEgresosRecurrentesPorPresupuesto(idPresupuesto:number): Observable<any> {
+  getEgresosRecurrentesPorPresupuesto(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoRecurrenteAdm/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
@@ -290,11 +290,11 @@ export class EgresosService {
   postEgresoRecurrente(params: any) {
     const url = `${this.baseUrl}/egresoRecurrenteAdm/crear`;
     const body = new HttpParams()
-    .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
-    .set('unidad', params.unidad)
-    .set('cargo', params.cargo)
-    .set('valorHora', params.valorHora)
-    .set('numHoras', params.numHoras);
+      .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
+      .set('unidad', params.unidad)
+      .set('cargo', params.cargo)
+      .set('valorHora', params.valorHora)
+      .set('numHoras', params.numHoras);
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
     return this.http.post(url, body.toString(), { headers, responseType: 'text' });
@@ -305,14 +305,14 @@ export class EgresosService {
     return this.http.delete(url, { responseType: 'text' });
   }
 
-  editEgresoRecurrente(id:number, unidad: string, cargo: string, valorHora:number, numHoras:number,) {
+  editEgresoRecurrente(id: number, unidad: string, cargo: string, valorHora: number, numHoras: number,) {
     const url = `${this.baseUrl}/egresoRecurrenteAdm/actualizar`;
     const params = new HttpParams()
-    .set('id', id)
-    .set('unidad', unidad)
-    .set('cargo', cargo)
-    .set('valorHora', valorHora)
-    .set('numHoras', numHoras);
+      .set('id', id)
+      .set('unidad', unidad)
+      .set('cargo', cargo)
+      .set('valorHora', valorHora)
+      .set('numHoras', numHoras);
     return this.http.put(url, params, { responseType: 'text' });
   }
 
@@ -321,12 +321,12 @@ export class EgresosService {
     return this.http.get(url);
   }
 
-  getTotalEgresosViajes(idPresupuesto:number): Observable<any> {
+  getTotalEgresosViajes(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoViaje/totalEgresosViajes?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
 
-  getEgresosViajesPorPresupuesto(idPresupuesto:number): Observable<any> {
+  getEgresosViajesPorPresupuesto(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoViaje/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
@@ -334,12 +334,12 @@ export class EgresosService {
   postEgresoViajes(params: any) {
     const url = `${this.baseUrl}/egresoViaje/crear`;
     const body = new HttpParams()
-    .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
-    .set('descripcion', params.descripcion)
-    .set('numPersonas', params.numPersonas)
-    .set('apoyoDesplazamiento', params.apoyoDesplazamiento)
-    .set('numViajesPorPersona', params.numViajesPorPersona)
-    .set('valorTransporte', params.valorTransporte);
+      .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
+      .set('descripcion', params.descripcion)
+      .set('numPersonas', params.numPersonas)
+      .set('apoyoDesplazamiento', params.apoyoDesplazamiento)
+      .set('numViajesPorPersona', params.numViajesPorPersona)
+      .set('valorTransporte', params.valorTransporte);
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
     return this.http.post(url, body.toString(), { headers, responseType: 'text' });
@@ -350,16 +350,16 @@ export class EgresosService {
     return this.http.delete(url, { responseType: 'text' });
   }
 
-  editEgresoViajes(id:number, descripcion: string, numPersonas: number, 
-    apoyoDesplazamiento: number, numViajesPorPersona:number, valorTransporte: number) {
+  editEgresoViajes(id: number, descripcion: string, numPersonas: number,
+    apoyoDesplazamiento: number, numViajesPorPersona: number, valorTransporte: number) {
     const url = `${this.baseUrl}/egresoViaje/actualizar`;
     const params = new HttpParams()
-    .set('id', id)
-    .set('descripcion', descripcion)
-    .set('numPersonas', numPersonas)
-    .set('apoyoDesplazamiento', apoyoDesplazamiento)
-    .set('numViajesPorPersona', numViajesPorPersona)
-    .set('valorTransporte', valorTransporte);
+      .set('id', id)
+      .set('descripcion', descripcion)
+      .set('numPersonas', numPersonas)
+      .set('apoyoDesplazamiento', apoyoDesplazamiento)
+      .set('numViajesPorPersona', numViajesPorPersona)
+      .set('valorTransporte', valorTransporte);
     return this.http.put(url, params, { responseType: 'text' });
   }
   getEgresosServiciosDocentes(): Observable<any> {
@@ -367,51 +367,58 @@ export class EgresosService {
     return this.http.get(url);
   }
 
-  getTotalEgresosServiciosDocentes(idPresupuesto:number): Observable<any> {
+  getTotalEgresosServiciosDocentes(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoServDocente/totalEgresosServDocentes?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
 
-  getEgresosServiciosDocentesPorPresupuesto(idPresupuesto:number): Observable<any> {
+  getEgresosServiciosDocentesPorPresupuesto(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoServDocente/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
     return this.http.get(url);
   }
 
+  getTotalEgresosDescuentos(idPresupuesto: number): Observable<any> {
+    const url = `${this.baseUrl}/egresoDescuento/totalEgresosDescuentos?idPresupuesto=${idPresupuesto}`;
+    return this.http.get(url);
+  }
+
+
+
   postEgresoServiciosDocentes(params: any) {
     const url = `${this.baseUrl}/egresoServDocente/crear`;
     const body = new HttpParams()
-    .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
-    .set('nombreMateria', params.nombreMateria)
-    .set('esDocentePlanta', params.esDocentePlanta)
-    .set('nombreDocente', params.nombreDocente)
-    .set('escalafon', params.escalafon)
-    .set('titulo', params.titulo)
-    .set('horasTeoricasMat', params.horasTeoricasMat)
-    .set('horasPracticasMat', params.horasPracticasMat)
-    .set('valorHoraProfesor', params.valorHoraProfesor)
-    .set('idTipoCompensacion', params.idTipoCompensacion);
+      .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
+      .set('nombreMateria', params.nombreMateria)
+      .set('esDocentePlanta', params.esDocentePlanta)
+      .set('nombreDocente', params.nombreDocente)
+      .set('escalafon', params.escalafon)
+      .set('titulo', params.titulo)
+      .set('horasTeoricasMat', params.horasTeoricasMat)
+      .set('horasPracticasMat', params.horasPracticasMat)
+      .set('valorHoraProfesor', params.valorHoraProfesor)
+      .set('idTipoCompensacion', params.idTipoCompensacion);
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
     return this.http.post(url, body.toString(), { headers, responseType: 'text' });
   }
 
-  editEgresoServiciosDocentes(id:number, nombreMateria: string, 
-    esDocentePlanta:boolean, nombreDocente: string, 
-    escalafon:string, titulo:string, horasTeoricasMat: number,
-    horasPracticasMat: number, valorHoraProfesor: number, 
-    idTipoCompensacion:number) {
+  editEgresoServiciosDocentes(id: number, nombreMateria: string,
+    esDocentePlanta: boolean, nombreDocente: string,
+    escalafon: string, titulo: string, horasTeoricasMat: number,
+    horasPracticasMat: number, valorHoraProfesor: number,
+    idTipoCompensacion: number) {
     const url = `${this.baseUrl}/egresoServDocente/actualizar`;
     const params = new HttpParams()
-    .set('id', id)
-    .set('nombreMateria', nombreMateria)
-    .set('esDocentePlanta', esDocentePlanta)
-    .set('nombreDocente', nombreDocente)
-    .set('escalafon', escalafon)
-    .set('titulo', titulo)
-    .set('horasTeoricasMat', horasTeoricasMat)
-    .set('horasPracticasMat', horasPracticasMat)
-    .set('valorHoraProfesor', valorHoraProfesor)
-    .set('idTipoCompensacion', idTipoCompensacion);
+      .set('id', id)
+      .set('nombreMateria', nombreMateria)
+      .set('esDocentePlanta', esDocentePlanta)
+      .set('nombreDocente', nombreDocente)
+      .set('escalafon', escalafon)
+      .set('titulo', titulo)
+      .set('horasTeoricasMat', horasTeoricasMat)
+      .set('horasPracticasMat', horasPracticasMat)
+      .set('valorHoraProfesor', valorHoraProfesor)
+      .set('idTipoCompensacion', idTipoCompensacion);
     return this.http.put(url, params, { responseType: 'text' });
   }
 
@@ -419,4 +426,6 @@ export class EgresosService {
     const url = `${this.baseUrl}/egresoServDocente/eliminar?id=${id}`;
     return this.http.delete(url, { responseType: 'text' });
   }
+
+
 }

@@ -207,7 +207,7 @@
             </div>
             <div class="row main-summary-font">
               <div class="col-3">
-               <span>Ingresos Totales</span>
+               <span>Ingresos Totales (I - D)</span>
               </div>
               <div class="col-6">
 
@@ -247,6 +247,28 @@
               </div>
               <div class="col-3">
                 <span [ngStyle]="{'color': balanceGeneral > 0 ? 'green' : 'red'}">${{balanceGeneral | number:'1.0-2'}}</span>
+               </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                <span>Total Ingresos</span>
+              </div>
+              <div class="col-6">
+
+              </div>
+              <div class="col-3">
+                <span>${{totalIngresos}}</span>
+               </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                <span>Total Egresos Descuentos</span>
+              </div>
+              <div class="col-6">
+
+              </div>
+              <div class="col-3">
+                <span>${{totalEgresosDescuentos}}</span>
                </div>
             </div>
             <div class="row">
@@ -348,6 +370,7 @@
                 <span>${{totalEgresosOtros}}</span>
                </div>
             </div>
+
           </div>
         </div>
         <div class="row mb-2 mt-2">

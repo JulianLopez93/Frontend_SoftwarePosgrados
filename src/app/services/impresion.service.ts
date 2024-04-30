@@ -15,6 +15,10 @@ export class ImpresionService {
       format: 'letter'
     });
 
+    var img = new Image();
+    img.src = 'assets/images/logo.png';
+    doc.addImage(img, 'JPEG', 30, 10, 50, 50);
+
     // Agrega el título "Prespuesto de la cohorte" al principio del PDF
     doc.setFontSize(22);
     let titulo = "Presupuesto";
@@ -28,12 +32,17 @@ export class ImpresionService {
     doc.text("Generado el " + fecha.toLocaleString(), doc.internal.pageSize.getWidth() / 2, 50 + (splitTitulo.length - 1) * 16, { align: 'center' }); // Ajusta la posición vertical según el número de líneas del título
 
     doc.setFontSize(12);
-    doc.text("Programa: " + presupuesto.cohorte.programa.nombre, 20, 90);
-    doc.text("Cohorte: " + presupuesto.cohorte.numero, 20, 105);
-    doc.text("Fecha de inicio: " + presupuesto.cohorte.fecha, 20, 120);
+
+    doc.text("Universidad de Caldas", 20, 90);
+    doc.text("Vicerrectoría de Investigaciones y Posgrados", 20, 105);
+    doc.text("Presupuesto y costos de programas, proyectos y servicios institucionales", 20, 120);
+    doc.text("Facultad: " + presupuesto.cohorte.programa.departamento.facultad.nombre, 20, 135);
+    doc.text("Programa: " + presupuesto.cohorte.programa.nombre, 20, 150);
+    doc.text("Cohorte: " + presupuesto.cohorte.numero, 20, 165);
+    doc.text("Fecha de inicio: " + presupuesto.cohorte.fecha, 20, 180);
 
     // Inicializa la altura actual debajo de la la fecha de inicio de la cohorte
-    let currentHeight = 130;
+    let currentHeight = 190;
 
     for (let dato of datos) {
       doc.setFontSize(14);
@@ -60,15 +69,15 @@ export class ImpresionService {
     doc.text("Observaciones: " + presupuesto.observaciones, 20, currentHeight + 30);
     currentHeight += 30;
 
-    doc.addPage();
+    //doc.addPage();
     doc.setFontSize(14);
-    doc.text("Resumen de la cohorte", doc.internal.pageSize.getWidth() / 2, 25, { align: 'center' });
+    doc.text("Resumen general", doc.internal.pageSize.getWidth() / 2, currentHeight + 30, { align: 'center' });
     doc.setFontSize(12);
 
-    doc.text("Total de ingresos (menos descuentos): " + presupuesto.ingresosTotales, 20, 60);
-    doc.text("Total de egresos del programa: " + presupuesto.egresosProgramaTotales, 20, 75);
-    doc.text("Total de egresos recurrentes para la universidad: " + presupuesto.egresosRecurrentesUniversidadTotales, 20, 90);
-    doc.text("Balance general: " + presupuesto.balanceGeneral, 20, 105);
+    doc.text("Total de ingresos (I - D): " + presupuesto.ingresosTotales, 20, currentHeight + 60);
+    doc.text("Total de egresos del programa: " + presupuesto.egresosProgramaTotales, 20, currentHeight + 75);
+    doc.text("Total de egresos recurrentes para la universidad: " + presupuesto.egresosRecurrentesUniversidadTotales, 20, currentHeight + 90);
+    doc.text("Balance general: " + presupuesto.balanceGeneral, 20, currentHeight + 105);
 
 
 

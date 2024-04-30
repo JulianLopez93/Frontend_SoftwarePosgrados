@@ -26,7 +26,7 @@ export class CrearPresupuestoComponent {
   programaCohorte: any;
   departamentoCohorte: any;
   facultadCohorte: any;
-  ingresosTotales: any;
+  ingresosTotales: any; //Ingresos - Descuentos
   egresosTotalesPrograma: any;
   egresosTotalesRecurrentes: any;
   balanceGeneral: any;
@@ -40,6 +40,8 @@ export class CrearPresupuestoComponent {
   totalEgresosRecurrentes: any;
   totalEgresosViajes: any;
   totalEgresosServDocentes: any;
+  totalEgresosDescuentos: any;
+  totalIngresos: any;
   paginaActual = 1;
 
   constructor(
@@ -205,13 +207,13 @@ export class CrearPresupuestoComponent {
             encabezado: encabezadoIngresos,
             cuerpo: this.formatIngresos(result.ingresos),
             titulo: 'Ingresos',
-            total: this.ingresosTotales,
+            total: this.totalIngresos,
           },
           {
             encabezado: encabezadoDescuentos,
             cuerpo: this.formatEgresosDescuentos(result.egresosDescuentos),
             titulo: 'Egresos de descuentos',
-            total: 0,
+            total: this.totalEgresosDescuentos,
           },
           {
             encabezado: encabezadoServDocentes,
@@ -293,7 +295,7 @@ export class CrearPresupuestoComponent {
       datosIngresos.push(filaIngreso);
     }
     datosIngresos.push(['', '']);
-    datosIngresos.push(['Total', this.ingresosTotales]);
+    datosIngresos.push(['Total', this.totalIngresos]);
     return datosIngresos;
   }
 
@@ -328,7 +330,7 @@ export class CrearPresupuestoComponent {
       datosEgresos.push(filaEgreso);
     }
     datosEgresos.push(['', '', '', '', '']);
-    datosEgresos.push(['Total', '', '', '', 0]);
+    datosEgresos.push(['Total', '', '', '', this.totalEgresosDescuentos]);
     return datosEgresos;
   }
 
@@ -367,7 +369,7 @@ export class CrearPresupuestoComponent {
       datosEgresos.push(filaEgreso);
     }
     datosEgresos.push(['', '', '', '', '']);
-    datosEgresos.push(['Total', '', '', '', this.totalEgresosOtrosServDocentes]);
+    datosEgresos.push(['Total', '', '', this.totalEgresosOtrosServDocentes, '']);
     return datosEgresos;
   }
 
@@ -571,6 +573,24 @@ export class CrearPresupuestoComponent {
       });
   }
 
+  obtenerTotalEgresosDescuentos() {
+    console.log(this.idPresupuesto);
+    this.egresosServices
+      .getTotalEgresosDescuentos(this.idPresupuesto)
+      .subscribe((result: any) => {
+        console.log(result);
+        this.totalEgresosDescuentos = result;
+      });
+  }
+
+  obtenerTotalIngresos() {
+    console.log(this.idPresupuesto);
+    this.ingresosServices.getTotalIngresos(this.idPresupuesto).subscribe((result: any) => {
+      console.log(result);
+      this.totalIngresos = result;
+    });
+  }
+
   crearPresupuesto(idCohorte: any) {
     try {
       console.log(idCohorte);
@@ -612,6 +632,7 @@ export class CrearPresupuestoComponent {
           result.egresosRecurrentesUniversidadTotales;
         this.balanceGeneral = result.balanceGeneral;
 
+
         this.obtenerTotalEgresosTransferencia();
         this.obtenerTotalEgresosGenerales();
         this.obtenerTotalEgresosInversiones();
@@ -621,6 +642,8 @@ export class CrearPresupuestoComponent {
         this.obtenerTotalEgresosServiciosNoDocentes();
         this.obtenerTotalEgresosViajes();
         this.obtenerTotalEgresosServiciosDocentes();
+        this.obtenerTotalEgresosDescuentos();
+        this.obtenerTotalIngresos();
 
         console.log(this.idPresupuesto);
         console.log(this.numeroCohorte);
@@ -629,6 +652,7 @@ export class CrearPresupuestoComponent {
         console.log(this.egresosTotalesPrograma);
         console.log(this.egresosTotalesRecurrentes);
         console.log(this.balanceGeneral);
+
 
         console.log(result.id);
         localStorage.setItem('idPresupuesto', result.id);

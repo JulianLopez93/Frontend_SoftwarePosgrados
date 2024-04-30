@@ -212,13 +212,13 @@ export class CrearPresupuestoComponent {
           {
             encabezado: encabezadoDescuentos,
             cuerpo: this.formatEgresosDescuentos(result.egresosDescuentos),
-            titulo: 'Egresos de descuentos',
+            titulo: 'Egresos por descuentos',
             total: this.totalEgresosDescuentos,
           },
           {
             encabezado: encabezadoServDocentes,
             cuerpo: this.formatEgresosServDocentes(result.egresosServDocentes),
-            titulo: 'Egresos de servicios Docentes',
+            titulo: 'Egresos por servicios Docentes',
             total: this.totalEgresosServDocentes,
           },
           {
@@ -226,7 +226,7 @@ export class CrearPresupuestoComponent {
             cuerpo: this.formatEgresosOtrosServDocentes(
               result.egresosOtrosServDocentes
             ),
-            titulo: 'Egresos de otros servicios docentes',
+            titulo: 'Egresos por otros servicios docentes',
             total: this.totalEgresosOtrosServDocentes,
           },
           {
@@ -234,7 +234,7 @@ export class CrearPresupuestoComponent {
             cuerpo: this.formatEgresosServNoDocentes(
               result.egresosServNoDocentes
             ),
-            titulo: 'Egresos de servicios no docentes',
+            titulo: 'Egresos por servicios no docentes',
             total: this.totalEgresosServNoDocentes,
           },
           {
@@ -246,7 +246,7 @@ export class CrearPresupuestoComponent {
           {
             encabezado: encabezadoViajes,
             cuerpo: this.formatEgresosViajes(result.egresosViaje),
-            titulo: 'Egresos de viajes',
+            titulo: 'Egresos por viajes',
             total: this.totalEgresosViajes,
           },
           {
@@ -254,13 +254,13 @@ export class CrearPresupuestoComponent {
             cuerpo: this.formatEgresosTransferencias(
               result.egresosTransferencias
             ),
-            titulo: 'Egresos de transferencias',
+            titulo: 'Egresos por transferencias',
             total: this.totalEgresosTransferencia,
           },
           {
             encabezado: encabezadoInversion,
             cuerpo: this.formatEgresosInversiones(result.egresosInversiones),
-            titulo: 'Egresos de inversiones',
+            titulo: 'Egresos por inversiones',
             total: this.totalEgresosInversiones,
           },
           {

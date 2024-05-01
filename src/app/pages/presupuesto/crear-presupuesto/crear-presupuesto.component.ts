@@ -113,6 +113,35 @@ export class CrearPresupuestoComponent {
     );
   }
 
+  actualizarPresupuesto()
+  {
+    try {
+      this.observaciones = this.presupuestoForm.value.observaciones;
+    const params=
+    {
+      id: this.idPresupuesto,
+      observaciones: this.observaciones,
+      idCohorte: this.idCohorte
+    }
+    console.log(params)
+    this.presupuestosServices.editPresupuesto(this.idPresupuesto, this.observaciones, this.idCohorte)
+    .subscribe((result:any) => {
+      console.log(result);
+      if(result == 'OK')
+        {
+          console.log("Presupuesto actualizado");
+          this.redirectTo();
+        }
+    })
+      
+    } 
+    catch (error) {
+      
+    }
+    
+
+  }
+
   enviarParaRevision() {
     this.presupuestosServices
       .sendPresupuestoForReview(this.idPresupuesto)
@@ -480,6 +509,7 @@ export class CrearPresupuestoComponent {
   }
 
   redirectTo() {
+    console.log(this.presupuestoForm.value.observaciones);
     this.router2.navigate(['cohortes/listar-cohortes']);
   }
 
@@ -631,6 +661,13 @@ export class CrearPresupuestoComponent {
         this.egresosTotalesRecurrentes =
           result?.egresosRecurrentesUniversidadTotales;
         this.balanceGeneral = result?.balanceGeneral;
+        this.observaciones = result?.observaciones;
+
+        this.presupuestoForm.patchValue(
+          {
+            'observaciones': this.observaciones
+          }
+        )
 
 
         this.obtenerTotalEgresosTransferencia();

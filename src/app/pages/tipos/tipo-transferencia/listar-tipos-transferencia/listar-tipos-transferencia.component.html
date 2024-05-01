@@ -1,7 +1,7 @@
 <div class="container">
     <!-- Contenedor para el botón y el campo de búsqueda -->
     <div class="action-bar">
-      <button mat-raised-button color="primary"  (click)="openCreateDialog('tipo de transferencia')" class="create-button">Crear Tipo de Transferencia</button>
+      <button mat-raised-button style="background-color: #003b70; color: white;"  (click)="openCreateDialog('tipo de transferencia')" class="create-button">Crear Tipo de Transferencia</button>
       <!-- Campo de búsqueda -->
       <mat-form-field class="example-full-width search-field" appearance="fill">
           <input matInput [(ngModel)]="searchText" (ngModelChange)="applyFilter()" placeholder="Ingresa tu búsqueda">
@@ -11,13 +11,13 @@
 <table mat-table [dataSource]="filteredTipos | paginate: { itemsPerPage: 10, currentPage: p }" class="mat-elevation-z8" >
 <!-- Columna de nombre -->
 <ng-container matColumnDef="nombre">
-<th mat-header-cell *matHeaderCellDef> Nombre </th>
+<th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Nombre </th>
 <td mat-cell *matCellDef="let tipo"> {{tipo.nombreTipo}} </td>
 </ng-container>
 
 <!-- Columna de acciones -->
 <ng-container matColumnDef="acciones">
-<th mat-header-cell *matHeaderCellDef> Acciones </th>
+<th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Acciones </th>
 <td mat-cell *matCellDef="let tipo">
   <button mat-icon-button color="primary" (click)="openCreateDialog('tipo de transferencia',tipo)">
     <mat-icon>edit</mat-icon>

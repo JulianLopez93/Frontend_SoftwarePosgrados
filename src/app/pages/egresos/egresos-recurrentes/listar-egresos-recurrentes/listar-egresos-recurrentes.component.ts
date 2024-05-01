@@ -27,7 +27,7 @@ export class ListarEgresosRecurrentesComponent {
 
   ngOnInit() {
 
-    this.idPresupuesto = localStorage.getItem('idPresupuesto');
+    this.idPresupuesto = sessionStorage.getItem('idPresupuesto');
     console.log(this.idPresupuesto);
     //localStorage.removeItem('idPresupuesto');
     this.obtenerEgresosRecurrentesPorPresupuesto();

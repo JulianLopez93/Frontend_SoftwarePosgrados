@@ -32,7 +32,7 @@ export class ListarEgresosServiciosDocentesComponent {
 
   ngOnInit() {
 
-    this.idPresupuesto = localStorage.getItem('idPresupuesto');
+    this.idPresupuesto = sessionStorage.getItem('idPresupuesto');
     console.log(this.idPresupuesto);
     //localStorage.removeItem('idPresupuesto');
     this.obtenerEgresosServiciosDocentesPorPresupuesto();

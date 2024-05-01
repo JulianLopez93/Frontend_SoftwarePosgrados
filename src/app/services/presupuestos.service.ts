@@ -43,11 +43,12 @@ export class PresupuestosService {
     return this.http.delete(url, { responseType: 'text' });
   }
 
-  editPresupuesto(id:number, observaciones:string) {
+  editPresupuesto(id:number, observaciones:string, idCohorte:number) {
     const url = `${this.baseUrl}/actualizar`;
     const params = new HttpParams()
     .set('id', id)
     .set('observaciones', observaciones)
+    .set('idCohorte', idCohorte);
   return this.http.put(url, params.toString(), { params: params, responseType: 'text' });
   }
 }

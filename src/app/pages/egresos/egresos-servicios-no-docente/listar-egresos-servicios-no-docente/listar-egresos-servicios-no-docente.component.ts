@@ -31,7 +31,7 @@ export class ListarEgresosServiciosNoDocenteComponent {
 
   ngOnInit() {
 
-    this.idPresupuesto = localStorage.getItem('idPresupuesto');
+    this.idPresupuesto = sessionStorage.getItem('idPresupuesto');
     console.log(this.idPresupuesto);
     //localStorage.removeItem('idPresupuesto');
     this.obtenerEgresosServNoDocentePorPresupuesto();

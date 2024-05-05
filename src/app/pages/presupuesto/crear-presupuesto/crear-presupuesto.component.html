@@ -374,8 +374,11 @@
                 <h4 class="section-title-text">Observaciones</h4>
                 <mat-form-field appearance="fill">
                   <mat-label>Observaciones</mat-label>
-                  <textarea matInput formControlName="observaciones"></textarea>
+                  <textarea matInput formControlName="observaciones"  maxlength="2000"></textarea>
                 </mat-form-field>
+                <div [ngClass]="contadorClase()">
+                  Caracteres restantes: {{ caracteresRestantes }}
+                </div>
               </div>
             </div>
           </div>

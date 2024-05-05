@@ -17,7 +17,7 @@ import { ImpresionService } from '@app/services/impresion.service';
 export class CrearPresupuestoComponent {
   listaCohortes: any[] = [];
   cohorteSeleccionada: number = 0;
-  observaciones: string = '';
+  //observaciones: string = '';
   presupuestoForm: FormGroup = new FormGroup({});
   idCohorte: number = 0;
   idPresupuesto: number = 0;
@@ -116,7 +116,6 @@ export class CrearPresupuestoComponent {
   actualizarPresupuesto()
   {
     try {
-      this.observaciones = this.presupuestoForm.value.observaciones;
     const params=
     {
       id: this.idPresupuesto,
@@ -152,6 +151,18 @@ export class CrearPresupuestoComponent {
           this.router2.navigate(['cohortes/listar-cohortes']);
         }
       });
+  }
+
+  get observaciones() {
+    return this.presupuestoForm.get('observaciones')?.value;
+  }
+
+  get caracteresRestantes() {
+    return 200 - this.observaciones.length;
+  }
+
+  contadorClase() {
+    return this.caracteresRestantes < 0 ? 'contador-negativo' : '';
   }
 
   imprimirReporteEgresos() {
@@ -661,11 +672,11 @@ export class CrearPresupuestoComponent {
         this.egresosTotalesRecurrentes =
           result?.egresosRecurrentesUniversidadTotales;
         this.balanceGeneral = result?.balanceGeneral;
-        this.observaciones = result?.observaciones;
+        //this.observaciones = result?.observaciones;
 
         this.presupuestoForm.patchValue(
           {
-            'observaciones': this.observaciones
+            'observaciones': result?.observaciones
           }
         )
 

@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="card mt-4">
+    <div class="card-header">
+      <h3 class="title-text mt-2">Bienvenido/a a Posgrados UCaldas</h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-5"> 
+          <form [formGroup]="loginForm">
+            <div class="row mb-2">
+              <div>
+                <img class="ucaldas-logo" src="../../../../assets/images/ucaldaslogo.jpeg" alt="">
+              </div>
+              <!-- <div >
+                <img src="../../../../assets/images/logo.jpg" alt="">
+              </div> -->
+            </div>
+            <div class="row">
+                <mat-form-field>
+                  <input matInput placeholder="Usuario" formControlName="username" required>
+                  <!-- <mat-error *ngIf="username.invalid">{{getErrorMessage()}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <input matInput placeholder="Contraseña" formControlName="password" [type]="hide ? 'password' : 'text'">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                  </mat-form-field>
+            </div>
+            <div class="row">
+                <button mat-raised-button style="background-color: #003b70; color: white;" (click)="onSubmit()">Iniciar sesión</button>
+            </div>
+            <div class="row mt-2">
+              <a routerLink="">¿No tienes una cuenta? Regístrate aquí</a>
+            </div>  
+          </form>
+        </div>
+        <div class="col-md-7">
+          <img class="ucaldas-image" src="../../../../assets/images/programas-especiales.png" alt="Descripción de la imagen">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

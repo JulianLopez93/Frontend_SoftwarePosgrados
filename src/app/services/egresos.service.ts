@@ -13,19 +13,29 @@ export class EgresosService {
 
   getEgresosTransferencia(): Observable<any> {
     const url = `${this.baseUrl}/egresoTransferencia/listar`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
-
+  
   getEgresosTransferenciaPorPresupuesto(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoTransferencia/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
-
+  
   getTotalEgresosTransferencia(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoTransferencia/totalEgresosTransferencias?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
-
+  
   postEgresoTransferencia(params: any) {
     const url = `${this.baseUrl}/egresoTransferencia/crear`;
     const body = new HttpParams()
@@ -33,16 +43,13 @@ export class EgresosService {
       .set('descripcion', params.descripcion)
       .set('porcentaje', params.porcentaje)
       .set('idTipoTransferencia', params.idTipoTransferencia);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
-
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
     return this.http.post(url, body.toString(), { headers, responseType: 'text' });
   }
-
-  deleteEgresoTransferencia(id: string) {
-    const url = `${this.baseUrl}/egresoTransferencia/eliminar?id=${id}`;
-    return this.http.delete(url, { responseType: 'text' });
-  }
-
+  
   editEgresoTransferencia(id: number, descripcion: string, porcentaje: number, idTipoTransferencia: number) {
     const url = `${this.baseUrl}/egresoTransferencia/actualizar`;
     const params = new HttpParams()
@@ -50,22 +57,45 @@ export class EgresosService {
       .set('descripcion', descripcion)
       .set('porcentaje', porcentaje)
       .set('idTipoTransferencia', idTipoTransferencia);
-    return this.http.put(url, params, { responseType: 'text' });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.put(url, params.toString(), { headers, responseType: 'text' });
   }
+  
+  deleteEgresoTransferencia(id: string) {
+    const url = `${this.baseUrl}/egresoTransferencia/eliminar?id=${id}`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.delete(url, { headers, responseType: 'text' });
+  }
+
 
   getEgresosGenerales(): Observable<any> {
     const url = `${this.baseUrl}/egresoGeneral/listar`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   getTotalEgresosGenerales(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoGeneral/totalEgresosGenerales?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   getEgresosGeneralesPorPresupuesto(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoGeneral/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   postEgresoGeneral(params: any) {
@@ -76,14 +106,11 @@ export class EgresosService {
       .set('valorUnitario', params.valorUnitario)
       .set('cantidad', params.cantidad)
       .set('idTipoCosto', params.idTipoCosto);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
-
-    return this.http.post(url, body.toString(), { headers, responseType: 'text' });
-  }
-
-  deleteEgresoGeneral(id: string) {
-    const url = `${this.baseUrl}/egresoGeneral/eliminar?id=${id}`;
-    return this.http.delete(url, { responseType: 'text' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
+      return this.http.post(url, body.toString(), { headers, responseType: 'text' });
   }
 
   editEgresoGeneral(id: number, concepto: string, valorUnitario: number, cantidad: number, idTipoCosto: number) {
@@ -94,22 +121,44 @@ export class EgresosService {
       .set('valorUnitario', valorUnitario)
       .set('cantidad', cantidad)
       .set('idTipoCosto', idTipoCosto);
-    return this.http.put(url, params, { responseType: 'text' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
+      return this.http.put(url, params.toString(), { headers, responseType: 'text' });
+  }
+
+  deleteEgresoGeneral(id: string) {
+    const url = `${this.baseUrl}/egresoGeneral/eliminar?id=${id}`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.delete(url, { headers, responseType: 'text' });
   }
 
   getEgresosOtros(): Observable<any> {
     const url = `${this.baseUrl}/egresoOtro/listar`;
-    return this.http.get(url);
-  }
-
-  getTotalEgresosOtros(idPresupuesto: number): Observable<any> {
-    const url = `${this.baseUrl}/egresoOtro/totalEgresosOtros?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   getEgresosOtrosPorPresupuesto(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoOtro/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
+  }
+
+  getTotalEgresosOtros(idPresupuesto: number): Observable<any> {
+    const url = `${this.baseUrl}/egresoOtro/totalEgresosOtros?idPresupuesto=${idPresupuesto}`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   postEgresoOtros(params: any) {
@@ -120,14 +169,11 @@ export class EgresosService {
       .set('valorUnitario', params.valorUnitario)
       .set('cantidad', params.cantidad)
       .set('idTipoCosto', params.idTipoCosto);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
-
-    return this.http.post(url, body.toString(), { headers, responseType: 'text' });
-  }
-
-  deleteEgresoOtros(id: string) {
-    const url = `${this.baseUrl}/egresoOtro/eliminar?id=${id}`;
-    return this.http.delete(url, { responseType: 'text' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
+      return this.http.post(url, body.toString(), { headers, responseType: 'text' });
   }
 
   editEgresoOtros(id: number, concepto: string, valorUnitario: number, cantidad: number, idTipoCosto: number) {
@@ -138,22 +184,44 @@ export class EgresosService {
       .set('valorUnitario', valorUnitario)
       .set('cantidad', cantidad)
       .set('idTipoCosto', idTipoCosto);
-    return this.http.put(url, params, { responseType: 'text' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
+      return this.http.put(url, params.toString(), { headers, responseType: 'text' });
+  }
+
+  deleteEgresoOtros(id: string) {
+    const url = `${this.baseUrl}/egresoOtro/eliminar?id=${id}`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.delete(url, { headers, responseType: 'text' });
   }
 
   getEgresosServiciosNoDocente(): Observable<any> {
     const url = `${this.baseUrl}/egresoServNoDocente/listar`;
-    return this.http.get(url);
-  }
-
-  getTotalEgresosServiciosNoDocentes(idPresupuesto: number): Observable<any> {
-    const url = `${this.baseUrl}/egresoServNoDocente/totalEgresosServNoDocentes?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   getEgresosServiciosNoDocentePorPresupuesto(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoServNoDocente/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
+  }
+
+  getTotalEgresosServiciosNoDocentes(idPresupuesto: number): Observable<any> {
+    const url = `${this.baseUrl}/egresoServNoDocente/totalEgresosServNoDocentes?idPresupuesto=${idPresupuesto}`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   postEgresoServiciosNoDocente(params: any) {
@@ -164,14 +232,11 @@ export class EgresosService {
       .set('valorUnitario', params.valorUnitario)
       .set('cantidad', params.cantidad)
       .set('idTipoCosto', params.idTipoCosto);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
-
-    return this.http.post(url, body.toString(), { headers, responseType: 'text' });
-  }
-
-  deleteEgresoServiciosNoDocente(id: string) {
-    const url = `${this.baseUrl}/egresoServNoDocente/eliminar?id=${id}`;
-    return this.http.delete(url, { responseType: 'text' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
+      return this.http.post(url, body.toString(), { headers, responseType: 'text' });
   }
 
   editEgresoServiciosNoDocente(id: number, servicio: string, valorUnitario: number, cantidad: number, idTipoCosto: number) {
@@ -182,22 +247,46 @@ export class EgresosService {
       .set('valorUnitario', valorUnitario)
       .set('cantidad', cantidad)
       .set('idTipoCosto', idTipoCosto);
-    return this.http.put(url, params, { responseType: 'text' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
+      return this.http.put(url, params.toString(), { headers, responseType: 'text' });
+  }
+
+  deleteEgresoServiciosNoDocente(id: string) {
+    const url = `${this.baseUrl}/egresoServNoDocente/eliminar?id=${id}`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.delete(url, { headers, responseType: 'text' });
   }
 
   getEgresosOtrosServiciosDocente(): Observable<any> {
     const url = `${this.baseUrl}/egresoOtrosServDocente/listar`;
-    return this.http.get(url);
-  }
-
-  getTotalEgresosOtrosServiciosDocentes(idPresupuesto: number): Observable<any> {
-    const url = `${this.baseUrl}/egresoOtrosServDocente/totalEgresosOtrosServDocentes?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   getEgresosOtrosServiciosDocentePorPresupuesto(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoOtrosServDocente/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
+  }
+
+  getTotalEgresosOtrosServiciosDocentes(idPresupuesto: number): Observable<any> {
+    const url = `${this.baseUrl}/egresoOtrosServDocente/totalEgresosOtrosServDocentes?idPresupuesto=${idPresupuesto}`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   postEgresoOtrosServiciosDocente(params: any) {
@@ -209,14 +298,11 @@ export class EgresosService {
       .set('numHoras', params.numHoras)
       .set('valorTotal', params.valorTotal)
       .set('idTipoCosto', params.idTipoCosto);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
-
-    return this.http.post(url, body.toString(), { headers, responseType: 'text' });
-  }
-
-  deleteEgresoOtrosServiciosDocente(id: string) {
-    const url = `${this.baseUrl}/egresoOtrosServDocente/eliminar?id=${id}`;
-    return this.http.delete(url, { responseType: 'text' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
+      return this.http.post(url, body.toString(), { headers, responseType: 'text' });
   }
 
   editEgresoOtrosServiciosDocente(id: number, servicio: string, descripcion: string, numHoras: number, valorTotal: number, idTipoCosto: number) {
@@ -228,22 +314,46 @@ export class EgresosService {
       .set('numHoras', numHoras)
       .set('valorTotal', valorTotal)
       .set('idTipoCosto', idTipoCosto);
-    return this.http.put(url, params, { responseType: 'text' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
+      return this.http.put(url, params.toString(), { headers, responseType: 'text' });
+  }
+
+  deleteEgresoOtrosServiciosDocente(id: string) {
+    const url = `${this.baseUrl}/egresoOtrosServDocente/eliminar?id=${id}`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.delete(url, { headers, responseType: 'text' });
   }
 
   getEgresosInversion(): Observable<any> {
     const url = `${this.baseUrl}/egresoInversion/listar`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   getTotalEgresosInversiones(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoInversion/totalEgresosInversiones?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   getEgresosInversionPorPresupuesto(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoInversion/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   postEgresoInversion(params: any) {
@@ -253,14 +363,11 @@ export class EgresosService {
       .set('concepto', params.concepto)
       .set('valor', params.valor)
       .set('idTipoInversion', params.idTipoInversion);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
-
-    return this.http.post(url, body.toString(), { headers, responseType: 'text' });
-  }
-
-  deleteEgresoInversion(id: string) {
-    const url = `${this.baseUrl}/egresoInversion/eliminar?id=${id}`;
-    return this.http.delete(url, { responseType: 'text' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
+      return this.http.post(url, body.toString(), { headers, responseType: 'text' });
   }
 
   editEgresoInversion(id: number, concepto: string, valor: number, idTipoInversion: number) {
@@ -270,21 +377,47 @@ export class EgresosService {
       .set('concepto', concepto)
       .set('valor', valor)
       .set('idTipoInversion', idTipoInversion);
-    return this.http.put(url, params, { responseType: 'text' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
+      return this.http.put(url, params.toString(), { headers, responseType: 'text' });
   }
+
+  deleteEgresoInversion(id: string) {
+    const url = `${this.baseUrl}/egresoInversion/eliminar?id=${id}`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.delete(url, { headers, responseType: 'text' });
+  }
+
+  
   getEgresosRecurrentes(): Observable<any> {
     const url = `${this.baseUrl}/egresoRecurrenteAdm/listar`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   getTotalEgresosRecurrentes(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoRecurrenteAdm/totalEgresosRecurrentesAdm?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   getEgresosRecurrentesPorPresupuesto(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoRecurrenteAdm/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   postEgresoRecurrente(params: any) {
@@ -295,14 +428,11 @@ export class EgresosService {
       .set('cargo', params.cargo)
       .set('valorHora', params.valorHora)
       .set('numHoras', params.numHoras);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
-
-    return this.http.post(url, body.toString(), { headers, responseType: 'text' });
-  }
-
-  deleteEgresoRecurrente(id: string) {
-    const url = `${this.baseUrl}/egresoRecurrenteAdm/eliminar?id=${id}`;
-    return this.http.delete(url, { responseType: 'text' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
+      return this.http.post(url, body.toString(), { headers, responseType: 'text' });
   }
 
   editEgresoRecurrente(id: number, unidad: string, cargo: string, valorHora: number, numHoras: number,) {
@@ -313,22 +443,46 @@ export class EgresosService {
       .set('cargo', cargo)
       .set('valorHora', valorHora)
       .set('numHoras', numHoras);
-    return this.http.put(url, params, { responseType: 'text' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
+      return this.http.put(url, params.toString(), { headers, responseType: 'text' });
+  }
+
+  deleteEgresoRecurrente(id: string) {
+    const url = `${this.baseUrl}/egresoRecurrenteAdm/eliminar?id=${id}`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.delete(url, { headers, responseType: 'text' });
   }
 
   getEgresosViajes(): Observable<any> {
     const url = `${this.baseUrl}/egresoViaje/listar`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   getTotalEgresosViajes(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoViaje/totalEgresosViajes?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   getEgresosViajesPorPresupuesto(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoViaje/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   postEgresoViajes(params: any) {
@@ -340,14 +494,11 @@ export class EgresosService {
       .set('apoyoDesplazamiento', params.apoyoDesplazamiento)
       .set('numViajesPorPersona', params.numViajesPorPersona)
       .set('valorTransporte', params.valorTransporte);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
-
-    return this.http.post(url, body.toString(), { headers, responseType: 'text' });
-  }
-
-  deleteEgresoViajes(id: string) {
-    const url = `${this.baseUrl}/egresoViaje/eliminar?id=${id}`;
-    return this.http.delete(url, { responseType: 'text' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
+      return this.http.post(url, body.toString(), { headers, responseType: 'text' });
   }
 
   editEgresoViajes(id: number, descripcion: string, numPersonas: number,
@@ -360,26 +511,55 @@ export class EgresosService {
       .set('apoyoDesplazamiento', apoyoDesplazamiento)
       .set('numViajesPorPersona', numViajesPorPersona)
       .set('valorTransporte', valorTransporte);
-    return this.http.put(url, params, { responseType: 'text' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
+      return this.http.put(url, params.toString(), { headers, responseType: 'text' });
   }
+
+  deleteEgresoViajes(id: string) {
+    const url = `${this.baseUrl}/egresoViaje/eliminar?id=${id}`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.delete(url, { headers, responseType: 'text' });
+  }
+
   getEgresosServiciosDocentes(): Observable<any> {
     const url = `${this.baseUrl}/egresoServDocente/listar`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   getTotalEgresosServiciosDocentes(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoServDocente/totalEgresosServDocentes?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   getEgresosServiciosDocentesPorPresupuesto(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoServDocente/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   getTotalEgresosDescuentos(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/egresoDescuento/totalEgresosDescuentos?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
 
@@ -397,9 +577,11 @@ export class EgresosService {
       .set('horasPracticasMat', params.horasPracticasMat)
       .set('valorHoraProfesor', params.valorHoraProfesor)
       .set('idTipoCompensacion', params.idTipoCompensacion);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
-
-    return this.http.post(url, body.toString(), { headers, responseType: 'text' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
+      return this.http.post(url, body.toString(), { headers, responseType: 'text' });
   }
 
   editEgresoServiciosDocentes(id: number, nombreMateria: string,
@@ -419,12 +601,19 @@ export class EgresosService {
       .set('horasPracticasMat', horasPracticasMat)
       .set('valorHoraProfesor', valorHoraProfesor)
       .set('idTipoCompensacion', idTipoCompensacion);
-    return this.http.put(url, params, { responseType: 'text' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
+      return this.http.put(url, params.toString(), { headers, responseType: 'text' });
   }
 
   deleteEgresoServiciosDocentes(id: string) {
     const url = `${this.baseUrl}/egresoServDocente/eliminar?id=${id}`;
-    return this.http.delete(url, { responseType: 'text' });
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.delete(url, { headers, responseType: 'text' });
   }
 
 

@@ -13,29 +13,40 @@ export class PresupuestosService {
 
   getPresupuestos(): Observable<any> {
     const url = `${this.baseUrl}/listar`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   postPresupuesto(params: any) {
     const url = `${this.baseUrl}/crear`;
     const body = new HttpParams()
       .set('idCohorte', params.idCohorte);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
   
     return this.http.post(url, body.toString(), { headers, responseType: 'text' });
   }
 
-  sendPresupuestoForReview(id:number)
-  {
+  sendPresupuestoForReview(id:number) {
     const url = `${this.baseUrl}/enviarParaRevision?id=${id}`;
-    return this.http.put(url, id.toString());
-
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.put(url, id.toString(), { headers });
   }
 
-  getPresupuestoPorCohorte(idCohorte:number)
-  {
+  getPresupuestoPorCohorte(idCohorte:number) {
     const url = `${this.baseUrl}/buscarPorCohorte?idCohorte=${idCohorte}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   deletePresupuesto(idCohorte: string) {

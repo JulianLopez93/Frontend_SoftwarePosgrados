@@ -12,11 +12,19 @@ export class IngresosService {
 
   getIngresos(): Observable<any> {
     const url = `${this.baseUrl}/listar`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
   getIngresosPorPresupuesto(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/listarPorPresupuesto?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   postIngresos(params: any) {
@@ -25,14 +33,12 @@ export class IngresosService {
       .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
       .set('concepto', params.concepto)
       .set('valor', params.valor);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
 
     return this.http.post(url, body.toString(), { headers, responseType: 'text' });
-  }
-
-  deleteIngreso(id: string) {
-    const url = `${this.baseUrl}/eliminar?id=${id}`;
-    return this.http.delete(url, { responseType: 'text' });
   }
 
   editIngreso(id: number, concepto: string, valor: number) {
@@ -41,11 +47,27 @@ export class IngresosService {
       .set('id', id.toString())
       .set('concepto', concepto)
       .set('valor', valor);
-    return this.http.put(url, params.toString(), { params: params, responseType: 'text' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
+      return this.http.put(url, params.toString(), { headers, responseType: 'text' });
+  }
+
+  deleteIngreso(id: string) {
+    const url = `${this.baseUrl}/eliminar?id=${id}`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.delete(url, { headers, responseType: 'text' });
   }
 
   getTotalIngresos(idPresupuesto: number): Observable<any> {
     const url = `${this.baseUrl}/totalIngresos?idPresupuesto=${idPresupuesto}`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 }

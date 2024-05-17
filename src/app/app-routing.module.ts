@@ -4,6 +4,10 @@ import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   {
+    path: 'login',
+    loadChildren: () => import(`@pages/auth/auth.module`).then(m => m.AuthModule)
+  },
+  {
 
     path: '',
     component: HomeComponent,

@@ -13,13 +13,20 @@ export class CohortesService {
 
   getCohortes(): Observable<any> {
     const url = `${this.baseUrl}/listar`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   searchCohorte(idCohorte: string)
   {
     const url = `${this.baseUrl}/buscar?id=${idCohorte}`;
-    return this.http.get(url, { responseType: 'text' });
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.delete(url, { headers, responseType: 'text' });
 
   }
 
@@ -29,14 +36,12 @@ export class CohortesService {
       .set('numero', params.numero)
       .set('fecha', params.fecha)
       .set('idPrograma', params.idPrograma);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
   
     return this.http.post(url, body.toString(), { headers, responseType: 'text' });
-  }
-
-  deleteCohorte(idCohorte: string) {
-    const url = `${this.baseUrl}/eliminar?id=${idCohorte}`;
-    return this.http.delete(url, { responseType: 'text' });
   }
 
   editCohorte(numero: string, fecha: string, idCohorte: string,  idPrograma:number) {
@@ -47,6 +52,20 @@ export class CohortesService {
     .set('fecha', fechaFormateada)
     .set('idCohorte', idCohorte.toString())     
     .set('idPrograma', idPrograma.toString());
-  return this.http.put(url, params.toString(), { params: params, responseType: 'text' });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.put(url, params.toString(), { headers, responseType: 'text' });
   }
+
+  deleteCohorte(idCohorte: string) {
+    const url = `${this.baseUrl}/eliminar?id=${idCohorte}`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.delete(url, { headers, responseType: 'text' });
+  }
+
+  
 }

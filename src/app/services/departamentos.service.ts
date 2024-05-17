@@ -13,7 +13,11 @@ export class DepartamentosService {
 
   getDepartamentos(): Observable<any> {
     const url = `${this.baseUrl}/listar`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   postDepartamento(params: any) {
@@ -21,14 +25,12 @@ export class DepartamentosService {
     const body = new HttpParams()
       .set('nombre', params.nombre)
       .set('idFacultad', params.idFacultad);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
   
     return this.http.post(url, body.toString(), { headers, responseType: 'text' });
-  }
-
-  deleteDepartamento(idDepartamento: string) {
-    const url = `${this.baseUrl}/eliminar?id=${idDepartamento}`;
-    return this.http.delete(url, { responseType: 'text' });
   }
 
   editDepartamento(nombre: string, idDepartamento: string,  idFacultad:number) {
@@ -37,8 +39,19 @@ export class DepartamentosService {
     .set('nombre', nombre)
     .set('idDepartamento', idDepartamento)     
     .set('idFacultad', idFacultad);
-    return this.http.put(url, params, { responseType: 'text' });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.put(url, params.toString(), { headers, responseType: 'text' });
   }
-    
+
+  deleteDepartamento(idDepartamento: string) {
+    const url = `${this.baseUrl}/eliminar?id=${idDepartamento}`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.delete(url, { headers, responseType: 'text' });
+  }
   
 }

@@ -13,7 +13,11 @@ export class ProgramasService {
 
   getProgramas(): Observable<any> {
     const url = `${this.baseUrl}/listar`;
-    return this.http.get(url);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
   }
 
   postPrograma(params: any) {
@@ -21,14 +25,11 @@ export class ProgramasService {
     const body = new HttpParams()
       .set('nombre', params.nombre)
       .set('idFacultad', params.idFacultad);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
-  
-    return this.http.post(url, body.toString(), { headers, responseType: 'text' });
-  }
-
-  deletePrograma(idPrograma: string) {
-    const url = `${this.baseUrl}/eliminar?id=${idPrograma}`;
-    return this.http.delete(url, { responseType: 'text' });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      });
+      return this.http.post(url, body.toString(), { headers, responseType: 'text' });
   }
 
   editPrograma(nombre: string, idPrograma: string,  idFacultad:number) {
@@ -37,6 +38,20 @@ export class ProgramasService {
     .set('nombre', nombre)
     .set('idPrograma', idPrograma)     
     .set('idFacultad', idFacultad);
-    return this.http.put(url, params, { responseType: 'text' });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.put(url, params.toString(), { headers, responseType: 'text' });
   }
+
+  deletePrograma(idPrograma: string) {
+    const url = `${this.baseUrl}/eliminar?id=${idPrograma}`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.delete(url, { headers, responseType: 'text' });
+  }
+
+  
 }

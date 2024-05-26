@@ -17,11 +17,17 @@
         <li *ngIf="session" class="nav-item">
           <a class="nav-link" href="/cohortes/listar-cohortes">Cohortes</a>
         </li>
-        <!-- <li class="nav-item"><a class="nav-link" href="/tipos-compensacion/listar-tipos-compensacion">Tipos de compensación</a></li>
-        <li class="nav-item"><a class="nav-link" href="/tipos-costo/listar-tipos-costo">Tipos de costo</a></li>
-        <li class="nav-item"><a class="nav-link" href="/tipos-transferencia/listar-tipos-transferencia">Tipos de transferencia</a></li>
-        <li class="nav-item"><a class="nav-link" href="/tipos-descuento/listar-tipos-descuento">Tipos de descuento</a></li>
-        <li class="nav-item"><a class="nav-link" href="/tipos-inversion/listar-tipos-inversion">Tipos de inversion</a></li>  -->
+        <li *ngIf="session" class="nav-item">
+          <a class="nav-link" href="/usuarios/listar-usuarios">Usuarios</a>
+        </li>
+        <li *ngIf="session" class="nav-item">
+          <a class="nav-link" href="/login">Cerrar sesión</a>
+        </li>
+        <li *ngIf="session" class="nav-item"><a class="nav-link" href="/tipos-compensacion/listar-tipos-compensacion">Tipos de compensación</a></li>
+        <li *ngIf="session" class="nav-item"><a class="nav-link" href="/tipos-costo/listar-tipos-costo">Tipos de costo</a></li>
+        <li *ngIf="session" class="nav-item"><a class="nav-link" href="/tipos-transferencia/listar-tipos-transferencia">Tipos de transferencia</a></li>
+        <li *ngIf="session" class="nav-item"><a class="nav-link" href="/tipos-descuento/listar-tipos-descuento">Tipos de descuento</a></li>
+        <li *ngIf="session" class="nav-item"><a class="nav-link" href="/tipos-inversion/listar-tipos-inversion">Tipos de inversion</a></li> 
         <li *ngIf="!session" class="nav-item">
           <a class="nav-link" href="/login">Iniciar sesión</a>
         </li>

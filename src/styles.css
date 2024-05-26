@@ -1,6 +1,16 @@
 @import '~bootstrap-icons/font/bootstrap-icons.css';
 
-
-
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.green-button {
+    color: #6dff72; /* color del texto/icono */
+  }
+  
+  .green-button:hover {
+    background-color: #8cdf90; /* color verde más oscuro al pasar el mouse */
+  }
+  
+  .green-button.mat-icon-button {
+    padding: 0; /* para asegurarse de que el padding sea consistente */
+  }

@@ -22,4 +22,20 @@ export class AutenticacionService {
   
     return this.http.post<AuthResponse>(url, body.toString(), { headers });
   }
+
+  registrarUsuario(params:any):Observable<AuthResponse>
+  {
+    console.log(params);
+    const url = `${this.baseUrl}/registro`;
+    const body = new HttpParams()
+      .set('nombre', params.nombre)
+      .set('apellido', params.apellido)
+      .set('email', params.email)
+      .set('idRol', params.idRol)
+      .set('idFacultad', params.idFacultad)
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+  
+    return this.http.post<AuthResponse>(url, body.toString(), { headers });
+
+  }
 }

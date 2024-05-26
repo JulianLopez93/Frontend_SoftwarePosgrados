@@ -56,6 +56,10 @@ const routes: Routes = [
         path: 'presupuestos',
         loadChildren: () => import(`@pages/presupuesto/presupuesto.module`).then(m => m.PresupuestoModule),
       },
+      {
+        path: 'usuarios',
+        loadChildren: () => import(`@pages/usuarios/usuarios.module`).then(m => m.UsuariosModule),
+      },
     ],
   },
   {

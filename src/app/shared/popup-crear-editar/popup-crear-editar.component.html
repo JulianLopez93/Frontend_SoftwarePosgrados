@@ -6,6 +6,20 @@
     <input *ngIf="data.modulo != 'cohorte'" matInput [(ngModel)]="data.nombre">
     <input *ngIf="data.modulo == 'cohorte'" matInput [(ngModel)]="data.numero">
   </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'usuario'">
+    <mat-label>Apellidos</mat-label>
+    <input matInput [(ngModel)]="data.apellido">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.modulo === 'usuario'">
+    <mat-label>Email</mat-label>
+    <input matInput [(ngModel)]="data.email">
+  </mat-form-field>
+  <div *ngIf="data.modulo === 'usuario'">
+    <span class="field-label">Seleccione rol perteneciente</span>
+    <select class="form-control" [(ngModel)]="rolSeleccionado">
+        <option *ngFor="let item of this.listaRoles" [value]="item.id">{{item.nombre}}</option>
+    </select>
+  </div>
   <mat-form-field *ngIf="data.modulo === 'ingreso'">
     <mat-label>Concepto del {{data.modulo}}</mat-label>
     <input matInput [(ngModel)]="data.concepto">
@@ -27,8 +41,9 @@
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
-  <div *ngIf="data.modulo === 'departamento' || data.modulo === 'programa' || data.modulo === 'cohorte'">
-    <span class="field-label">Seleccione {{data.modulo === 'departamento' ? 'facultad' : data.modulo === 'programa' ? 'facultad' : data.modulo === 'cohorte' ? 'programa':''}} perteneciente</span>
+  <div *ngIf="data.modulo === 'departamento' || data.modulo === 'programa' || data.modulo === 'cohorte' 
+    || data.modulo ==='usuario'">
+    <span class="field-label">Seleccione {{data.modulo === 'departamento' ? 'facultad' : data.modulo === 'programa' ? 'facultad' : data.modulo === 'cohorte' ? 'programa': data.modulo === 'usuario' ? 'facultad':''}} perteneciente</span>
     <select class="form-control" [(ngModel)]="entidadSeleccionada">
         <option *ngFor="let item of this.listaPerteneciente" [value]="item.id">{{item.nombre}}</option>
     </select>

@@ -30,6 +30,7 @@ export class LoginComponent {
   }
 
   ngOnInit() {
+    localStorage.removeItem('authToken');
   }
 
   getErrorMessage() {

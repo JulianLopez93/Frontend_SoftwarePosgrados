@@ -8,7 +8,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class PopupCrearEditarComponent {
   listaPerteneciente:any [] = []
+  listaRoles:any [] = [];
   entidadSeleccionada:number = 0;
+  rolSeleccionado:number = 0;
   nombreIngresado:string = '';
   showError: boolean = false;
 
@@ -21,10 +23,16 @@ export class PopupCrearEditarComponent {
       console.log(data.numero);
       console.log(data.fecha);
       console.log(data.nombre);
+      console.log(data.apellido);
+      console.log(data.email);
       console.log(data.isEdit);
       console.log(data.listaDepartamentos);
       console.log(data.listaFacultades);
       console.log(data.listaProgramas);
+      console.log(data.listaRoles);
+
+      this.listaRoles = data.listaRoles;
+
       switch (data.modulo) {
         case 'departamento':
           this.listaPerteneciente = data.listaFacultades;
@@ -32,6 +40,9 @@ export class PopupCrearEditarComponent {
         case 'programa':
           this.listaPerteneciente = data.listaFacultades;
           break;
+        case 'usuario':
+        this.listaPerteneciente = data.listaFacultades;
+        break;
         case 'cohorte':
           this.listaPerteneciente = data.listaProgramas;
           break;
@@ -51,7 +62,11 @@ export class PopupCrearEditarComponent {
       this.showError = false;
 
       const entidadPerteneciente = this.entidadSeleccionada;
+      const rolperteneciente = this.rolSeleccionado;
       let nombre;
+      let apellido;
+      let email;
+      let password;
       let numero;
       let fecha;
       let concepto;
@@ -67,6 +82,7 @@ export class PopupCrearEditarComponent {
 
       console.log(nombre);
       console.log(entidadPerteneciente);
+      console.log(rolperteneciente);
       console.log(fecha);
       console.log(valor);
       console.log(numEstudiantes);
@@ -118,7 +134,33 @@ export class PopupCrearEditarComponent {
           numPeriodos: numPeriodos,
           valor: valor
         };
-      } 
+      }
+      else if (this.data.modulo === 'usuario')
+        {
+          nombre = this.data.nombre;
+          apellido = this.data.apellido;
+          email = this.data.email;
+          console.log(nombre);
+          console.log(apellido);
+          console.log(email);
+          console.log(rolperteneciente);
+
+          if (!nombre || !apellido || !email || rolperteneciente === 0
+            || this.entidadSeleccionada === 0
+          ) 
+          {
+          this.showError = true; // Muestra el mensaje de error
+          return; // Detiene la ejecución si hay campos vacíos
+          }
+
+          result = {
+            nombre: nombre,
+            apellido: apellido,
+            email: email,
+            rol: rolperteneciente,
+            entidadPerteneciente: entidadPerteneciente
+          };
+        }
       else {
         if(this.data.modulo !== 'tipo de compensacion' && this.data.modulo !== 'tipo de costo' && this.data.modulo !== 'tipo de transferencia'
         && this.data.modulo !== 'tipo de descuento' && this.data.modulo !== 'tipo de inversion' && this.data.modulo !== 'ingreso'

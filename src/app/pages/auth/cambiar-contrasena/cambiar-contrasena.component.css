@@ -1,0 +1,26 @@
+.card
+{
+    border-color: #003b70;
+}
+.card-header
+{
+    background-color: #003b70;
+}
+.title-text
+{
+    
+    color: white;
+    text-align: center;
+}
+.ucaldas-logo
+{
+    width: 400px;
+    height: 120px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.ucaldas-image
+{
+    width: 600px;
+}

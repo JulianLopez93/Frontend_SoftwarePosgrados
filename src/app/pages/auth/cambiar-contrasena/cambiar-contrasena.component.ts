@@ -11,7 +11,7 @@ import { AuthResponse } from '../auth-response';
 })
 export class CambiarContrasenaComponent {
 
-  recoveryToken:any
+  recoveryToken: any
 
   passwordChangeForm = new FormGroup({
     'newPassword': new FormControl(null, Validators.required)
@@ -22,55 +22,60 @@ export class CambiarContrasenaComponent {
   successfulSend = false;
 
   constructor(private authService: AutenticacionService,
-    private route:Router,
-    private route2:ActivatedRoute
-  )
-  {
+    private route: Router,
+    private route2: ActivatedRoute
+  ) {
 
   }
-  ngOnInit()
-  {
-    this.recoveryToken = this.route2.snapshot.queryParamMap.get('token');
-    console.log(this.recoveryToken);
+
+  ngOnInit() {
+    this.route2.queryParams.subscribe(params => {
+      this.recoveryToken = params['token'];
+      //console.log("token " + this.recoveryToken);
+    });
   }
+
 
   onSubmit() {
-    try 
-    {
+    try {
       if (this.passwordChangeForm && this.passwordChangeForm.valid) {
-        const token = localStorage.getItem('authToken');
         const newPassword = this.passwordChangeForm.get('newPassword')?.value;
+        let token;
+
+        // Si recoveryToken existe, significa que el usuario está utilizando el enlace de recuperación
+        if (this.recoveryToken) {
+          token = this.recoveryToken;
+        } else {
+          // Si no, entonces el usuario está logueado y cambia la contraseña desde su sesión
+          token = localStorage.getItem('authToken');
+        }
+
         console.log(token);
         console.log(newPassword);
-        const params = 
-        {
-          'token': token,
-          'password': newPassword
-        }
-        console.log(params);
-        if (newPassword && token) { // Verifica que password y token no sea null ni undefined
+
+        if (newPassword && token) { // Verifica que password y token no sean null ni undefined
+          const params = {
+            'token': token,
+            'password': newPassword
+          }
+          console.log(params);
           this.authService.cambiarContrasena(params).subscribe(
             (response: any) => {
-              if (response !== null)
-                {
-                  console.log(response);
-                  console.log('Cambio de contraseña exitoso');
-                  this.successfulSend = true;
-                  this.route.navigate(['facultades/listar-facultades']);
-  
-                }
-              
+              if (response !== null) {
+                console.log(response);
+                console.log('Cambio de contraseña exitoso');
+                this.successfulSend = true;
+                // Redirige al usuario a una ruta adecuada después del cambio de contraseña
+                this.route.navigate(['ruta/deseada/despues/cambio/contraseña']);
+              }
             }
           );
         }
       }
-      
-    } 
-    catch (error) 
-    {
+    } catch (error) {
       console.error("Error al cambiar contraseña");
     }
-    
   }
+
 
 }

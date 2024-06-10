@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PopupCrearEditarComponent } from '@app/shared/popup-crear-editar/popup-crear-editar.component';
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listar-tipos-costo',
@@ -21,7 +22,8 @@ export class ListarTiposCostoComponent {
   filteredTipos: any[] = [];
 
   constructor(private tiposService: TiposService,
-              public dialog: MatDialog) {}
+              public dialog: MatDialog,
+              private toastr: ToastrService) {}
 
   ngOnInit() {
     this.obtenerTiposCosto();
@@ -36,7 +38,7 @@ export class ListarTiposCostoComponent {
 
       },
       (error) => {
-        console.error('Error al obtener los tipos:', error);
+        this.toastr.error('Error al obtener los tipos:', error);
       }
     );
   }
@@ -48,6 +50,32 @@ export class ListarTiposCostoComponent {
       );
     } else {
       this.filteredTipos = this.tipos;
+    }
+  }
+
+  crearTipoCosto(nombreTipo:string)
+  {
+    try
+    {
+      console.log(nombreTipo);
+      const params =
+      {
+        nombreTipo: nombreTipo
+      }
+      console.log(params);
+      this.tiposService.postTipoCosto(params).subscribe((result:any) => {
+        console.log(result);
+        if (result = "OK")
+        {
+          this.toastr.success('Tipo de costo creado exitosamente');
+          this.obtenerTiposCosto();
+        }
+
+      });
+    }
+    catch(error)
+    {
+      this.toastr.error('Error al crear el tipo de costo:', (error as Error).message || String(error));
     }
   }
 
@@ -65,16 +93,16 @@ export class ListarTiposCostoComponent {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Tipo de costo editado");
+          this.toastr.success('Tipo de costo editado exitosamente');
           this.obtenerTiposCosto();
         }
 
       });
     }
     catch(error)
-      {
-
-      }
+    {
+      this.toastr.error('Error al editar el tipo de costo:', (error as Error).message || String(error));
+    }
 
   }
   eliminarTipoCosto(id:string)
@@ -86,43 +114,19 @@ export class ListarTiposCostoComponent {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Tipo de costo eliminado");
+          this.toastr.success('Tipo de costo eliminado exitosamente');
           this.obtenerTiposCosto();
         }
 
       });
     }
     catch(error)
-      {
-
-      }
-
-  }
-  crearTipoCosto(nombreTipo:string)
-  {
-    try
     {
-      console.log(nombreTipo);
-      const params =
-      {
-        nombreTipo: nombreTipo
-      }
-      console.log(params);
-      this.tiposService.postTipoCosto(params).subscribe((result:any) => {
-        console.log(result);
-        if (result = "OK")
-        {
-          console.log("Tipo de costo creado");
-          this.obtenerTiposCosto();
-        }
-
-      });
+      this.toastr.error('Error al eliminar el tipo de costo:', (error as Error).message || String(error));
     }
-    catch(error)
-      {
 
-      }
   }
+  
 
   openCreateDialog(modulo:string, tipo?: any): void {
     console.log(tipo);

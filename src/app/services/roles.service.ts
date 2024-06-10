@@ -14,7 +14,8 @@ export class RolesService {
   getRoles(): Observable<any> {
     const url = `${this.baseUrl}/listar`;
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
     });
     return this.http.get(url, { headers });
   }

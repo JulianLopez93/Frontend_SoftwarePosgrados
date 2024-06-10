@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { EgresosService } from '@app/services/egresos.service';
 import { PopupCrearEditarEgresoComponent } from '@app/shared/popup-crear-editar-egreso/popup-crear-editar-egreso.component';
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listar-egresos-viajes',
@@ -24,7 +25,8 @@ export class ListarEgresosViajesComponent {
   totalEgresos = 0;
 
   constructor(private egresosService: EgresosService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
 
@@ -43,7 +45,7 @@ export class ListarEgresosViajesComponent {
 
     },
       (error) => {
-        console.error('Error al obtener el total de egresos viajes:', error);
+        this.toastr.error('Error al obtener el total de egresos viajes:', error);
       }
     )
   }
@@ -56,7 +58,7 @@ export class ListarEgresosViajesComponent {
       this.obtenerTotalEgresos();
     },
       (error) => {
-        console.error('Error al obtener los ingresos:', error);
+        this.toastr.error('Error al obtener los ingresos:', error);
       }
     )
   }
@@ -93,13 +95,13 @@ export class ListarEgresosViajesComponent {
       this.egresosService.postEgresoViajes(params).subscribe((result: any) => {
         console.log(result);
         if (result == "OK") {
-          console.log("Egreso guardado");
+          this.toastr.success("Egreso guardado exitosamente");
           this.obtenerEgresosViajesPorPresupuesto();
           this.obtenerTotalEgresos();
         }
       });
     } catch (error) {
-      console.error('Error al crear el egreso:', error);
+        this.toastr.error('Error al crear el egreso:', (error as Error).message || String(error));
     }
   }
   editarEgresoViajes(id: number, descripcion: string, numPersonas: number,
@@ -116,7 +118,7 @@ export class ListarEgresosViajesComponent {
         , numViajesPorPersona, valorTransporte).subscribe((result: any) => {
           console.log(result);
           if (result = "OK") {
-            console.log("Egreso editado");
+            this.toastr.success("Egreso editado exitosamente");
             this.obtenerEgresosViajesPorPresupuesto();
             this.obtenerTotalEgresos();
           }
@@ -124,7 +126,7 @@ export class ListarEgresosViajesComponent {
         });
     }
     catch (error) {
-
+      this.toastr.error('Error al crear el egreso:', (error as Error).message || String(error));
     }
 
   }
@@ -135,7 +137,7 @@ export class ListarEgresosViajesComponent {
       this.egresosService.deleteEgresoViajes(id).subscribe((result: any) => {
         console.log(result);
         if (result = "OK") {
-          console.log("egreso eliminado");
+          this.toastr.success("Egreso eliminado exitosamente");
           this.obtenerEgresosViajesPorPresupuesto();
           this.obtenerTotalEgresos();
         }
@@ -143,7 +145,7 @@ export class ListarEgresosViajesComponent {
       });
     }
     catch (error) {
-
+      this.toastr.error('Error al crear el egreso:', (error as Error).message || String(error));
     }
 
   }

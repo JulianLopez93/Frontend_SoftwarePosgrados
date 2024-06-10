@@ -16,7 +16,7 @@
   </mat-form-field>
   <div *ngIf="data.modulo === 'usuario'">
     <span class="field-label">Seleccione rol perteneciente</span>
-    <select class="form-control" [(ngModel)]="rolSeleccionado">
+    <select class="form-control" [(ngModel)]="rolSeleccionado" (click)="cambiaRoles()">
         <option *ngFor="let item of this.listaRoles" [value]="item.id">{{item.nombre}}</option>
     </select>
   </div>
@@ -42,10 +42,17 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
   <div *ngIf="data.modulo === 'departamento' || data.modulo === 'programa' || data.modulo === 'cohorte' 
-    || data.modulo ==='usuario'">
+    || (data.modulo ==='usuario' && rolSeleccionado !== 1)">
     <span class="field-label">Seleccione {{data.modulo === 'departamento' ? 'facultad' : data.modulo === 'programa' ? 'facultad' : data.modulo === 'cohorte' ? 'programa': data.modulo === 'usuario' ? 'facultad':''}} perteneciente</span>
     <select class="form-control" [(ngModel)]="entidadSeleccionada">
         <option *ngFor="let item of this.listaPerteneciente" [value]="item.id">{{item.nombre}}</option>
+    </select>
+    <div *ng></div>
+  </div>
+  <div *ngIf="data.modulo === 'usuario'">
+    <span class="field-label">Seleccione programa perteneciente</span>
+    <select class="form-control" [(ngModel)]="programaSeleccionado">
+        <option *ngFor="let item of this.listaProgramasUsuario" [value]="item.id">{{item.nombre}}</option>
     </select>
   </div>
   <div *ngIf="data.modulo === 'descuento'">
@@ -54,6 +61,13 @@
         <option *ngFor="let item of this.listaPerteneciente" [value]="item.id">{{item.nombreTipo}}</option>
     </select>
   </div>
+  <mat-form-field *ngIf="data.modulo === 'programa'">
+    <mat-label>Priorizado?</mat-label>
+    <mat-select [(ngModel)]="data.isPriorizado">
+      <mat-option [value]="true">Sí</mat-option>
+      <mat-option [value]="false">No</mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 <div *ngIf="showError" class="error-message">
   <span>Por favor, completa todos los campos requeridos.</span>

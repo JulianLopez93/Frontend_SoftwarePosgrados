@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-popup-crear-editar',
@@ -8,16 +9,19 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class PopupCrearEditarComponent {
   listaPerteneciente:any [] = []
+  listaProgramasUsuario:any [] = []
   listaRoles:any [] = [];
   entidadSeleccionada:number = 0;
-  rolSeleccionado:number = 0;
+  rolSeleccionado:number = 1;
+  programaSeleccionado:number = 0;
   nombreIngresado:string = '';
   showError: boolean = false;
 
 
   constructor(
     public dialogRef: MatDialogRef<PopupCrearEditarComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private cdr: ChangeDetectorRef) {
       console.log(data);
       console.log(data.modulo);
       console.log(data.numero);
@@ -29,9 +33,12 @@ export class PopupCrearEditarComponent {
       console.log(data.listaDepartamentos);
       console.log(data.listaFacultades);
       console.log(data.listaProgramas);
+      console.log(data.listaProgramasUsuario);
       console.log(data.listaRoles);
+      console.log(data.isPriorizado);
 
       this.listaRoles = data.listaRoles;
+      this.listaProgramasUsuario = data.listaProgramas;
 
       switch (data.modulo) {
         case 'departamento':
@@ -54,6 +61,12 @@ export class PopupCrearEditarComponent {
           break;
       }
       console.log(this.listaPerteneciente);
+      console.log(this.rolSeleccionado);
+    }
+    cambiaRoles()
+    {
+      console.log(this.rolSeleccionado);
+      //this.cdr.detectChanges();
     }
     onNoClick(): void {
       this.dialogRef.close();
@@ -74,6 +87,7 @@ export class PopupCrearEditarComponent {
       let numEstudiantes;
       let numPeriodos
       let result;
+      let esPriorizado;
 
       valor = this.data.valor;
       concepto = this.data.concepto;
@@ -105,6 +119,25 @@ export class PopupCrearEditarComponent {
           fecha: fecha
         };
       }
+      else if (this.data.modulo === 'programa') {
+        nombre = this.data.nombre;
+        esPriorizado = this.data.isPriorizado;
+        console.log(nombre);
+        console.log(esPriorizado);
+
+        if (!nombre || !esPriorizado || this.entidadSeleccionada === 0) 
+        {
+          this.showError = true; // Muestra el mensaje de error
+          return; // Detiene la ejecución si hay campos vacíos
+        }
+
+        result = {
+          nombre: nombre,
+          esPriorizado: esPriorizado,
+          entidadPerteneciente: entidadPerteneciente
+        };
+      }
+
 
       // Construye el objeto que se devuelve dependiendo del módulo
       

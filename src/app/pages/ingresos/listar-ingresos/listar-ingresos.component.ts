@@ -5,6 +5,7 @@ import { IngresosService } from '@app/services/ingresos.service';
 import { PopupCrearEditarComponent } from '@app/shared/popup-crear-editar/popup-crear-editar.component';
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
 import { PresupuestosService } from '@app/services/presupuestos.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listar-ingresos',
@@ -26,7 +27,8 @@ export class ListarIngresosComponent {
 
   constructor(private ingresosService: IngresosService,
     private presupuestosService: PresupuestosService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
 
@@ -61,7 +63,7 @@ export class ListarIngresosComponent {
 
     },
       (error) => {
-        console.error('Error al obtener el total de ingresos:', error);
+        this.toastr.error('Error al obtener el total de ingresos:', error);
       }
     )
   }
@@ -74,7 +76,7 @@ export class ListarIngresosComponent {
       this.obtenerTotalIngresos();
     },
       (error) => {
-        console.error('Error al obtener los ingresos:', error);
+        this.toastr.error('Error al obtener los ingresos:', error);
       }
     )
   }
@@ -98,7 +100,7 @@ export class ListarIngresosComponent {
       this.ingresosService.editIngreso(id, concepto, valor).subscribe((result: any) => {
         console.log(result);
         if (result = "OK") {
-          console.log("Ingreso editado");
+          this.toastr.success('Ingreso editado exitosamente');
           this.obtenerIngresosPorPresupuesto();
           this.obtenerTotalIngresos();
         }
@@ -106,7 +108,7 @@ export class ListarIngresosComponent {
       });
     }
     catch (error) {
-
+      this.toastr.error('Error al editar el programa:', (error as Error).message || String(error));
     }
 
   }
@@ -116,7 +118,7 @@ export class ListarIngresosComponent {
       this.ingresosService.deleteIngreso(id).subscribe((result: any) => {
         console.log(result);
         if (result = "OK") {
-          console.log("Ingreso eliminado");
+          this.toastr.success('Ingreso eliminado exitosamente');
           this.obtenerIngresosPorPresupuesto();
           this.obtenerTotalIngresos();
         }
@@ -124,7 +126,7 @@ export class ListarIngresosComponent {
       });
     }
     catch (error) {
-
+      this.toastr.error('Error al editar el programa:', (error as Error).message || String(error));
     }
 
   }
@@ -144,14 +146,14 @@ export class ListarIngresosComponent {
       this.ingresosService.postIngresos(params).subscribe((result: any) => {
         console.log(result);
         if (result == "OK") {
-          console.log("Ingreso guardado");
+          this.toastr.success('Ingreso guardado exitosamente');
 
           this.obtenerIngresosPorPresupuesto();
           this.obtenerTotalIngresos();
         }
       });
     } catch (error) {
-      console.error('Error al crear el ingreso:', error);
+      this.toastr.error('Error al crear el ingreso:', (error as Error).message || String(error));
     }
   }
 

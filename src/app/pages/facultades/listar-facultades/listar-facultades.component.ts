@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { CrearFacultadComponent } from './crear-facultad/crear-facultad.component';
 import { PopupEliminarFacultadComponent } from './popup-eliminar-facultad/popup-eliminar-facultad.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listar-facultades',
@@ -20,7 +21,8 @@ export class ListarFacultadesComponent {
   filteredFacultades: any[] = [];
 
   constructor(private facultadesService: FacultadesServicioService,
-              public dialog: MatDialog) {}
+              public dialog: MatDialog,
+              private toastr: ToastrService) {}
 
   ngOnInit() {
     this.obtenerFacultades();
@@ -35,7 +37,7 @@ export class ListarFacultadesComponent {
 
       },
       (error) => {
-        console.error('Error al obtener las facultades:', error);
+        this.toastr.error('Error al obtener las facultades:', error);
       }
     );
   }
@@ -64,16 +66,16 @@ export class ListarFacultadesComponent {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Facultad editada");
+          this.toastr.success('Facultad editada exitosamente');
           this.obtenerFacultades();
         }
 
       });
     }
     catch(error)
-      {
-
-      }
+    {
+      this.toastr.error('Error al editar la facultad', (error as Error).message || String(error));
+    }
 
   }
   eliminarFacultad(idFacultad:string)
@@ -85,16 +87,16 @@ export class ListarFacultadesComponent {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Facultad eliminada");
+          this.toastr.success('Facultad eliminada exitosamente');
           this.obtenerFacultades();
         }
 
       });
     }
     catch(error)
-      {
-
-      }
+    {
+      this.toastr.error('Error al eliminar la facultad', (error as Error).message || String(error));
+    }
 
   }
   crearFacultad(nombre:string)
@@ -111,16 +113,16 @@ export class ListarFacultadesComponent {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Facultad creada");
+          this.toastr.success('Facultad creada exitosamente');
           this.obtenerFacultades();
         }
 
       });
     }
     catch(error)
-      {
-
-      }
+    {
+      this.toastr.error('Error al crear la facultad', (error as Error).message || String(error));
+    }
   }
 
   openCreateDialog(facultad?: any): void {

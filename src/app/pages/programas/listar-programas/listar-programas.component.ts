@@ -5,6 +5,7 @@ import { FacultadesServicioService } from '@app/services/facultades-servicio.ser
 import { ProgramasService } from '@app/services/programas.service';
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
 import { PopupCrearEditarComponent } from '@app/shared/popup-crear-editar/popup-crear-editar.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listar-programas',
@@ -13,7 +14,7 @@ import { PopupCrearEditarComponent } from '@app/shared/popup-crear-editar/popup-
 })
 export class ListarProgramasComponent {
   departamentos: any[] = [];
-  displayedColumns: string[] = ['nombre','facultad','acciones'];
+  displayedColumns: string[] = ['nombre','facultad', 'priorizado', 'acciones'];
   listadoFacultades:any[] = [];
 
   form!: FormGroup;
@@ -25,7 +26,8 @@ export class ListarProgramasComponent {
 
   constructor(private programasService: ProgramasService,
     private facultadesService: FacultadesServicioService,
-              public dialog: MatDialog) {}
+              public dialog: MatDialog,
+              private toastr: ToastrService) {}
 
   ngOnInit() {
     this.obtenerProgramas();
@@ -41,7 +43,7 @@ export class ListarProgramasComponent {
         this.applyFilter();
       },
       (error) => {
-        console.error('Error al obtener las cohortes:', error);
+        this.toastr.error('Error al obtener los programas:', error);
       }
     );
   }
@@ -53,7 +55,7 @@ export class ListarProgramasComponent {
 
       },
       (error) => {
-        console.error('Error al obtener los departamentos:', error);
+        this.toastr.error('Error al obtener las facultades:', error);
       }
     );
   }
@@ -69,52 +71,57 @@ export class ListarProgramasComponent {
     }
   }
 
-  crearPrograma(nombre:string, facultad:any)
+  crearPrograma(nombre:string, facultad:any, esPriorizado:boolean)
   {
     try
     {
       console.log(nombre);
       console.log(facultad);
+      console.log(esPriorizado);
       const params =
       {
         nombre: nombre,
-        idFacultad: facultad
+        idFacultad: facultad,
+        esPriorizado: esPriorizado
       }
       console.log(params);
       this.programasService.postPrograma(params).subscribe((result:any) => {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Programa guardado");
+          this.toastr.success('Programa creado exitosamente');
           this.obtenerProgramas();
         }
 
       });
     }
     catch(error)
-      {
+    {
+      this.toastr.error('Error al crear el programa:', (error as Error).message || String(error));
 
-      }
+    }
   }
 
-  editarPrograma(idPrograma:string, nombre:string, idFacultad:number)
+  editarPrograma(idPrograma:string, nombre:string, idFacultad:number, esPriorizado:boolean)
   {
     try
     {
       console.log(idPrograma);
       console.log(idFacultad)
       console.log(nombre);
+      console.log(esPriorizado);
       const params =
       {
         nombre: nombre,
-        idFacultad: idFacultad
+        idFacultad: idFacultad,
+        esPriorizado: esPriorizado
       }
       console.log(params);
-      this.programasService.editPrograma(nombre, idPrograma, idFacultad).subscribe((result:any) => {
+      this.programasService.editPrograma(nombre, idPrograma, idFacultad, esPriorizado).subscribe((result:any) => {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Programa editado");
+          this.toastr.success('Programa editado exitosamente');
           this.obtenerProgramas();
         }
 
@@ -122,7 +129,7 @@ export class ListarProgramasComponent {
     }
     catch(error)
       {
-
+        this.toastr.error('Error al editar el programa:', (error as Error).message || String(error));
       }
 
   }
@@ -136,7 +143,7 @@ export class ListarProgramasComponent {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Programa eliminado");
+          this.toastr.success('Programa eliminado exitosamente');
           this.obtenerProgramas();
         }
 
@@ -144,7 +151,7 @@ export class ListarProgramasComponent {
     }
     catch(error)
       {
-
+        this.toastr.error('Error al eliminar el programa:', (error as Error).message || String(error));
       }
 
   }
@@ -160,7 +167,8 @@ export class ListarProgramasComponent {
               modulo:modulo,
               nombre: programa ? programa.nombre : '',
               isEdit: !!programa,
-              listaFacultades: this.listadoFacultades
+              listaFacultades: this.listadoFacultades,
+              isPriorizado: programa ? programa.isPriorizado : ''
             }
     });
 
@@ -170,10 +178,10 @@ export class ListarProgramasComponent {
       if (result) {
         if (programa) {
           console.log("Edita Programa");
-          this.editarPrograma(programa.id, result.nombre, result.entidadPerteneciente);
+          this.editarPrograma(programa.id, result.nombre, result.entidadPerteneciente, result.esPriorizado);
         } else {
           console.log("Crea programa");
-           this.crearPrograma(result.nombre, result.entidadPerteneciente);
+           this.crearPrograma(result.nombre, result.entidadPerteneciente, result.esPriorizado);
         }
       }
 

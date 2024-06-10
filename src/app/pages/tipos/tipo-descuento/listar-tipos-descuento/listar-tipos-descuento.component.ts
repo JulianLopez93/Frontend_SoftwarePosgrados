@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PopupCrearEditarComponent } from '@app/shared/popup-crear-editar/popup-crear-editar.component';
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listar-tipos-descuento',
@@ -21,7 +22,8 @@ export class ListarTiposDescuentoComponent {
   filteredTipos: any[] = [];
 
   constructor(private tiposService: TiposService,
-              public dialog: MatDialog) {}
+              public dialog: MatDialog,
+              private toastr: ToastrService) {}
 
   ngOnInit() {
     this.obtenerTiposDescuento();
@@ -36,7 +38,7 @@ export class ListarTiposDescuentoComponent {
 
       },
       (error) => {
-        console.error('Error al obtener los tipos:', error);
+        this.toastr.error('Error al obtener los tipos:', error);
       }
     );
   }
@@ -48,6 +50,32 @@ export class ListarTiposDescuentoComponent {
       );
     } else {
       this.filteredTipos = this.tipos;
+    }
+  }
+
+  crearTipoDescuento(nombreTipo:string)
+  {
+    try
+    {
+      console.log(nombreTipo);
+      const params =
+      {
+        nombreTipo: nombreTipo
+      }
+      console.log(params);
+      this.tiposService.postTipoDescuento(params).subscribe((result:any) => {
+        console.log(result);
+        if (result = "OK")
+        {
+          this.toastr.success('Tipo de descuento creado exitosamente');
+          this.obtenerTiposDescuento();
+        }
+
+      });
+    }
+    catch(error)
+    {
+      this.toastr.error('Error al crear el tipo de descuento:', (error as Error).message || String(error));
     }
   }
 
@@ -65,16 +93,16 @@ export class ListarTiposDescuentoComponent {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Tipo de descuento editado");
+          this.toastr.success('Tipo de descuento editado exitosamente');
           this.obtenerTiposDescuento();
         }
 
       });
     }
     catch(error)
-      {
-
-      }
+    {
+      this.toastr.error('Error al editar el tipo de descuento:', (error as Error).message || String(error));
+    }
 
   }
   eliminarTipoDescuento(id:string)
@@ -86,43 +114,19 @@ export class ListarTiposDescuentoComponent {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Tipo de descuento eliminado");
+          this.toastr.success('Tipo de descuento eliminado exitosamente');
           this.obtenerTiposDescuento();
         }
 
       });
     }
     catch(error)
-      {
-
-      }
-
-  }
-  crearTipoDescuento(nombreTipo:string)
-  {
-    try
     {
-      console.log(nombreTipo);
-      const params =
-      {
-        nombreTipo: nombreTipo
-      }
-      console.log(params);
-      this.tiposService.postTipoDescuento(params).subscribe((result:any) => {
-        console.log(result);
-        if (result = "OK")
-        {
-          console.log("Tipo de descuento creado");
-          this.obtenerTiposDescuento();
-        }
-
-      });
+      this.toastr.error('Error al eliminar el tipo de descuento:', (error as Error).message || String(error));
     }
-    catch(error)
-      {
 
-      }
   }
+  
 
   openCreateDialog(modulo:string, tipo?: any): void {
     console.log(tipo);

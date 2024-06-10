@@ -5,7 +5,7 @@ import { DepartamentosService } from '@app/services/departamentos.service';
 import { PopupCrearEditarComponent } from '@app/shared/popup-crear-editar/popup-crear-editar.component';
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
 import { FacultadesServicioService } from '@app/services/facultades-servicio.service';
-
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listar-departamentos',
@@ -25,7 +25,8 @@ export class ListarDepartamentosComponent {
 
   constructor(private departamentosService: DepartamentosService,
     private facultadesService: FacultadesServicioService,
-              public dialog: MatDialog) {}
+              public dialog: MatDialog,
+              private toastr: ToastrService) {}
 
   ngOnInit() {
     this.obtenerDepartamentos();
@@ -41,7 +42,7 @@ export class ListarDepartamentosComponent {
         this.applyFilter();
       },
       (error) => {
-        console.error('Error al obtener los departamentos:', error);
+        this.toastr.error('Error al obtener los departamentos:', error);
       }
     );
   }
@@ -74,16 +75,16 @@ export class ListarDepartamentosComponent {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Departamento editado");
+          this.toastr.success('Departamento editado exitosamente');
           this.obtenerDepartamentos();
         }
 
       });
     }
     catch(error)
-      {
-
-      }
+    {
+      this.toastr.error('Error al editar el departamento', (error as Error).message || String(error));
+    }
 
   }
   eliminarDepartamento(idDepartamento:string)
@@ -95,16 +96,16 @@ export class ListarDepartamentosComponent {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Departamento eliminado");
+          this.toastr.success('Departamento eliminado exitosamente');
           this.obtenerDepartamentos();
         }
 
       });
     }
     catch(error)
-      {
-
-      }
+    {
+      this.toastr.error('Error al eliminar el departamento', (error as Error).message || String(error));
+    }
 
   }
   crearDepartamento(nombre: string, facultad: any) {
@@ -119,12 +120,12 @@ export class ListarDepartamentosComponent {
       this.departamentosService.postDepartamento(params).subscribe((result: any) => {
         console.log(result);
         if (result == "OK") {
-          console.log("Departamento guardado");
+          this.toastr.success('Departamento creado exitosamente');
           this.obtenerDepartamentos();
         }
       });
     } catch (error) {
-      console.error('Error al crear el departamento:', error);
+        this.toastr.error('Error al crear el departamento:', (error as Error).message || String(error));
     }
   }
 
@@ -182,7 +183,7 @@ export class ListarDepartamentosComponent {
 
       },
       (error) => {
-        console.error('Error al obtener las facultades:', error);
+        this.toastr.error('Error al obtener las facultades:', error);
       }
     );
   }

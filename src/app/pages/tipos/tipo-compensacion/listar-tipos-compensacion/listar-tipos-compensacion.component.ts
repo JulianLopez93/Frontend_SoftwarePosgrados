@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PopupCrearEditarComponent } from '@app/shared/popup-crear-editar/popup-crear-editar.component';
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-listar-tipos-compensacion',
@@ -21,7 +23,8 @@ export class ListarTiposCompensacionComponent {
   filteredTipos: any[] = [];
 
   constructor(private tiposService: TiposService,
-              public dialog: MatDialog) {}
+              public dialog: MatDialog,
+              private toastr: ToastrService) {}
 
   ngOnInit() {
     this.obtenerTiposCompensacion();
@@ -36,7 +39,7 @@ export class ListarTiposCompensacionComponent {
 
       },
       (error) => {
-        console.error('Error al obtener los tipos:', error);
+        this.toastr.error('Error al obtener los tipos:', error);
       }
     );
   }
@@ -49,6 +52,32 @@ export class ListarTiposCompensacionComponent {
     } else {
       this.filteredTipos = this.tipos;
     }
+  }
+
+  crearTipoCompensacion(nombreTipo:string)
+  {
+    try
+    {
+      console.log(nombreTipo);
+      const params =
+      {
+        nombreTipo: nombreTipo
+      }
+      console.log(params);
+      this.tiposService.postTiposCompensacion(params).subscribe((result:any) => {
+        console.log(result);
+        if (result = "OK")
+        {
+          this.toastr.success('Tipo de compensación creado exitosamente');
+          this.obtenerTiposCompensacion();
+        }
+
+      });
+    }
+    catch(error)
+      {
+        this.toastr.error('Error al crear el tipo de compensación:', (error as Error).message || String(error));
+      }
   }
 
   editarTipoCompensacion(id:string, nombreTipo:string)
@@ -65,16 +94,16 @@ export class ListarTiposCompensacionComponent {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Tipo de compensacion editado");
+          this.toastr.success('Tipo de compensación editado exitosamente');
           this.obtenerTiposCompensacion();
         }
 
       });
     }
     catch(error)
-      {
-
-      }
+    {
+      this.toastr.error('Error al editar el tipo de compensación:', (error as Error).message || String(error));
+    }
 
   }
   eliminarTipoCompensacion(id:string)
@@ -86,43 +115,19 @@ export class ListarTiposCompensacionComponent {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Tipo de compensacion eliminado");
+          this.toastr.success('Tipo de compensación eliminar exitosamente');
           this.obtenerTiposCompensacion();
         }
 
       });
     }
     catch(error)
-      {
-
-      }
-
-  }
-  crearTipoCompensacion(nombreTipo:string)
-  {
-    try
     {
-      console.log(nombreTipo);
-      const params =
-      {
-        nombreTipo: nombreTipo
-      }
-      console.log(params);
-      this.tiposService.postTiposCompensacion(params).subscribe((result:any) => {
-        console.log(result);
-        if (result = "OK")
-        {
-          console.log("Tipo de compensacion creado");
-          this.obtenerTiposCompensacion();
-        }
-
-      });
+      this.toastr.error('Error al eliminar el tipo de compensación:', (error as Error).message || String(error));
     }
-    catch(error)
-      {
 
-      }
   }
+  
 
   openCreateDialog(modulo:string, tipo?: any): void {
     console.log(tipo);

@@ -5,6 +5,7 @@ import { DescuentosService } from '@app/services/descuentos.service';
 import { TiposService } from '@app/services/tipos.service';
 import { PopupCrearEditarComponent } from '@app/shared/popup-crear-editar/popup-crear-editar.component';
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listar-descuentos',
@@ -27,7 +28,8 @@ export class ListarDescuentosComponent {
 
   constructor(private descuentosService: DescuentosService,
     private tiposService: TiposService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
 
@@ -47,7 +49,7 @@ export class ListarDescuentosComponent {
 
     },
       (error) => {
-        console.error('Error al obtener el total de egresos generales:', error);
+        this.toastr.error('Error al obtener el total de egresos generales:', error);
       }
     )
   }
@@ -60,7 +62,7 @@ export class ListarDescuentosComponent {
       this.obtenerTotalEgresos();
     },
       (error) => {
-        console.error('Error al obtener los ingresos:', error);
+        this.toastr.error('Error al obtener los ingresos:', error);
       }
     )
   }
@@ -72,7 +74,7 @@ export class ListarDescuentosComponent {
 
       },
       (error) => {
-        console.error('Error al obtener los tipos de descuento:', error);
+        this.toastr.error('Error al obtener los tipos de descuento:', error);
       }
     );
   }
@@ -105,13 +107,13 @@ export class ListarDescuentosComponent {
       this.descuentosService.postDescuento(params).subscribe((result: any) => {
         console.log(result);
         if (result == "OK") {
-          console.log("Descuento guardado");
+          this.toastr.success('Descuento creado exitosamente');
           this.obtenerDescuentosPorPresupuesto();
           this.obtenerTotalEgresos();
         }
       });
     } catch (error) {
-      console.error('Error al crear el descuento:', error);
+        this.toastr.error('Error al crear el descuento:', (error as Error).message || String(error));
     }
   }
 
@@ -126,7 +128,7 @@ export class ListarDescuentosComponent {
       this.descuentosService.editDescuento(id, numEstudiantes, valor, numPeridodos, idTipoDescuento).subscribe((result: any) => {
         console.log(result);
         if (result = "OK") {
-          console.log("Descuento editado");
+          this.toastr.success('Descuento editado exitosamente');
           this.obtenerDescuentosPorPresupuesto();
           this.obtenerTotalEgresos();
         }
@@ -134,7 +136,7 @@ export class ListarDescuentosComponent {
       });
     }
     catch (error) {
-
+      this.toastr.error('Error al editar el descuento:', (error as Error).message || String(error));
     }
 
   }
@@ -145,7 +147,7 @@ export class ListarDescuentosComponent {
       this.descuentosService.deleteDescuento(id).subscribe((result: any) => {
         console.log(result);
         if (result = "OK") {
-          console.log("Descuento eliminado");
+          this.toastr.success('Descuento eliminado exitosamente');
           this.obtenerDescuentosPorPresupuesto();
           this.obtenerTotalEgresos();
         }
@@ -153,6 +155,7 @@ export class ListarDescuentosComponent {
       });
     }
     catch (error) {
+      this.toastr.error('Error al eliminar el descuento:', (error as Error).message || String(error));
 
     }
 

@@ -5,7 +5,7 @@ import { EgresosService } from '@app/services/egresos.service';
 import { TiposService } from '@app/services/tipos.service';
 import { PopupCrearEditarEgresoComponent } from '@app/shared/popup-crear-editar-egreso/popup-crear-editar-egreso.component';
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
-
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listar-egresos-servicios-no-docente',
@@ -27,7 +27,8 @@ export class ListarEgresosServiciosNoDocenteComponent {
 
   constructor(private egresosService: EgresosService,
     private tiposService: TiposService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
 
@@ -47,7 +48,7 @@ export class ListarEgresosServiciosNoDocenteComponent {
 
     },
       (error) => {
-        console.error('Error al obtener el total de egresos  serv no docentes:', error);
+        this.toastr.error('Error al obtener el total de egresos  serv no docentes:', error);
       }
     )
   }
@@ -60,7 +61,7 @@ export class ListarEgresosServiciosNoDocenteComponent {
       this.obtenerTotalEgresos();
     },
       (error) => {
-        console.error('Error al obtener los egresos:', error);
+        this.toastr.error('Error al obtener los egresos:', error);
       }
     )
   }
@@ -83,7 +84,7 @@ export class ListarEgresosServiciosNoDocenteComponent {
 
       },
       (error) => {
-        console.error('Error al obtener los tipos de costo:', error);
+        this.toastr.error('Error al obtener los tipos de costo:', error);
       }
     );
   }
@@ -106,13 +107,13 @@ export class ListarEgresosServiciosNoDocenteComponent {
       this.egresosService.postEgresoServiciosNoDocente(params).subscribe((result: any) => {
         console.log(result);
         if (result == "OK") {
-          console.log("Egreso guardado");
+          this.toastr.success("Egreso guardado exitosamente");
           this.obtenerEgresosServNoDocentePorPresupuesto();
           this.obtenerTotalEgresos();
         }
       });
     } catch (error) {
-      console.error('Error al crear el egreso:', error);
+        this.toastr.error('Error al crear el egreso:', (error as Error).message || String(error));
     }
   }
   editarEgresosServNoDocente(id: number, servicio: string, valorUnitario: number, cantidad: number, idTipoCosto: number) {
@@ -126,7 +127,7 @@ export class ListarEgresosServiciosNoDocenteComponent {
       this.egresosService.editEgresoServiciosNoDocente(id, servicio, valorUnitario, cantidad, idTipoCosto).subscribe((result: any) => {
         console.log(result);
         if (result = "OK") {
-          console.log("Egreso editado");
+          this.toastr.success("Egreso editado exitosamente");
           this.obtenerEgresosServNoDocentePorPresupuesto();
           this.obtenerTotalEgresos();
         }
@@ -134,7 +135,7 @@ export class ListarEgresosServiciosNoDocenteComponent {
       });
     }
     catch (error) {
-
+      this.toastr.error('Error al editar el egreso:', (error as Error).message || String(error));
     }
 
   }
@@ -145,7 +146,7 @@ export class ListarEgresosServiciosNoDocenteComponent {
       this.egresosService.deleteEgresoServiciosNoDocente(id).subscribe((result: any) => {
         console.log(result);
         if (result = "OK") {
-          console.log("egreso eliminado");
+          this.toastr.success("Egreso eliminado exitosamente");
           this.obtenerEgresosServNoDocentePorPresupuesto();
           this.obtenerTotalEgresos();
         }
@@ -153,7 +154,7 @@ export class ListarEgresosServiciosNoDocenteComponent {
       });
     }
     catch (error) {
-
+      this.toastr.error('Error al eliminar el egreso:', (error as Error).message || String(error));
     }
 
   }

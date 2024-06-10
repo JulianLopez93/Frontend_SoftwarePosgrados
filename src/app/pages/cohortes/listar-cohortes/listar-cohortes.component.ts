@@ -9,6 +9,7 @@ import { CohortesService } from '@app/services/cohortes.service';
 import { ProgramasService } from '@app/services/programas.service';
 import { PresupuestosService } from '@app/services/presupuestos.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listar-cohortes',
@@ -31,7 +32,8 @@ export class ListarCohortesComponent {
     private programasService: ProgramasService,
     private presupuestosService:PresupuestosService,
     private route:Router,
-              public dialog: MatDialog) {}
+              public dialog: MatDialog,
+              private toastr: ToastrService) {}
 
   ngOnInit() {
     sessionStorage.removeItem('paginaPresupuesto');
@@ -49,7 +51,7 @@ export class ListarCohortesComponent {
         this.applyFilter();
       },
       (error) => {
-        console.error('Error al obtener las cohortes:', error);
+        this.toastr.error('Error al obtener las cohortes:', error);
       }
     );
   }
@@ -106,16 +108,16 @@ export class ListarCohortesComponent {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Cohorte guardada");
+          this.toastr.success('Cohorte creada exitosamente');
           this.obtenerCohortes();
         }
 
       });
     }
     catch(error)
-      {
-
-      }
+    {
+      this.toastr.error('Error al crear la cohorte:', (error as Error).message || String(error));
+    }
   }
 
   editarCohorte(idCohorte:string, numero:string, fecha:any, idPrograma:any)
@@ -139,16 +141,16 @@ export class ListarCohortesComponent {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Cohorte actualizada");
+          this.toastr.success('Cohorte actualizada exitosamente');
           this.obtenerCohortes();
         }
 
       });
     }
     catch(error)
-      {
-
-      }
+    {
+      this.toastr.error('Error al editar la cohorte:', (error as Error).message || String(error));
+    }
 
   }
   eliminarCohorte(idCohorte:string)
@@ -160,16 +162,16 @@ export class ListarCohortesComponent {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Cohorte eliminada");
+          this.toastr.success('Cohorte eliminada exitosamente');
           this.obtenerCohortes();
         }
 
       });
     }
     catch(error)
-      {
-
-      }
+    {
+      this.toastr.error('Error al eliminar la cohorte:', (error as Error).message || String(error));
+    }
 
   }
   

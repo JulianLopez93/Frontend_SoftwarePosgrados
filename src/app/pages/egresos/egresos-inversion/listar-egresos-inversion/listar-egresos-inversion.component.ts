@@ -5,6 +5,7 @@ import { EgresosService } from '@app/services/egresos.service';
 import { TiposService } from '@app/services/tipos.service';
 import { PopupCrearEditarEgresoComponent } from '@app/shared/popup-crear-editar-egreso/popup-crear-editar-egreso.component';
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listar-egresos-inversion',
@@ -26,7 +27,8 @@ export class ListarEgresosInversionComponent {
 
   constructor(private egresosService: EgresosService,
     private tiposService: TiposService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private toastr: ToastrService) { }
 
 
   ngOnInit() {
@@ -47,7 +49,7 @@ export class ListarEgresosInversionComponent {
 
     },
       (error) => {
-        console.error('Error al obtener el total de egresos inversion:', error);
+        this.toastr.error('Error al obtener el total de egresos inversion:', error);
       }
     )
   }
@@ -60,7 +62,7 @@ export class ListarEgresosInversionComponent {
       this.obtenerTotalEgresos();
     },
       (error) => {
-        console.error('Error al obtener los ingresos:', error);
+        this.toastr.error('Error al obtener los ingresos:', error);
       }
     )
   }
@@ -83,7 +85,7 @@ export class ListarEgresosInversionComponent {
 
       },
       (error) => {
-        console.error('Error al obtener los tipos de inversión:', error);
+        this.toastr.error('Error al obtener los egresos:', error);
       }
     );
   }
@@ -104,13 +106,13 @@ export class ListarEgresosInversionComponent {
       this.egresosService.postEgresoInversion(params).subscribe((result: any) => {
         console.log(result);
         if (result == "OK") {
-          console.log("Egreso guardado");
+          this.toastr.success("Egreso guardado exitosamente");
           this.obtenerEgresosInversionPorPresupuesto();
           this.obtenerTotalEgresos();
         }
       });
     } catch (error) {
-      console.error('Error al crear el egreso:', error);
+      this.toastr.error('Error al crear el egreso:', (error as Error).message || String(error));
     }
   }
   editarEgresoInversion(id: number, concepto: string, valor: number, idTipoInversion: number) {
@@ -123,7 +125,7 @@ export class ListarEgresosInversionComponent {
       this.egresosService.editEgresoInversion(id, concepto, valor, idTipoInversion).subscribe((result: any) => {
         console.log(result);
         if (result = "OK") {
-          console.log("Egreso editado");
+          this.toastr.success("Egreso editado exitosamente");
           this.obtenerEgresosInversionPorPresupuesto();
           this.obtenerTotalEgresos();
         }
@@ -131,7 +133,7 @@ export class ListarEgresosInversionComponent {
       });
     }
     catch (error) {
-
+      this.toastr.error('Error al editar el egreso:', (error as Error).message || String(error));
     }
 
   }
@@ -142,7 +144,7 @@ export class ListarEgresosInversionComponent {
       this.egresosService.deleteEgresoInversion(id).subscribe((result: any) => {
         console.log(result);
         if (result = "OK") {
-          console.log("egreso eliminado");
+          this.toastr.success("Egreso eliminado exitosamente");
           this.obtenerEgresosInversionPorPresupuesto();
           this.obtenerTotalEgresos();
         }
@@ -150,6 +152,7 @@ export class ListarEgresosInversionComponent {
       });
     }
     catch (error) {
+      this.toastr.error('Error al eliminar el egreso:', (error as Error).message || String(error));
 
     }
 

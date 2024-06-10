@@ -5,6 +5,7 @@ import { EgresosService } from '@app/services/egresos.service';
 import { TiposService } from '@app/services/tipos.service';
 import { PopupCrearEditarEgresoComponent } from '@app/shared/popup-crear-editar-egreso/popup-crear-editar-egreso.component';
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listar-egresos-transferencias',
@@ -26,7 +27,8 @@ export class ListarEgresosTransferenciasComponent {
 
   constructor(private egresosService: EgresosService,
     private tiposService: TiposService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
 
@@ -46,7 +48,7 @@ export class ListarEgresosTransferenciasComponent {
 
     },
       (error) => {
-        console.error('Error al obtener el total de egresos transferencias:', error);
+        this.toastr.error('Error al obtener el total de egresos transferencias:', error);
       }
     )
   }
@@ -59,7 +61,7 @@ export class ListarEgresosTransferenciasComponent {
       this.obtenerTotalEgresos();
     },
       (error) => {
-        console.error('Error al obtener los ingresos:', error);
+        this.toastr.error('Error al obtener los ingresos:', error);
       }
     )
   }
@@ -81,7 +83,7 @@ export class ListarEgresosTransferenciasComponent {
 
       },
       (error) => {
-        console.error('Error al obtener los tipos de transferencia:', error);
+        this.toastr.error('Error al obtener los tipos de transferencia:', error);
       }
     );
   }
@@ -102,13 +104,13 @@ export class ListarEgresosTransferenciasComponent {
       this.egresosService.postEgresoTransferencia(params).subscribe((result: any) => {
         console.log(result);
         if (result == "OK") {
-          console.log("Egreso guardado");
+          this.toastr.success("Egreso guardado exitosamente");
           this.obtenerEgresosTransferenciaPorPresupuesto();
           this.obtenerTotalEgresos();
         }
       });
     } catch (error) {
-      console.error('Error al crear el descuento:', error);
+      this.toastr.error('Error al crear el egreso:', (error as Error).message || String(error));
     }
   }
 
@@ -122,7 +124,7 @@ export class ListarEgresosTransferenciasComponent {
       this.egresosService.editEgresoTransferencia(id, descripcion, porcentaje, idTipoTransferencia).subscribe((result: any) => {
         console.log(result);
         if (result = "OK") {
-          console.log("Egreso editado");
+          this.toastr.success("Egreso editado exitosamente");
           this.obtenerEgresosTransferenciaPorPresupuesto();
           this.obtenerTotalEgresos();
         }
@@ -130,6 +132,7 @@ export class ListarEgresosTransferenciasComponent {
       });
     }
     catch (error) {
+      this.toastr.error('Error al editar el egreso:', (error as Error).message || String(error));
 
     }
 
@@ -141,7 +144,7 @@ export class ListarEgresosTransferenciasComponent {
       this.egresosService.deleteEgresoTransferencia(id).subscribe((result: any) => {
         console.log(result);
         if (result = "OK") {
-          console.log("egreso eliminado");
+          this.toastr.success("Egreso eliminado exitosamente");
           this.obtenerEgresosTransferenciaPorPresupuesto();
           this.obtenerTotalEgresos();
         }
@@ -149,7 +152,7 @@ export class ListarEgresosTransferenciasComponent {
       });
     }
     catch (error) {
-
+      this.toastr.error('Error al eliminar el egreso:', (error as Error).message || String(error));
     }
 
   }

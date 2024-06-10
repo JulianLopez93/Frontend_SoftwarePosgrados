@@ -5,6 +5,7 @@ import { UsuariosService } from '@app/services/usuarios.service';
 import { AutenticacionService } from '@app/services/autenticacion.service';
 import { RolesService } from '@app/services/roles.service';
 import { FacultadesServicioService } from '@app/services/facultades-servicio.service';
+import { ProgramasService } from '@app/services/programas.service';
 import { PopupCrearEditarComponent } from '@app/shared/popup-crear-editar/popup-crear-editar.component';
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
 
@@ -18,6 +19,7 @@ export class ListarUsuariosComponent {
   usuarios: any[] = [];
   displayedColumns: string[] = ['nombre','apellido','email', 'username', 'rol', 'facultad', 'enabled', 'acciones'];
   listadoFacultades:any[] = [];
+  listadoProgramas:any[] = [];
   listadoRoles:any[] = [];
   form!: FormGroup;
   p: number = 1;
@@ -28,6 +30,7 @@ export class ListarUsuariosComponent {
               private autenticacionService: AutenticacionService,
               private rolesService: RolesService,
               private facultadesService: FacultadesServicioService,
+              private programasService: ProgramasService,
               public dialog: MatDialog) {}
 
   ngOnInit() {
@@ -62,6 +65,13 @@ export class ListarUsuariosComponent {
     this.facultadesService.getFacultades().subscribe((result) => {
       console.log(result);
         this.listadoFacultades = result;
+    })
+  }
+  obtenerProgramas()
+  {
+    this.programasService.getProgramas().subscribe((result) => {
+      console.log(result);
+        this.listadoProgramas = result;
     })
   }
 
@@ -147,6 +157,7 @@ export class ListarUsuariosComponent {
               email: usuario ? usuario.email : '',
               listaRoles: this.listadoRoles,
               listaFacultades: this.listadoFacultades,
+              listaProgramas: this.listadoProgramas,
               isEdit: !!usuario,
             }
     });

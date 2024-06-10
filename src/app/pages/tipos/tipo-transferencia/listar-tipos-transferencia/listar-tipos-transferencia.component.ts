@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PopupCrearEditarComponent } from '@app/shared/popup-crear-editar/popup-crear-editar.component';
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listar-tipos-transferencia',
@@ -21,7 +22,8 @@ export class ListarTiposTransferenciaComponent {
   filteredTipos: any[] = [];
 
   constructor(private tiposService: TiposService,
-              public dialog: MatDialog) {}
+              public dialog: MatDialog,
+              private toastr: ToastrService) {}
 
   ngOnInit() {
     this.obtenerTiposTransferencia();
@@ -36,7 +38,7 @@ export class ListarTiposTransferenciaComponent {
 
       },
       (error) => {
-        console.error('Error al obtener los tipos:', error);
+        this.toastr.error('Error al obtener los tipos:', error);
       }
     );
   }
@@ -48,6 +50,32 @@ export class ListarTiposTransferenciaComponent {
       );
     } else {
       this.filteredTipos = this.tipos;
+    }
+  }
+
+  crearTipoTransferencia(nombreTipo:string)
+  {
+    try
+    {
+      console.log(nombreTipo);
+      const params =
+      {
+        nombreTipo: nombreTipo
+      }
+      console.log(params);
+      this.tiposService.postTipoTransferencia(params).subscribe((result:any) => {
+        console.log(result);
+        if (result = "OK")
+        {
+          this.toastr.success("Tipo de transferencia creado exitosamente");
+          this.obtenerTiposTransferencia();
+        }
+
+      });
+    }
+    catch(error)
+    {
+      this.toastr.error('Error al crear el tipo de transferencia:', (error as Error).message || String(error));
     }
   }
 
@@ -65,16 +93,16 @@ export class ListarTiposTransferenciaComponent {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Tipo de transferencia editado");
+          this.toastr.success("Tipo de transferencia editado exitosamente");
           this.obtenerTiposTransferencia();
         }
 
       });
     }
     catch(error)
-      {
-
-      }
+    {
+      this.toastr.error('Error al editar el tipo de transferencia:', (error as Error).message || String(error));
+    }
 
   }
   eliminarTipoTransferencia(id:string)
@@ -86,43 +114,19 @@ export class ListarTiposTransferenciaComponent {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Tipo de transferencia eliminado");
+          this.toastr.success("Tipo de transferencia eliminado exitosamente");
           this.obtenerTiposTransferencia();
         }
 
       });
     }
     catch(error)
-      {
-
-      }
-
-  }
-  crearTipoTransferencia(nombreTipo:string)
-  {
-    try
     {
-      console.log(nombreTipo);
-      const params =
-      {
-        nombreTipo: nombreTipo
-      }
-      console.log(params);
-      this.tiposService.postTipoTransferencia(params).subscribe((result:any) => {
-        console.log(result);
-        if (result = "OK")
-        {
-          console.log("Tipo de transferencia creado");
-          this.obtenerTiposTransferencia();
-        }
-
-      });
+      this.toastr.error('Error al eliminar el tipo de transferencia:', (error as Error).message || String(error));
     }
-    catch(error)
-      {
 
-      }
   }
+  
 
   openCreateDialog(modulo:string, tipo?: any): void {
     console.log(tipo);

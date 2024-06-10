@@ -24,7 +24,8 @@ export class ProgramasService {
     const url = `${this.baseUrl}/crear`;
     const body = new HttpParams()
       .set('nombre', params.nombre)
-      .set('idFacultad', params.idFacultad);
+      .set('idFacultad', params.idFacultad)
+      .set('priorizado', params.esPriorizado);
       const headers = new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': 'Bearer ' + localStorage.getItem('authToken')
@@ -32,12 +33,13 @@ export class ProgramasService {
       return this.http.post(url, body.toString(), { headers, responseType: 'text' });
   }
 
-  editPrograma(nombre: string, idPrograma: string,  idFacultad:number) {
+  editPrograma(nombre: string, idPrograma: string,  idFacultad:number, esPriorizado: boolean) {
     const url = `${this.baseUrl}/actualizar`;
     const params = new HttpParams()
     .set('nombre', nombre)
     .set('idPrograma', idPrograma)     
-    .set('idFacultad', idFacultad);
+    .set('idFacultad', idFacultad)
+    .set('priorizado', esPriorizado);
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': 'Bearer ' + localStorage.getItem('authToken')

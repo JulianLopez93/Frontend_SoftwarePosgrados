@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AuthResponse } from '../pages/auth/auth-response';
+import { Token } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +54,9 @@ export class AutenticacionService {
       .set('token', params.token)
       .set('password', params.password);
     console.log(body);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded',
+                                    'Authorization': 'Bearer ' + params.token
+     });
     return this.http.post(url, body.toString(), { headers, responseType: 'text' });
 }
 }

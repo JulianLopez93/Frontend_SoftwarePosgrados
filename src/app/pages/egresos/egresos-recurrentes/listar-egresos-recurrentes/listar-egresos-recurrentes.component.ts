@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { EgresosService } from '@app/services/egresos.service';
 import { PopupCrearEditarEgresoComponent } from '@app/shared/popup-crear-editar-egreso/popup-crear-editar-egreso.component';
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listar-egresos-recurrentes',
@@ -23,7 +24,8 @@ export class ListarEgresosRecurrentesComponent {
   totalEgresos = 0;
 
   constructor(private egresosService: EgresosService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
 
@@ -42,7 +44,7 @@ export class ListarEgresosRecurrentesComponent {
 
     },
       (error) => {
-        console.error('Error al obtener el total de egresos recurrentes adm:', error);
+        this.toastr.error('Error al obtener el total de egresos recurrentes adm:', error);
       }
     )
   }
@@ -55,7 +57,7 @@ export class ListarEgresosRecurrentesComponent {
       this.obtenerTotalEgresos();
     },
       (error) => {
-        console.error('Error al obtener los ingresos:', error);
+        this.toastr.error('Error al obtener los ingresos:', error);
       }
     )
   }
@@ -90,13 +92,13 @@ export class ListarEgresosRecurrentesComponent {
       this.egresosService.postEgresoRecurrente(params).subscribe((result: any) => {
         console.log(result);
         if (result == "OK") {
-          console.log("Egreso guardado");
+          this.toastr.success("Egreso guardado exitosamente");
           this.obtenerEgresosRecurrentesPorPresupuesto();
           this.obtenerTotalEgresos();
         }
       });
     } catch (error) {
-      console.error('Error al crear el egreso:', error);
+      this.toastr.error('Error al crear el egreso:', (error as Error).message || String(error));
     }
   }
   editarEgresoRecurrente(id: number, unidad: string, cargo: string, valorHora: number, numHoras: number) {
@@ -110,7 +112,7 @@ export class ListarEgresosRecurrentesComponent {
       this.egresosService.editEgresoRecurrente(id, unidad, cargo, valorHora, numHoras).subscribe((result: any) => {
         console.log(result);
         if (result = "OK") {
-          console.log("Egreso editado");
+          this.toastr.success("Egreso editado exitosamente");
           this.obtenerEgresosRecurrentesPorPresupuesto();
           this.obtenerTotalEgresos();
         }
@@ -118,7 +120,7 @@ export class ListarEgresosRecurrentesComponent {
       });
     }
     catch (error) {
-
+      this.toastr.error('Error al editar el egreso:', (error as Error).message || String(error));
     }
 
   }
@@ -129,7 +131,7 @@ export class ListarEgresosRecurrentesComponent {
       this.egresosService.deleteEgresoRecurrente(id).subscribe((result: any) => {
         console.log(result);
         if (result = "OK") {
-          console.log("egreso eliminado");
+          this.toastr.success("Egreso eliminado exitosamente");
           this.obtenerEgresosRecurrentesPorPresupuesto();
           this.obtenerTotalEgresos();
         }
@@ -137,7 +139,7 @@ export class ListarEgresosRecurrentesComponent {
       });
     }
     catch (error) {
-
+      this.toastr.error('Error al eliminar el egreso:', (error as Error).message || String(error));
     }
 
   }

@@ -5,6 +5,7 @@ import { EgresosService } from '@app/services/egresos.service';
 import { TiposService } from '@app/services/tipos.service';
 import { PopupCrearEditarEgresoComponent } from '@app/shared/popup-crear-editar-egreso/popup-crear-editar-egreso.component';
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listar-egresos-generales',
@@ -27,7 +28,8 @@ export class ListarEgresosGeneralesComponent {
 
   constructor(private egresosService: EgresosService,
     private tiposService: TiposService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
 
@@ -47,7 +49,7 @@ export class ListarEgresosGeneralesComponent {
 
     },
       (error) => {
-        console.error('Error al obtener el total de egresos generales:', error);
+        this.toastr.error('Error al obtener el total de egresos generales:', error);
       }
     )
   }
@@ -60,7 +62,7 @@ export class ListarEgresosGeneralesComponent {
       this.obtenerTotalEgresos();
     },
       (error) => {
-        console.error('Error al obtener los ingresos:', error);
+        this.toastr.error('Error al obtener los ingresos:', error);
       }
     )
   }
@@ -83,7 +85,7 @@ export class ListarEgresosGeneralesComponent {
 
       },
       (error) => {
-        console.error('Error al obtener los tipos de costo:', error);
+        this.toastr.error('Error al obtener los tipos de costo:', error);
       }
     );
   }
@@ -106,13 +108,13 @@ export class ListarEgresosGeneralesComponent {
       this.egresosService.postEgresoGeneral(params).subscribe((result: any) => {
         console.log(result);
         if (result == "OK") {
-          console.log("Egreso guardado");
+          this.toastr.success("Egreso guardado exitosamente");
           this.obtenerEgresosGeneralesPorPresupuesto();
           this.obtenerTotalEgresos();
         }
       });
     } catch (error) {
-      console.error('Error al crear el egreso:', error);
+        this.toastr.error('Error al crear el egreso:', (error as Error).message || String(error));
     }
   }
   editarEgresoGeneral(id: number, concepto: string, valorUnitario: number, cantidad: number, idTipoCosto: number) {
@@ -126,7 +128,7 @@ export class ListarEgresosGeneralesComponent {
       this.egresosService.editEgresoGeneral(id, concepto, valorUnitario, cantidad, idTipoCosto).subscribe((result: any) => {
         console.log(result);
         if (result = "OK") {
-          console.log("Egreso editado");
+          this.toastr.success("Egreso editado exitosamente");
           this.obtenerEgresosGeneralesPorPresupuesto();
           this.obtenerTotalEgresos();
         }
@@ -134,7 +136,7 @@ export class ListarEgresosGeneralesComponent {
       });
     }
     catch (error) {
-
+      this.toastr.error('Error al editar el egreso:', (error as Error).message || String(error));
     }
 
   }
@@ -145,7 +147,7 @@ export class ListarEgresosGeneralesComponent {
       this.egresosService.deleteEgresoGeneral(id).subscribe((result: any) => {
         console.log(result);
         if (result = "OK") {
-          console.log("egreso eliminado");
+          this.toastr.success("Egreso eliminado exitosamente");
           this.obtenerEgresosGeneralesPorPresupuesto();
           this.obtenerTotalEgresos();
         }
@@ -153,7 +155,7 @@ export class ListarEgresosGeneralesComponent {
       });
     }
     catch (error) {
-
+      this.toastr.error('Error al eliminar el egreso:', (error as Error).message || String(error));
     }
 
   }

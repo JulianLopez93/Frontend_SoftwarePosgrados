@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PopupCrearEditarComponent } from '@app/shared/popup-crear-editar/popup-crear-editar.component';
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listar-tipos-inversion',
@@ -21,7 +22,8 @@ export class ListarTiposInversionComponent {
   filteredTipos: any[] = [];
 
   constructor(private tiposService: TiposService,
-              public dialog: MatDialog) {}
+              public dialog: MatDialog,
+              private toastr: ToastrService) {}
 
   ngOnInit() {
     this.obtenerTiposInversion();
@@ -36,7 +38,7 @@ export class ListarTiposInversionComponent {
 
       },
       (error) => {
-        console.error('Error al obtener los tipos:', error);
+        this.toastr.error('Error al obtener los tipos:', error);
       }
     );
   }
@@ -48,6 +50,32 @@ export class ListarTiposInversionComponent {
       );
     } else {
       this.filteredTipos = this.tipos;
+    }
+  }
+
+  crearTipoInversion(nombreTipo:string)
+  {
+    try
+    {
+      console.log(nombreTipo);
+      const params =
+      {
+        nombreTipo: nombreTipo
+      }
+      console.log(params);
+      this.tiposService.postTipoInversion(params).subscribe((result:any) => {
+        console.log(result);
+        if (result = "OK")
+        {
+          this.toastr.success("Tipo de inversion creado exitosamente");
+          this.obtenerTiposInversion();
+        }
+
+      });
+    }
+    catch(error)
+    {
+      this.toastr.error('Error al crear el tipo de inversion:', (error as Error).message || String(error));
     }
   }
 
@@ -65,16 +93,16 @@ export class ListarTiposInversionComponent {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Tipo de inversion editado");
+          this.toastr.success("Tipo de inversion editado exitosamente");
           this.obtenerTiposInversion();
         }
 
       });
     }
     catch(error)
-      {
-
-      }
+    {
+      this.toastr.error('Error al editar el tipo de inversion:', (error as Error).message || String(error));
+    }
 
   }
   eliminarTipoInversion(id:string)
@@ -86,43 +114,19 @@ export class ListarTiposInversionComponent {
         console.log(result);
         if (result = "OK")
         {
-          console.log("Tipo de inversion eliminado");
+          this.toastr.success("Tipo de inversion eliminado exitosamente");
           this.obtenerTiposInversion();
         }
 
       });
     }
     catch(error)
-      {
-
-      }
-
-  }
-  crearTipoInversion(nombreTipo:string)
-  {
-    try
     {
-      console.log(nombreTipo);
-      const params =
-      {
-        nombreTipo: nombreTipo
-      }
-      console.log(params);
-      this.tiposService.postTipoInversion(params).subscribe((result:any) => {
-        console.log(result);
-        if (result = "OK")
-        {
-          console.log("Tipo de inversion creado");
-          this.obtenerTiposInversion();
-        }
-
-      });
+      this.toastr.error('Error al eliminar el tipo de inversion:', (error as Error).message || String(error));
     }
-    catch(error)
-      {
 
-      }
   }
+  
 
   openCreateDialog(modulo:string, tipo?: any): void {
     console.log(tipo);

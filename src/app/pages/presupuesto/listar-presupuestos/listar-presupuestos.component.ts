@@ -2,12 +2,15 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
 
 import { CohortesService } from '@app/services/cohortes.service';
 import { ProgramasService } from '@app/services/programas.service';
 import { PresupuestosService } from '@app/services/presupuestos.service';
+import { EjecucionPresupuestalService } from '@app/services/ejecucion-presupuestal.service';
+import { error } from 'jquery';
 
 @Component({
   selector: 'app-listar-presupuestos',
@@ -16,11 +19,13 @@ import { PresupuestosService } from '@app/services/presupuestos.service';
 })
 export class ListarPresupuestosComponent {
   presupuestos: any[] = [];
-  displayedColumns: string[] = ['numero cohorte','fecha cohorte','programa','departamento', 'facultad', 'estado', 'observaciones','acciones'];
+  presupuestosPorRevisar: any[] = [];
+  displayedColumns: string[] = ['numero cohorte','fecha cohorte','programa', 'facultad', 'estado', 'observaciones','acciones'];
   listadoProgramas:any[] = [];
   form!: FormGroup;
   nombre:string='';
   cohortes: any[] = [];
+  ejecucionPresupuesto:any;
   p: number = 1;
   searchText: string = '';
   filteredPresupuestos: any[] = [];
@@ -28,31 +33,33 @@ export class ListarPresupuestosComponent {
   constructor(private cohortesService: CohortesService,
               private programasService: ProgramasService,
               private route:Router,
+              private toastr: ToastrService,
               private presupuestosServices: PresupuestosService,
+              private ejecucionPresupuestalService: EjecucionPresupuestalService,
               public dialog: MatDialog) {}
 
   ngOnInit() {
-    this.obtenerPresupuestos();
+    this.obtenerPresupuestosPorRevisar();
     //this.obtenerCohortes();
   }
 
 
-  obtenerPresupuestos() {
-    this.presupuestosServices.getPresupuestos().subscribe(
+  obtenerPresupuestosPorRevisar() {
+    this.presupuestosServices?.getPresupuestosPorRevisarPorFacultad().subscribe(
       (result) => {
         console.log(result);
-        this.presupuestos = result;
+        this.presupuestosPorRevisar = result;
         this.applyFilter();
       },
       (error) => {
-        console.error('Error al obtener las cohortes:', error);
+        this.toastr.error('Error al obtener los presupuestos:', error);
       }
     );
   }
 
   applyFilter() {
     if (this.searchText) {
-      this.filteredPresupuestos = this.presupuestos.filter(presupuesto =>
+      this.filteredPresupuestos = this.presupuestosPorRevisar.filter(presupuesto =>
         presupuesto.cohorte.numero.toLowerCase().includes(this.searchText.toLowerCase()) ||
         presupuesto.cohorte.fecha.toLowerCase().includes(this.searchText.toLowerCase()) ||
         presupuesto.cohorte.programa.nombre.toLowerCase().includes(this.searchText.toLowerCase()) ||
@@ -60,14 +67,70 @@ export class ListarPresupuestosComponent {
         presupuesto.cohorte.programa.departamento.facultad.nombre.toLowerCase().includes(this.searchText.toLowerCase())
       );
     } else {
-      this.filteredPresupuestos = this.presupuestos;
+      this.filteredPresupuestos = this.presupuestosPorRevisar;
     }
   }
+
+
 
   openBudgetForm()
   {
     this.route.navigate(['presupuestos/crear-presupuesto']);
 
+  }
+
+  desaprobarPresupuesto(idPresupuesto:number)
+  {
+    console.log(idPresupuesto)
+    this.presupuestosServices?.disapprovePresupuesto(idPresupuesto).subscribe(
+      (result) => {
+        console.log(result)
+        this.toastr.success("Presupuesto desaprobado correctamente");
+      },
+      (error) =>
+      {
+        this.toastr.error("Error al desaprobar presupuesto");
+
+      }
+    )
+
+
+  }
+  aprobarPresupuesto(idPresupuesto:number)
+  {
+    console.log(idPresupuesto);
+    this.presupuestosServices?.approvePresupuesto(idPresupuesto).subscribe(
+      (result) => {
+        console.log(result);
+        this.toastr.success("Presupuesto aprobado correctamente");
+        this.obtenerPresupuestosPorRevisar();
+      }
+    )
+
+
+  }
+
+  abrirFormularioCDP(presupuesto:any)
+  {
+    this.ejecucionPresupuestalService.getEjecucionPorPresupuesto(presupuesto.id).subscribe((result:any) =>{
+      console.log(result);
+      if (result !== null)
+        {
+          console.log("Entra condicional");
+          this.ejecucionPresupuesto = result;
+          console.log(this.ejecucionPresupuesto);
+          sessionStorage.setItem('idCohorte', this.ejecucionPresupuesto.presupuesto.cohorte.numero);
+          sessionStorage.setItem('nombrePrograma', this.ejecucionPresupuesto.presupuesto.cohorte.programa.nombre);
+          sessionStorage.setItem('nombreFacultad', this.ejecucionPresupuesto.presupuesto.cohorte.programa.facultad.nombre);
+          this.route.navigate(['ejecucion-presupuestal/crear-orden-gasto',this.ejecucionPresupuesto.presupuesto.id.toString()]);
+
+        }
+        else
+        {
+          //this.openBudgetCreationDialog(cohorte);
+        }
+          
+    });
   }
 
   

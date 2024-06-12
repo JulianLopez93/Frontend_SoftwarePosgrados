@@ -13,6 +13,10 @@ const routes: Routes = [
     component: ListarCohortesComponent,
   },
   {
+    path: 'listar-cohortes-programa/:idPrograma',
+    component: ListarCohortesComponent,
+  },
+  {
     path:'**',
     redirectTo: 'listar-cohortes'
   }

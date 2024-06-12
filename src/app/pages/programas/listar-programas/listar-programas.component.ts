@@ -6,6 +6,8 @@ import { ProgramasService } from '@app/services/programas.service';
 import { PopupEliminarComponent } from '@app/shared/popup-eliminar/popup-eliminar.component';
 import { PopupCrearEditarComponent } from '@app/shared/popup-crear-editar/popup-crear-editar.component';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { id } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-listar-programas',
@@ -27,7 +29,8 @@ export class ListarProgramasComponent {
   constructor(private programasService: ProgramasService,
     private facultadesService: FacultadesServicioService,
               public dialog: MatDialog,
-              private toastr: ToastrService) {}
+              private toastr: ToastrService,
+              private route:Router) {}
 
   ngOnInit() {
     this.obtenerProgramas();
@@ -203,6 +206,13 @@ export class ListarProgramasComponent {
       }
     });
 
+
+  }
+
+  obtenerCohortesPorPrograma(idPrograma:string)
+  {
+    sessionStorage.setItem('idPrograma', idPrograma);
+    this.route.navigate(['cohortes/listar-cohortes-programa',idPrograma.toString()]);
 
   }
 

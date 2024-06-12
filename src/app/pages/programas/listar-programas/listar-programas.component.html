@@ -32,6 +32,9 @@
           <button mat-icon-button color="warn" (click)="openDeleteDialog(programa.id, 'programa')">
             <mat-icon>delete</mat-icon>
           </button>
+          <button mat-icon-button color="primary" (click)="obtenerCohortesPorPrograma(programa.id)" matTooltip="Ver cohortes">
+            <mat-icon>list</mat-icon>
+          </button>
         </td>
       </ng-container>
 

@@ -20,6 +20,15 @@ export class CohortesService {
     return this.http.get(url, { headers });
   }
 
+  getCohortesPorPrograma(idPrograma: string): Observable<any> {
+    const url = `${this.baseUrl}/listarPorPrograma?idPrograma=${idPrograma}`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
+  }
+
   searchCohorte(idCohorte: string)
   {
     const url = `${this.baseUrl}/buscar?id=${idCohorte}`;

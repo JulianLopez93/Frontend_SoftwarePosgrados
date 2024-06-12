@@ -30,7 +30,7 @@ export class DescuentosService {
   postDescuento(params: any) {
     const url = `${this.baseUrl}/crear`;
     const body = new HttpParams()
-      .set('idPresupuestoEjecucion', params.idPresupuestoEjecucion)
+      .set('idPresupuesto', params.idPresupuestoEjecucion)
       .set('numEstudiantes', params.numEstudiantes)
       .set('valor', params.valor)
       .set('numPeriodos', params.numPeriodos)

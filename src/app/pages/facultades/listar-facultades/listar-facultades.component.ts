@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { FacultadesServicioService } from 'src/app/services/facultades-servicio.service';
+import { UsuariosService } from '@app/services/usuarios.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { CrearFacultadComponent } from './crear-facultad/crear-facultad.component';
 import { PopupEliminarFacultadComponent } from './popup-eliminar-facultad/popup-eliminar-facultad.component';
 import { ToastrService } from 'ngx-toastr';
+//import * as jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-listar-facultades',
@@ -13,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ListarFacultadesComponent {
   facultades: any[] = [];
+  usuarios: any[] = [];
   displayedColumns: string[] = ['nombre', 'acciones'];
   form!: FormGroup;
   nombre:string='';
@@ -21,11 +24,13 @@ export class ListarFacultadesComponent {
   filteredFacultades: any[] = [];
 
   constructor(private facultadesService: FacultadesServicioService,
+              private usuariosService: UsuariosService,
               public dialog: MatDialog,
               private toastr: ToastrService) {}
 
   ngOnInit() {
     this.obtenerFacultades();
+    //this.obtenerUsuarios();
   }
 
 
@@ -41,6 +46,23 @@ export class ListarFacultadesComponent {
       }
     );
   }
+
+  obtenerUsuarios()
+  {
+    this.usuariosService.getUsuarios().subscribe((usuarios) =>{
+      this.usuarios = usuarios;
+      console.log(this.usuarios);
+    })
+
+  }
+
+  /*
+  obtenerUsuarioActual()
+  {
+    const token = localStorage.getItem('authToken');
+    const decodedToken = jwt_decode(token);
+  }
+    */
 
   applyFilter() {
     if (this.searchText) {

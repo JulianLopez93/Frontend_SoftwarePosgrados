@@ -60,6 +60,10 @@ const routes: Routes = [
         path: 'usuarios',
         loadChildren: () => import(`@pages/usuarios/usuarios.module`).then(m => m.UsuariosModule),
       },
+      {
+        path: 'ejecucion-presupuestal',
+        loadChildren: () => import(`@pages/ejecucion-presupuestal/ejecucion-presupuestal.module`).then(m => m.EjecucionPresupuestalModule),
+      },
     ],
   },
   {

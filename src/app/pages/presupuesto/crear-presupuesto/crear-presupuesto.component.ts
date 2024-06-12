@@ -142,6 +142,7 @@ export class CrearPresupuestoComponent {
   }
 
   enviarParaRevision() {
+    console.log(this.idPresupuesto)
     this.presupuestosServices
       .sendPresupuestoForReview(this.idPresupuesto)
       .subscribe((result: any) => {

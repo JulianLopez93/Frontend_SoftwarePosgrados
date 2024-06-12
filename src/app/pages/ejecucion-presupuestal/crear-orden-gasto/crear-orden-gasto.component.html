@@ -1,0 +1,205 @@
+<div class="container">
+    <form [formGroup]="CDPForm">
+      <div *ngIf="paginaActual === 1" class="mb-1">
+        <div class="row mb-2 mt-2">
+          <div class="card">
+            <div class="row mr-1 mt-2">
+              <h2 class="section-title-text">CREACIÓN CDP</h2>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Facultad</mat-label>
+                      <input matInput readonly [value]="facultadCohorte">
+                    </mat-form-field>
+                </div>
+                <div class="col-3">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Programa</mat-label>
+                      <input matInput readonly [value]="programaCohorte">
+                    </mat-form-field>
+                  </div>
+              <div class="col-3">
+                <mat-form-field appearance="fill">
+                  <mat-label>Numero cohorte</mat-label>
+                  <input matInput readonly [value]="numeroCohorte">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-label>Seleccione rubro perteneciente</mat-label>
+                <mat-select class="form-control" formControlName="rubroSeleccionado">
+                    <mat-option *ngFor="let item of this.listaRubros" [value]="item">{{item}}</mat-option>
+                </mat-select>
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-2 mt-2">
+            <div class="card">
+                <div class="row mr-1 mt-2">
+                    <h3 class="section-title-text">AGREGAR EGRESOS</h3>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-6">
+                        <button (click)="obtenerEgresosDesdePresupuesto()" mat-raised-button style="background-color: #003b70; color: white;" class="create-button">Desde presupuesto</button>
+                    </div>
+                    <div class="col-6">
+                        
+                    </div>
+                </div>
+                <table *ngIf="rubroSeleccionado != ''" mat-table [dataSource]="listaEgresosRubros" class="mat-elevation-z8 mb-2" >
+                    <!-- Columna de nombre -->
+                    <ng-container *ngIf="rubroSeleccionado == 'Generales' || rubroSeleccionado == 'Otros' || rubroSeleccionado == 'Inversiones'" matColumnDef="concepto">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Concepto </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.concepto}} </td>
+                    </ng-container>
+                    <ng-container *ngIf="rubroSeleccionado == 'Recurrentes Administrativos'" matColumnDef="unidad">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Unidad </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.unidad}} </td>
+                    </ng-container>
+                    <ng-container *ngIf="rubroSeleccionado == 'Recurrentes Administrativos'" matColumnDef="cargo">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Cargo </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.cargo}} </td>
+                    </ng-container>
+                    <ng-container *ngIf="rubroSeleccionado == 'Recurrentes Administrativos'" matColumnDef="valorHora">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Valor hora </th>
+                        <td mat-cell *matCellDef="let egreso"> ${{egreso.valorHora}}</td>
+                    </ng-container>
+                    <ng-container *ngIf="rubroSeleccionado == 'Viajes'" matColumnDef="numPersonas">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Número personas </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.numPersonas}} </td>
+                    </ng-container>
+                    <ng-container *ngIf="rubroSeleccionado == 'Viajes'" matColumnDef="apoyoDesplazamiento">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Apoyo desplazamiento </th>
+                        <td mat-cell *matCellDef="let egreso"> ${{egreso.apoyoDesplazamiento}}</td>
+                    </ng-container>
+                    <ng-container *ngIf="rubroSeleccionado == 'Viajes'" matColumnDef="numViajesPorPersona">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Número viajes por persona</th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.numViajesPorPersona}} </td>
+                    </ng-container>
+                    <ng-container *ngIf="rubroSeleccionado == 'Viajes'" matColumnDef="valorTransporte">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Valor transporte</th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.valorTransporte}} </td>
+                    </ng-container>
+                    <ng-container *ngIf="rubroSeleccionado == 'Otros Servicios Docentes' || rubroSeleccionado == 'Servicios No Docentes'" matColumnDef="servicio">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Servicio </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.servicio}} </td>
+                      </ng-container>
+                      <ng-container  *ngIf="rubroSeleccionado == 'Otros Servicios Docentes' || rubroSeleccionado == 'Transferencias' || rubroSeleccionado == 'Viajes'" matColumnDef="descripcion">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Descripción </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.descripcion}} </td>
+                      </ng-container>
+                      <ng-container *ngIf="rubroSeleccionado == 'Transferencias'" matColumnDef="porcentaje">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Porcentaje </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.porcentaje}}% </td>
+                      </ng-container>
+                      <ng-container *ngIf="rubroSeleccionado == 'Otros Servicios Docentes' || rubroSeleccionado == 'Recurrentes Administrativos'"  matColumnDef="numHoras">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Número horas </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.numHoras}} </td>
+                      </ng-container>
+                    <ng-container *ngIf="rubroSeleccionado == 'Generales' || rubroSeleccionado == 'Otros' || rubroSeleccionado == 'Servicios No Docentes'" matColumnDef="valorUnitario">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Valor Unitario </th>
+                        <td mat-cell *matCellDef="let egreso"> ${{egreso.valorUnitario}}</td>
+                    </ng-container>
+                    <ng-container *ngIf="rubroSeleccionado == 'Descuentos' || rubroSeleccionado == 'Inversiones'" matColumnDef="valor">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Valor </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.valor}} </td>
+                      </ng-container>
+                    <ng-container *ngIf="rubroSeleccionado == 'Generales' || rubroSeleccionado == 'Otros' || rubroSeleccionado == 'Servicios No Docentes'" matColumnDef="cantidad">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Cantidad </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.cantidad}}</td>
+                    </ng-container>
+                    <ng-container *ngIf="rubroSeleccionado == 'Descuentos'" matColumnDef="cantidadEstudiantes">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Cantidad estudiantes </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.numEstudiantes}} </td>
+                      </ng-container>
+                      <ng-container *ngIf="rubroSeleccionado == 'Descuentos'" matColumnDef="numeroPeriodos">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Número periodos </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.numPeriodos}} </td>
+                      </ng-container>
+                    <ng-container *ngIf="rubroSeleccionado == 'Transferencias'" matColumnDef="tipoTransferencia">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Tipo transferencia </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.tipoTransferencia.nombreTipo}} </td>
+                      </ng-container>
+                    <ng-container *ngIf="rubroSeleccionado == 'Generales' || rubroSeleccionado == 'Otros' || rubroSeleccionado == 'Otros Servicios Docentes' || rubroSeleccionado == 'Servicios No Docentes'" matColumnDef="tipoCosto">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Tipo costo </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.tipoCosto.nombreTipo}} </td>
+                    </ng-container>
+                    <ng-container *ngIf="rubroSeleccionado == 'Generales' || rubroSeleccionado == 'Otros' || rubroSeleccionado == 'Otros Servicios Docentes' || rubroSeleccionado == 'Servicios No Docentes' || rubroSeleccionado == 'Transferencias' || rubroSeleccionado == 'Recurrentes Administrativos'" matColumnDef="valorTotal">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Valor total </th>
+                        <td mat-cell *matCellDef="let egreso"> ${{egreso.valorTotal}} </td>
+                    </ng-container>
+                    <ng-container *ngIf="rubroSeleccionado == 'Servicios Docentes'" matColumnDef="nombreMateria">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Nombre Materia </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.nombreMateria}} </td>
+                      </ng-container>
+                      <ng-container *ngIf="rubroSeleccionado == 'Servicios Docentes'" matColumnDef="esDocentePlanta">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;">Es docente planta</th>
+                        <td mat-cell *matCellDef="let egreso">{{ egreso.esDocentePlanta ? 'Sí' : 'No' }}</td>
+                      </ng-container>
+                      <ng-container *ngIf="rubroSeleccionado == 'Servicios Docentes'" matColumnDef="nombreDocente">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Nombre Docente </th>
+                        <td mat-cell *matCellDef="let egreso">{{egreso.nombreDocente}}</td>
+                      </ng-container>
+                      <ng-container *ngIf="rubroSeleccionado == 'Servicios Docentes'" matColumnDef="escalafon">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Escalafón </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.escalafon}}</td>
+                      </ng-container>
+                      <ng-container *ngIf="rubroSeleccionado == 'Servicios Docentes'" matColumnDef="titulo">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Título </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.titulo}}</td>
+                      </ng-container>
+                      <ng-container *ngIf="rubroSeleccionado == 'Servicios Docentes'" matColumnDef="horasTeoricasMat">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Horas teóricas </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.horasTeoricasMat}}</td>
+                      </ng-container>
+                      <ng-container *ngIf="rubroSeleccionado == 'Servicios Docentes'" matColumnDef="horasPracticasMat">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Horas prácticas </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.horasPracticasMat}}</td>
+                      </ng-container>
+                      <ng-container *ngIf="rubroSeleccionado == 'Servicios Docentes'" matColumnDef="valorHoraProfesor">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Valor hora profesor </th>
+                        <td mat-cell *matCellDef="let egreso"> ${{egreso.valorHoraProfesor}}</td>
+                      </ng-container>
+                      <ng-container *ngIf="rubroSeleccionado == 'Servicios Docentes'" matColumnDef="tipoCompensacion">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Tipo compensación </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.tipoCompensacion.nombreTipo}} </td>
+                      </ng-container>
+                      <ng-container *ngIf="rubroSeleccionado == 'Descuentos'" matColumnDef="tipoDescuento">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Tipo descuento </th>
+                        <td mat-cell *matCellDef="let descuento"> {{descuento.tipoDescuento.nombreTipo}} </td>
+                      </ng-container>
+                      <ng-container *ngIf="rubroSeleccionado == 'Inversiones'" matColumnDef="tipoInversion">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Tipo inversión </th>
+                        <td mat-cell *matCellDef="let egreso"> {{egreso.tipoInversion.nombreTipo}} </td>
+                      </ng-container>
+                      <ng-container *ngIf="rubroSeleccionado == 'Descuentos'" matColumnDef="totalDescuento">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Total descuento </th>
+                        <td mat-cell *matCellDef="let descuento"> ${{descuento.totalDescuento}} </td>
+                      </ng-container>
+                      <ng-container *ngIf="rubroSeleccionado == 'Servicios Docentes'" matColumnDef="totalPagoProfesor">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Pago total </th>
+                        <td mat-cell *matCellDef="let egreso"> ${{egreso.totalPagoProfesor}} </td>
+                      </ng-container>
+                    
+                    <!-- Columna de acciones -->
+                    <ng-container matColumnDef="acciones">
+                        <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Acciones </th>
+                        <td mat-cell *matCellDef="let egreso">
+                        <button mat-icon-button color="primary">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                        </td>
+                    </ng-container>
+                
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </div>
+        </div>
+    </form>
+</div>

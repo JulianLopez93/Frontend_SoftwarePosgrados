@@ -27,6 +27,7 @@ export class ListarCohortesComponent {
   searchText: string = '';
   filteredCohortes: any[] = [];
   presupuesto:any;
+  idPrograma:any;
 
   constructor(private cohortesService: CohortesService,
     private programasService: ProgramasService,
@@ -37,14 +38,36 @@ export class ListarCohortesComponent {
 
   ngOnInit() {
     sessionStorage.removeItem('paginaPresupuesto');
-    this.obtenerCohortes();
+    this.idPrograma = sessionStorage.getItem('idPrograma')
+    console.log(this.idPrograma);
+    sessionStorage.removeItem('idPrograma');
+
+    if (this.idPrograma !== null)
+    {
+      this.obtenerCohortesPorPrograma(this.idPrograma);
+    }
+    else
+    {
+      this.obtenerCohortes();
+    }
+
     this.obtenerProgramas();
     
   }
-
-
   obtenerCohortes() {
     this.cohortesService.getCohortes().subscribe(
+      (result) => {
+        console.log(result);
+        this.cohortes = result;
+        this.applyFilter();
+      },
+      (error) => {
+        this.toastr.error('Error al obtener las cohortes:', error);
+      }
+    );
+  }
+  obtenerCohortesPorPrograma(idPrograma:string) {
+    this.cohortesService.getCohortesPorPrograma(idPrograma).subscribe(
       (result) => {
         console.log(result);
         this.cohortes = result;
@@ -75,6 +98,28 @@ export class ListarCohortesComponent {
           
     });
 
+  }
+  abrirFormularioCDP(cohorte:any)
+  {
+    this.presupuestosService.getPresupuestoPorCohorte(cohorte.id).subscribe((result:any) =>{
+      console.log(result);
+      if (result !== null)
+        {
+          console.log("Entra condicional");
+          this.presupuesto = result;
+          console.log(this.presupuesto);
+          sessionStorage.setItem('idCohorte', this.presupuesto.cohorte.numero);
+          sessionStorage.setItem('nombrePrograma', this.presupuesto.cohorte.programa.nombre);
+          sessionStorage.setItem('nombreFacultad', this.presupuesto.cohorte.programa.facultad.nombre);
+          this.route.navigate(['ejecucion-presupuestal/crear-orden-gasto',this.presupuesto.id.toString(), cohorte.id.toString()]);
+
+        }
+        else
+        {
+          //this.openBudgetCreationDialog(cohorte);
+        }
+          
+    });
   }
 
   applyFilter() {

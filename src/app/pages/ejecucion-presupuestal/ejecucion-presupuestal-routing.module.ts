@@ -4,7 +4,7 @@ import { CrearOrdenGastoComponent } from './crear-orden-gasto/crear-orden-gasto.
 
 const routes: Routes = [
   {
-    path: 'crear-orden-gasto/:idEjecucionPresupuestal',
+    path: 'crear-orden-gasto',
     component: CrearOrdenGastoComponent,
   },
 ];

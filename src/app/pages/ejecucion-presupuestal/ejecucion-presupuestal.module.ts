@@ -8,11 +8,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@app/material/material/material.module';
 import { MatTableModule } from '@angular/material/table';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { PopupConfirmarRubroComponent } from './crear-orden-gasto/popup-confirmar-rubro/popup-confirmar-rubro.component';
 
 
 @NgModule({
   declarations: [
-    CrearOrdenGastoComponent
+    CrearOrdenGastoComponent,
+    PopupConfirmarRubroComponent
   ],
   imports: [
     CommonModule,

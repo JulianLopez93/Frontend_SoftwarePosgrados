@@ -33,6 +33,14 @@ export class ProgramasService {
       return this.http.post(url, body.toString(), { headers, responseType: 'text' });
   }
 
+  getProgramasPorFacultad(idFacultad:number) {
+    const url = `${this.baseUrl}/listarPorFacultad?idFacultad=${idFacultad}`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
+  }
+
   editPrograma(nombre: string, idPrograma: string,  idFacultad:number, esPriorizado: boolean) {
     const url = `${this.baseUrl}/actualizar`;
     const params = new HttpParams()

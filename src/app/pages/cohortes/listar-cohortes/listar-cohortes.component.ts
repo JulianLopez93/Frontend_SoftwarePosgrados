@@ -41,6 +41,10 @@ export class ListarCohortesComponent {
     this.idPrograma = sessionStorage.getItem('idPrograma')
     console.log(this.idPrograma);
     sessionStorage.removeItem('idPrograma');
+    sessionStorage.removeItem('nombrePrograma');
+    sessionStorage.removeItem('nombreFacultad');
+    sessionStorage.removeItem('idCohorte');
+    sessionStorage.removeItem('idPresupuesto');
 
     if (this.idPrograma !== null)
     {
@@ -83,18 +87,18 @@ export class ListarCohortesComponent {
     this.presupuestosService.getPresupuestoPorCohorte(cohorte.id).subscribe((result:any) =>{
       console.log(result);
       if (result !== null)
-        {
-          console.log("Entra condicional");
-          this.presupuesto = result;
-          console.log(this.presupuesto);
-          sessionStorage.setItem('idPresupuesto', this.presupuesto.id);
-          this.route.navigate(['presupuestos/crear-presupuesto',cohorte.id.toString()]);
+      {
+        console.log("Entra condicional");
+        this.presupuesto = result;
+        console.log(this.presupuesto);
+        sessionStorage.setItem('idPresupuesto', this.presupuesto.id);
+        this.route.navigate(['presupuestos/crear-presupuesto',cohorte.id.toString()]);
 
-        }
-        else
-        {
-          this.openBudgetCreationDialog(cohorte);
-        }
+      }
+      else
+      {
+        this.openBudgetCreationDialog(cohorte);
+      }
           
     });
 

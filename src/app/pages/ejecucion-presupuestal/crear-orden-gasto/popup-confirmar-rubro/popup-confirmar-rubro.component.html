@@ -1,0 +1,8 @@
+<h1 mat-dialog-title class="dialog-title">Crear Presupuesto</h1>
+<div mat-dialog-content>
+  Está seguro de que estos son los datos para crear CDP? Recuerde que una vez hecho click en 'Aceptar', no se podrán mofificar
+</div>
+<div mat-dialog-actions style="display: flex; justify-content: space-between;">
+    <button mat-button style="background-color: #f02032; color: white;" (click)="onNoClick()">Cancelar</button>
+    <button mat-button style="background-color: #0a7c0a; color: white;" (click)="onAccept()" cdkFocusInitial>Aceptar</button>
+  </div>

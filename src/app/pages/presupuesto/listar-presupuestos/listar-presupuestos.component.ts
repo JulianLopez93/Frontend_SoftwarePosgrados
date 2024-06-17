@@ -79,7 +79,7 @@ export class ListarPresupuestosComponent {
 
   }
 
-  desaprobarPresupuesto(idPresupuesto:number)
+  desaprobarPresupuesto(idPresupuesto:string)
   {
     console.log(idPresupuesto)
     this.presupuestosServices?.disapprovePresupuesto(idPresupuesto).subscribe(

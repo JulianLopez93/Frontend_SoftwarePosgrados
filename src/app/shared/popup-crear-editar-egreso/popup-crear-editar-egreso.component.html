@@ -109,11 +109,23 @@
     <mat-label>Valor hora profesor</mat-label>
     <input matInput [(ngModel)]="data.valorHoraProfesor" type="number">
   </mat-form-field>
-  <div *ngIf="data.modulo === 'egreso transferencia' || data.modulo === 'egreso general' 
+  <mat-form-field *ngIf="data.isCreacionCDP === 'Si' && (data.modulo !== 'egreso recurrente')">
+    <mat-label>Tipo</mat-label>
+    <input matInput [(ngModel)]="data.tipoPerteneciente.nombreTipo" readonly="true">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.isCreacionCDP === 'Si'">
+    <mat-label>Descripción para CDP </mat-label>
+    <input matInput [(ngModel)]="data.descripcionCDP">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.isCreacionCDP === 'Si'">
+    <mat-label>CPC (Dane) </mat-label>
+    <input matInput [(ngModel)]="data.CPC">
+  </mat-form-field>
+  <div *ngIf="(data.modulo === 'egreso transferencia' || data.modulo === 'egreso general' 
   || data.modulo === 'otro egreso' || data.modulo === 'egreso servicio no docente'
   || data.modulo === 'egreso otros servicios docente'
   || data.modulo === 'egreso inversion'
-  || data.modulo === 'egreso servicio docente'">
+  || data.modulo === 'egreso servicio docente') && data.isCreacionCDP !== 'Si'">
     <span class="field-label">Seleccione {{data.modulo === 'egreso transferencia' ? 'tipo transferencia'
     :data.modulo === 'egreso general' ? 'tipo costo':data.modulo === 'otro egreso' ? 'tipo costo'
     :data.modulo === 'egreso servicio no docente' ? 'tipo costo'
@@ -130,5 +142,6 @@
 </div>
 <div mat-dialog-actions style="display: flex; justify-content: space-between;">
   <button mat-button style="background-color: #f02032; color: white;" (click)="onNoClick()">Cancelar</button>
-  <button mat-button style="background-color: #0a7c0a; color: white;" (click)="onAccept()" cdkFocusInitial>{{data.isEdit ? 'Guardar' : 'Aceptar'}}</button>
+  <button *ngIf="data.isCreacionCDP !== 'Si'" mat-button style="background-color: #0a7c0a; color: white;" (click)="onAccept()" cdkFocusInitial>{{data.isEdit ? 'Guardar' : 'Aceptar'}}</button>
+  <button *ngIf="data.isCreacionCDP === 'Si'" mat-button style="background-color: #0a7c0a; color: white;" (click)="onAcceptCDP()" cdkFocusInitial>{{data.isEdit ? 'Guardar' : 'Aceptar'}}</button>
 </div>

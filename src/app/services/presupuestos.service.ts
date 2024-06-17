@@ -85,11 +85,12 @@ export class PresupuestosService {
     .set('idCohorte', idCohorte);
   return this.http.put(url, params.toString(), { params: params, responseType: 'text' });
   }
-  disapprovePresupuesto(id:number) {
+  disapprovePresupuesto(id:string) {
     console.log(id);
     const url = `${this.baseUrl}/desaprobar`;
+    console.log(url);
     const params = new HttpParams()
-    .set('id', id.toString());
+    .set('id', id);
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('authToken')

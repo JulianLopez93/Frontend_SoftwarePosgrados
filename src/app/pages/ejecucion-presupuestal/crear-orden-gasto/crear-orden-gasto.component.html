@@ -125,7 +125,7 @@
                         <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Tipo costo </th>
                         <td mat-cell *matCellDef="let egreso"> {{egreso.tipoCosto.nombreTipo}} </td>
                     </ng-container>
-                    <ng-container *ngIf="rubroSeleccionado == 'Generales' || rubroSeleccionado == 'Otros' || rubroSeleccionado == 'Otros Servicios Docentes' || rubroSeleccionado == 'Servicios No Docentes' || rubroSeleccionado == 'Transferencias' || rubroSeleccionado == 'Recurrentes Administrativos'" matColumnDef="valorTotal">
+                    <ng-container *ngIf="rubroSeleccionado == 'Generales' || rubroSeleccionado == 'Otros' || rubroSeleccionado == 'Otros Servicios Docentes' || rubroSeleccionado == 'Servicios No Docentes' || rubroSeleccionado == 'Transferencias' || rubroSeleccionado == 'Recurrentes Administrativos' || rubroSeleccionado == 'Viajes'" matColumnDef="valorTotal">
                         <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Valor total </th>
                         <td mat-cell *matCellDef="let egreso"> ${{egreso.valorTotal}} </td>
                     </ng-container>
@@ -284,7 +284,7 @@
                         <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Tipo costo </th>
                         <td mat-cell *matCellDef="let egreso"> {{egreso.egresoEspecifico.tipoCosto.nombreTipo}} </td>
                     </ng-container>
-                    <ng-container *ngIf="rubroSeleccionado == 'Generales' || rubroSeleccionado == 'Otros' || rubroSeleccionado == 'Otros Servicios Docentes' || rubroSeleccionado == 'Servicios No Docentes' || rubroSeleccionado == 'Transferencias' || rubroSeleccionado == 'Recurrentes Administrativos'" matColumnDef="valorTotal">
+                    <ng-container *ngIf="rubroSeleccionado == 'Generales' || rubroSeleccionado == 'Otros' || rubroSeleccionado == 'Otros Servicios Docentes' || rubroSeleccionado == 'Servicios No Docentes' || rubroSeleccionado == 'Transferencias' || rubroSeleccionado == 'Recurrentes Administrativos' || rubroSeleccionado == 'Viajes'" matColumnDef="valorTotal">
                         <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Valor total </th>
                         <td mat-cell *matCellDef="let egreso"> ${{egreso.egresoEspecifico.valorTotal}} </td>
                     </ng-container>

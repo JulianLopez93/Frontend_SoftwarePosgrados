@@ -41,6 +41,18 @@
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
+  <mat-form-field *ngIf="data.isCreacionCDP === 'Si'">
+    <mat-label>Tipo</mat-label>
+    <input matInput [(ngModel)]="data.tipoPerteneciente.nombreTipo" readonly="true">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.isCreacionCDP === 'Si'">
+    <mat-label>Descripción para CDP </mat-label>
+    <input matInput [(ngModel)]="data.descripcionCDP">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.isCreacionCDP === 'Si'">
+    <mat-label>CPC (Dane) </mat-label>
+    <input matInput [(ngModel)]="data.CPC">
+  </mat-form-field>
   <div *ngIf="data.modulo === 'departamento' || data.modulo === 'programa' || data.modulo === 'cohorte' 
     || (data.modulo ==='usuario' && rolSeleccionado !== 1)">
     <span class="field-label">Seleccione {{data.modulo === 'departamento' ? 'facultad' : data.modulo === 'programa' ? 'facultad' : data.modulo === 'cohorte' ? 'programa': data.modulo === 'usuario' ? 'facultad':''}} perteneciente</span>
@@ -55,7 +67,7 @@
         <option *ngFor="let item of this.listaProgramasUsuario" [value]="item.id">{{item.nombre}}</option>
     </select>
   </div>
-  <div *ngIf="data.modulo === 'descuento'">
+  <div *ngIf="data.modulo === 'descuento' && data.isCreacionCDP !== 'Si'">
     <span class="field-label">Seleccione {{data.modulo === 'descuento' ? 'tipo de descuento':''}} perteneciente</span>
     <select class="form-control" [(ngModel)]="entidadSeleccionada">
         <option *ngFor="let item of this.listaPerteneciente" [value]="item.id">{{item.nombreTipo}}</option>
@@ -74,7 +86,8 @@
 </div>
 <div mat-dialog-actions style="display: flex; justify-content: space-between;">
   <button mat-button style="background-color: #f02032; color: white;" (click)="onNoClick()">Cancelar</button>
-  <button mat-button style="background-color: #0a7c0a; color: white;" (click)="onAccept()" cdkFocusInitial>{{data.isEdit ? 'Guardar' : 'Aceptar'}}</button>
+  <button *ngIf="data.isCreacionCDP !== 'Si'" mat-button style="background-color: #0a7c0a; color: white;" (click)="onAccept()" cdkFocusInitial>{{data.isEdit ? 'Guardar' : 'Aceptar'}}</button>
+  <button *ngIf="data.isCreacionCDP === 'Si'" mat-button style="background-color: #0a7c0a; color: white;" (click)="onAcceptCDP()" cdkFocusInitial>{{data.isEdit ? 'Guardar' : 'Aceptar'}}</button>
 </div>
 
 

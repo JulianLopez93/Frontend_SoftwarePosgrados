@@ -216,6 +216,39 @@ export class PopupCrearEditarComponent {
 
       this.dialogRef.close(result);
     }
+
+    onAcceptCDP():void {
+      this.showError = false;
+
+      const entidadPerteneciente = this.data?.tipoPerteneciente?.id;
+      let valor;
+      let numEstudiantes;
+      let numPeriodos
+
+      let result;
+
+      valor = this.data.valor;
+      numEstudiantes = this.data.numEstudiantes;
+      numPeriodos = this.data.numPeriodos;
+
+      if (!this.data.numEstudiantes || !this.data.numPeriodos || !this.data.valor 
+        || isNaN(this.data.valor) || isNaN(this.data.numEstudiantes) || isNaN(this.data.numPeriodos 
+          || entidadPerteneciente=== 0)) {
+        this.showError = true; // Muestra el mensaje de error
+        return; // Detiene la ejecución si hay campos vacíos
+      }
+      result = {
+        entidadPerteneciente: entidadPerteneciente,
+        numEstudiantes: numEstudiantes,
+        numPeriodos: numPeriodos,
+        valor: valor,
+        descripcionCDP: this.data.descripcionCDP,
+        CPC: this.data.CPC
+      };
+
+      this.dialogRef.close(result);
+
+    }
     
     formatDate(date: Date): string {
       const day = date.getDate();

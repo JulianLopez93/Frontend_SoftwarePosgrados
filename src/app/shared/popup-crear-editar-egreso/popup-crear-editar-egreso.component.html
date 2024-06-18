@@ -109,7 +109,7 @@
     <mat-label>Valor hora profesor</mat-label>
     <input matInput [(ngModel)]="data.valorHoraProfesor" type="number">
   </mat-form-field>
-  <mat-form-field *ngIf="data.isCreacionCDP === 'Si' && (data.modulo !== 'egreso recurrente')">
+  <mat-form-field *ngIf="data.isCreacionCDP === 'Si' && (data.modulo !== 'egreso recurrente' && data.modulo !== 'egreso viaje')">
     <mat-label>Tipo</mat-label>
     <input matInput [(ngModel)]="data.tipoPerteneciente.nombreTipo" readonly="true">
   </mat-form-field>

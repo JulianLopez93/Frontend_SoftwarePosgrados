@@ -10,6 +10,7 @@ import { CdpService } from '@app/services/cdp.service';
 
 import { PopupCrearEditarEgresoComponent } from '@app/shared/popup-crear-editar-egreso/popup-crear-editar-egreso.component';
 import { PopupConfirmarRubroComponent } from './popup-confirmar-rubro/popup-confirmar-rubro.component';
+import { PopupCrearEditarComponent } from '@app/shared/popup-crear-editar/popup-crear-editar.component';
 
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -375,33 +376,77 @@ export class CrearOrdenGastoComponent {
     ? egreso.tipoCompensacion
     : this.rubroSeleccionado === 'Inversiones'
     ? egreso.tipoInversion
+    : this.rubroSeleccionado === 'Descuentos'
+    ? egreso.tipoDescuento
     : null;
-  
-  const dialogRef = this.dialog.open(PopupCrearEditarEgresoComponent, {
-    width: '350px',
-    data: {
-      modulo: modulo,
-      isCreacionCDP: 'Si',
-      concepto: egreso ? egreso.concepto : '',
-      valor: egreso ? egreso.valor : '',
-      valorUnitario: egreso ? egreso.valorUnitario : '',
-      cantidad: egreso ? egreso.cantidad : '',
-      unidad: egreso ? egreso.unidad : '',
-      cargo: egreso ? egreso.cargo : '',
-      valorHora: egreso ? egreso.valorHora : '',
-      numHoras: egreso ? egreso.numHoras : '',
-      nombreMateria: egreso ? egreso.nombreMateria : '',
-      esDocentePlanta: egreso ? egreso.esDocentePlanta : '',
-      nombreDocente: egreso ? egreso.nombreDocente : '',
-      escalafon: egreso ? egreso.escalafon : '',
-      titulo: egreso ? egreso.titulo : '',
-      horasTeoricasMat: egreso ? egreso.horasTeoricasMat : '',
-      horasPracticasMat: egreso ? egreso.horasPracticasMat : '',
-      valorHoraProfesor: egreso ? egreso.valorHoraProfesor : '',
-      isEdit: !!egreso,
-      tipoPerteneciente: tipoPerteneciente
-    }
-  });
+
+  if (modulo !== 'descuento')
+  {
+    const dialogRef = this.dialog.open(PopupCrearEditarEgresoComponent, {
+      width: '350px',
+      data: {
+        modulo: modulo,
+        isCreacionCDP: 'Si',
+        concepto: egreso ? egreso.concepto : '',
+        valor: egreso ? egreso.valor : '',
+        valorUnitario: egreso ? egreso.valorUnitario : '',
+        valorTotal: egreso ? egreso.valorTotal : '',
+        cantidad: egreso ? egreso.cantidad : '',
+        unidad: egreso ? egreso.unidad : '',
+        cargo: egreso ? egreso.cargo : '',
+        valorHora: egreso ? egreso.valorHora : '',
+        numHoras: egreso ? egreso.numHoras : '',
+        nombreMateria: egreso ? egreso.nombreMateria : '',
+        esDocentePlanta: egreso ? egreso.esDocentePlanta : '',
+        nombreDocente: egreso ? egreso.nombreDocente : '',
+        escalafon: egreso ? egreso.escalafon : '',
+        titulo: egreso ? egreso.titulo : '',
+        horasTeoricasMat: egreso ? egreso.horasTeoricasMat : '',
+        horasPracticasMat: egreso ? egreso.horasPracticasMat : '',
+        valorHoraProfesor: egreso ? egreso.valorHoraProfesor : '',
+        descripcion: egreso ? egreso.descripcion : '',
+        numPersonas: egreso ? egreso.numPersonas : '',
+        apoyoDesplazamiento: egreso ? egreso.apoyoDesplazamiento : '',
+        numViajesPorPersona: egreso ? egreso.numViajesPorPersona : '',
+        valorTransporte: egreso ? egreso.valorTransporte : '',
+        servicio: egreso ? egreso.servicio : '',
+        porcentaje: egreso ? egreso.porcentaje : '',
+        isEdit: !!egreso,
+        tipoPerteneciente: tipoPerteneciente
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('El diálogo se cerró');
+      console.log('Resultado:', result);
+      if (result) {
+        if (egreso) {
+          console.log("Edita egreso");
+          this.agregarEgresoDesdePresupuesto(result, modulo, egreso.id)
+        } else {
+          console.log("Crea egreso");
+          //this.crearEgresoGeneral(this.idPresupuesto, result.concepto, result.valorUnitario, result.cantidad, result.entidadPerteneciente);
+        }
+      }
+
+    });
+
+  }
+
+  else
+  {
+    const dialogRef = this.dialog.open(PopupCrearEditarComponent, {
+      width: '350px',
+      data: {
+        modulo: modulo,
+        isCreacionCDP: 'Si',
+        valor: egreso ? egreso.valor : '',
+        numEstudiantes: egreso ? egreso.numEstudiantes : '',
+        numPeriodos: egreso ? egreso.numPeriodos : '',
+        isEdit: !!egreso,
+        tipoPerteneciente: tipoPerteneciente
+      }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('El diálogo se cerró');
@@ -418,14 +463,65 @@ export class CrearOrdenGastoComponent {
 
     });
   }
+  
+  
+  }
+
+  determinarModulo(rubroSeleccionado: string, egreso:any)
+  {
+    let modulo: string = '';
+    switch(rubroSeleccionado)
+    {
+      case 'Generales':
+        modulo = 'egreso general'
+        break;
+      case 'Recurrentes Administrativos':
+        modulo = 'egreso recurrente'
+        break;
+      case 'Inversiones':
+        modulo = 'egreso inversion'
+        break;
+      case 'Viajes':
+        modulo = 'egreso viaje'
+        break;
+      case 'Otros Servicios Docentes':
+        modulo = 'egreso otros servicios docente'
+        break;
+      case 'Servicios Docentes':
+        modulo = 'egreso servicio docente'
+        break;
+      case 'Servicios No Docentes':
+        modulo = 'egreso servicio no docente'
+        break;
+      case 'Descuentos':
+        modulo = 'descuento'
+        break;
+      case 'Transferencias':
+        modulo = 'egreso transferencia'
+        break;
+      case 'Otros':
+        modulo = 'otro egreso'
+        break;
+
+    }
+
+    /*
+    if (modulo !== 'descuento')
+      {
+        this.openCreateDialog(modulo, egreso)
+      }
+        */
+
+      this.openCreateDialog(modulo, egreso)
+  }
 
   agregarEgresoDesdePresupuesto(resultado: any, modulo: string, egresoId: number)
   {
     if (modulo == 'egreso general')
-      {
-        this.adicionarEgresoGeneralPresupuesto(resultado, egresoId);
+    {
+      this.adicionarEgresoGeneralPresupuesto(resultado, egresoId);
 
-      }
+    }
     else if (modulo == 'egreso recurrente')
     {
       this.adicionarEgresoRecurrentePresupuesto(resultado, egresoId);
@@ -439,10 +535,41 @@ export class CrearOrdenGastoComponent {
     }
 
     else if (modulo == 'egreso inversion')
-      {
-        this.adicionarEgresoInversionPresupuesto(resultado, egresoId);
-  
-      }
+    {
+      this.adicionarEgresoInversionPresupuesto(resultado, egresoId);
+
+    }
+
+    else if (modulo == 'egreso viaje')
+    {
+      this.adicionarEgresoViajePresupuesto(resultado, egresoId);
+
+    }
+    else if (modulo == 'egreso otros servicios docente')
+    {
+      this.adicionarEgresoOtrosServDocentePresupuesto(resultado, egresoId);
+
+    }
+    else if (modulo == 'egreso servicio no docente')
+    {
+      this.adicionarEgresosServNoDocentePresupuesto(resultado, egresoId);
+
+    }
+    else if (modulo == 'egreso transferencia')
+    {
+      this.adicionarEgresoTransferenciaPresupuesto(resultado, egresoId);
+
+    }
+    else if (modulo == 'otro egreso')
+    {
+      this.adicionarEgresoOtroPresupuesto(resultado, egresoId);
+
+    }
+    else if (modulo == 'descuento')
+    {
+      this.adicionarEgresoDescuentoPresupuesto(resultado, egresoId);
+
+    }
     
 
   }
@@ -550,6 +677,73 @@ export class CrearOrdenGastoComponent {
     })
   }
 
+  adicionarEgresoOtrosServDocentePresupuesto(resultado: any, egresoId: number)
+  {
+    console.log(resultado);
+    console.log(egresoId);
+    const params = 
+    {
+      idCdp: parseInt(this.idCdp),
+      servicio: resultado.servicio,
+      descripcion: resultado.descripcion,
+      numHoras: resultado.numHoras,
+      valorTotal: resultado.valorTotal,
+      idTipoCosto: resultado.entidadPerteneciente,
+      idEgresoDelPresupuesto: egresoId,
+      descripcionEgresoCDP: resultado.descripcionCDP,
+      cpc: resultado.CPC
+    }
+    console.log(params);
+
+    this.cdpServices.adicionarEgresoOtrosServDocentePresupuesto(params).subscribe((result:any) => {
+      console.log(result);
+      if (result == 'OK')
+        {
+          this.toastr.success("Egreso otro servicio docente agregado");
+          this.obtenerEgresosDesdePresupuesto();
+          this.listarEgresosCDP(this.idCdp);
+          
+        }
+        else
+        {
+          //this.openBudgetCreationDialog(cohorte);
+        }
+    })
+  }
+
+  adicionarEgresosServNoDocentePresupuesto(resultado: any, egresoId: number)
+  {
+    console.log(resultado);
+    console.log(egresoId);
+    const params = 
+    {
+      idCdp: parseInt(this.idCdp),
+      servicio: resultado.servicio,
+      cantidad: resultado.cantidad,
+      valorUnitario: resultado.valorUnitario,
+      idTipoCosto: resultado.entidadPerteneciente,
+      idEgresoDelPresupuesto: egresoId,
+      descripcionEgresoCDP: resultado.descripcionCDP,
+      cpc: resultado.CPC
+    }
+    console.log(params);
+
+    this.cdpServices.adicionarEgresoServNoDocentePresupuesto(params).subscribe((result:any) => {
+      console.log(result);
+      if (result == 'OK')
+        {
+          this.toastr.success("Egreso servicio no docente agregado");
+          this.obtenerEgresosDesdePresupuesto();
+          this.listarEgresosCDP(this.idCdp);
+          
+        }
+        else
+        {
+          //this.openBudgetCreationDialog(cohorte);
+        }
+    })
+  }
+
   adicionarEgresoRecurrentePresupuesto(resultado: any, egresoId: number)
   {
     console.log(resultado);
@@ -583,6 +777,139 @@ export class CrearOrdenGastoComponent {
     })
   }
 
+  adicionarEgresoViajePresupuesto(resultado: any, egresoId: number)
+  {
+    console.log(resultado);
+    console.log(egresoId);
+    const params = 
+    {
+      idCdp: parseInt(this.idCdp),
+      descripcion: resultado.descripcion,
+      numPersonas: resultado.numPersonas,
+      apoyoDesplazamiento: resultado.apoyoDesplazamiento,
+      numViajesPorPersona: resultado.numViajesPorPersona,
+      valorTransporte: resultado.valorTransporte,
+      idEgresoDelPresupuesto: egresoId,
+      descripcionEgresoCDP: resultado.descripcionCDP,
+      cpc: resultado.CPC
+    }
+    console.log(params);
+
+    this.cdpServices.adicionarEgresoViajePresupuesto(params).subscribe((result:any) => {
+      console.log(result);
+      if (result == 'OK')
+        {
+          this.toastr.success("Egreso viaje agregado");
+          this.obtenerEgresosDesdePresupuesto();
+          this.listarEgresosCDP(this.idCdp);
+          
+        }
+        else
+        {
+          //this.openBudgetCreationDialog(cohorte);
+        }
+    })
+  }
+
+  adicionarEgresoTransferenciaPresupuesto(resultado: any, egresoId: number)
+  {
+    console.log(resultado);
+    console.log(egresoId);
+    const params = 
+    {
+      idCdp: parseInt(this.idCdp),
+      descripcion: resultado.descripcion,
+      porcentaje: resultado.porcentaje,
+      idTipoTransferencia: resultado.entidadPerteneciente,
+      idEgresoDelPresupuesto: egresoId,
+      descripcionEgresoCDP: resultado.descripcionCDP,
+      cpc: resultado.CPC
+    }
+    console.log(params);
+
+    this.cdpServices.adicionarEgresoTransferenciaPresupuesto(params).subscribe((result:any) => {
+      console.log(result);
+      if (result == 'OK')
+        {
+          this.toastr.success("Egreso transferencia agregado");
+          this.obtenerEgresosDesdePresupuesto();
+          this.listarEgresosCDP(this.idCdp);
+          
+        }
+        else
+        {
+          //this.openBudgetCreationDialog(cohorte);
+        }
+    })
+  }
+
+  adicionarEgresoOtroPresupuesto(resultado: any, egresoId: number)
+  {
+    console.log(resultado);
+    console.log(egresoId);
+    const params = 
+    {
+      idCdp: parseInt(this.idCdp),
+      concepto: resultado.concepto,
+      valorUnitario: resultado.valorUnitario,
+      cantidad: resultado.cantidad,
+      idTipoCosto: resultado.entidadPerteneciente,
+      idEgresoDelPresupuesto: egresoId,
+      descripcionEgresoCDP: resultado.descripcionCDP,
+      cpc: resultado.CPC
+    }
+    console.log(params);
+
+    this.cdpServices.adicionarEgresoOtroPresupuesto(params).subscribe((result:any) => {
+      console.log(result);
+      if (result == 'OK')
+        {
+          this.toastr.success("Egreso Otros agregado");
+          this.obtenerEgresosDesdePresupuesto();
+          this.listarEgresosCDP(this.idCdp);
+          
+        }
+        else
+        {
+          //this.openBudgetCreationDialog(cohorte);
+        }
+    })
+  }
+
+  adicionarEgresoDescuentoPresupuesto(resultado: any, egresoId: number)
+  {
+    console.log(resultado);
+    console.log(egresoId);
+    const params = 
+    {
+      idCdp: parseInt(this.idCdp),
+      numEstudiantes: resultado.numEstudiantes,
+      valor: resultado.valor,
+      numPeriodos: resultado.numPeriodos,
+      idTipoDescuento: resultado.entidadPerteneciente,
+      idEgresoDelPresupuesto: egresoId,
+      descripcionEgresoCDP: resultado.descripcionCDP,
+      cpc: resultado.CPC
+    }
+    console.log(params);
+
+    this.cdpServices.adicionarEgresoDescuentoPresupuesto(params).subscribe((result:any) => {
+      console.log(result);
+      if (result == 'OK')
+        {
+          this.toastr.success("Egreso Descuento agregado");
+          this.obtenerEgresosDesdePresupuesto();
+          this.listarEgresosCDP(this.idCdp);
+          
+        }
+        else
+        {
+          //this.openBudgetCreationDialog(cohorte);
+        }
+    })
+  }
+
+
   listarEgresosCDP(idCdp: string) {
     this.cdpServices.getListaEgresosCDP(idCdp).subscribe((result: any) => {
       if (result !== null) {
@@ -590,8 +917,8 @@ export class CrearOrdenGastoComponent {
         this.listaEgresosCDP = result.map((egreso: any) => ({
           ...egreso,
           egresoEspecifico: egreso.egresoRecurrenteAdm || egreso.egresoGeneral || egreso.egresoInversion
-          || egreso.egresoOtro || egreso.egresoOtrosServDocente || egreso.egresoServDocente || egreso.egresoServNoDocente
-          || egreso.egresoTransferencia || egreso.egresoViaje
+          || egreso.egresoOtro || egreso.egresoOtroServDocente || egreso.egresoServDocente || egreso.egresoServNoDocente
+          || egreso.egresoTransferencia || egreso.egresoViaje || egreso.egresoDescuento
         }));
         console.log(this.listaEgresosCDP);
         this.obtenerEncabezadosEgresosCDPAgregados();
@@ -601,49 +928,7 @@ export class CrearOrdenGastoComponent {
     });
   }
 
-  determinarModulo(rubroSeleccionado: string, egreso:any)
-  {
-    let modulo: string = '';
-    switch(rubroSeleccionado)
-    {
-      case 'Generales':
-        modulo = 'egreso general'
-        break;
-      case 'Recurrentes Administrativos':
-        modulo = 'egreso recurrente'
-        break;
-      case 'Inversiones':
-        modulo = 'egreso inversion'
-        break;
-      case 'Viajes':
-        modulo = 'egreso viaje'
-        break;
-      case 'Otros Servicios Docentes':
-        modulo = 'egreso otros servicios docente'
-        break;
-      case 'Servicios Docentes':
-        modulo = 'egreso servicio docente'
-        break;
-      case 'Servicios No Docentes':
-        modulo = 'egreso servicio no docente'
-        break;
-      case 'Descuentos':
-        modulo = 'descuento'
-        break;
-      case 'Transferencias':
-        modulo = 'egreso transferencia'
-        break;
-      case 'Otros':
-        modulo = 'otro egreso'
-        break;
-
-    }
-
-    if (modulo !== 'descuento')
-      {
-        this.openCreateDialog(modulo, egreso)
-      }
-  }
+  
 
   openConfirmationDialog(rubro:string)
   {

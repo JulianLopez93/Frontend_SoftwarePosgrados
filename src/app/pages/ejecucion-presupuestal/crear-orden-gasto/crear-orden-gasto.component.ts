@@ -927,7 +927,15 @@ export class CrearOrdenGastoComponent {
       }
     });
   }
-
+  generarReporePDFEgresosCDP() {
+    this.cdpServices.generarPDFdeCDP(this.idCdp).subscribe((data: Blob) => {
+      const downloadURL = window.URL.createObjectURL(data);
+      const link = document.createElement('a');
+      link.href = downloadURL;
+      link.download = "reporte.pdf";
+      link.click();
+    });
+  }
   
 
   openConfirmationDialog(rubro:string)

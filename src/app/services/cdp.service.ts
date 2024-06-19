@@ -304,4 +304,12 @@ export class CdpService {
     return this.http.get(url, { headers });
 
   }
+  generarPDFdeCDP(idCdp: string): Observable<any> {
+    const url = `${this.baseUrl}/generarReportePDF?idCdp=${idCdp}`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers, responseType: 'blob' });
+  }
 }

@@ -19,5 +19,13 @@ export class EjecucionPresupuestalService {
     return this.http.get(url, { headers });
   }
 
+  getEjecucionPorCohorte(idCohorte:number) {
+    const url = `${this.baseUrl}/buscarPorCohorte?idCohorte=${idCohorte}`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    });
+    return this.http.get(url, { headers });
+  }
+
   
 }

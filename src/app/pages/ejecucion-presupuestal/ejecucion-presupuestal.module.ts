@@ -9,12 +9,14 @@ import { MaterialModule } from '@app/material/material/material.module';
 import { MatTableModule } from '@angular/material/table';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PopupConfirmarRubroComponent } from './crear-orden-gasto/popup-confirmar-rubro/popup-confirmar-rubro.component';
+import { ReporteEgresosComponent } from './reporte-egresos/reporte-egresos.component';
 
 
 @NgModule({
   declarations: [
     CrearOrdenGastoComponent,
-    PopupConfirmarRubroComponent
+    PopupConfirmarRubroComponent,
+    ReporteEgresosComponent
   ],
   imports: [
     CommonModule,

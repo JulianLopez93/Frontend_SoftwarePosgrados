@@ -79,7 +79,7 @@
                     </ng-container>
                     <ng-container *ngIf="rubroSeleccionado == 'Viajes'" matColumnDef="valorTransporte">
                         <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Valor transporte</th>
-                        <td mat-cell *matCellDef="let egreso"> {{egreso.valorTransporte}} </td>
+                        <td mat-cell *matCellDef="let egreso"> ${{egreso.valorTransporte}} </td>
                     </ng-container>
                     <ng-container *ngIf="rubroSeleccionado == 'Otros Servicios Docentes' || rubroSeleccionado == 'Servicios No Docentes'" matColumnDef="servicio">
                         <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Servicio </th>
@@ -103,7 +103,7 @@
                     </ng-container>
                     <ng-container *ngIf="rubroSeleccionado == 'Descuentos' || rubroSeleccionado == 'Inversiones'" matColumnDef="valor">
                         <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Valor </th>
-                        <td mat-cell *matCellDef="let egreso"> {{egreso.valor}} </td>
+                        <td mat-cell *matCellDef="let egreso"> ${{egreso.valor}} </td>
                       </ng-container>
                     <ng-container *ngIf="rubroSeleccionado == 'Generales' || rubroSeleccionado == 'Otros' || rubroSeleccionado == 'Servicios No Docentes'" matColumnDef="cantidad">
                         <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Cantidad </th>
@@ -238,7 +238,7 @@
                     </ng-container>
                     <ng-container *ngIf="rubroSeleccionado == 'Viajes'" matColumnDef="valorTransporte">
                         <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Valor transporte</th>
-                        <td mat-cell *matCellDef="let egreso"> {{egreso.egresoEspecifico.valorTransporte}} </td>
+                        <td mat-cell *matCellDef="let egreso"> ${{egreso.egresoEspecifico.valorTransporte}} </td>
                     </ng-container>
                     <ng-container *ngIf="rubroSeleccionado == 'Otros Servicios Docentes' || rubroSeleccionado == 'Servicios No Docentes'" matColumnDef="servicio">
                         <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Servicio </th>
@@ -262,7 +262,7 @@
                     </ng-container>
                     <ng-container *ngIf="rubroSeleccionado == 'Descuentos' || rubroSeleccionado == 'Inversiones'" matColumnDef="valor">
                         <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Valor </th>
-                        <td mat-cell *matCellDef="let egreso"> {{egreso. egresoEspecifico.valor}} </td>
+                        <td mat-cell *matCellDef="let egreso"> ${{egreso. egresoEspecifico.valor}} </td>
                       </ng-container>
                     <ng-container *ngIf="rubroSeleccionado == 'Generales' || rubroSeleccionado == 'Otros' || rubroSeleccionado == 'Servicios No Docentes'" matColumnDef="cantidad">
                         <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;"> Cantidad </th>

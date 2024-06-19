@@ -1,0 +1,13 @@
+.main-summary-font
+{
+    font-size: 20px;
+}
+.section-title-text
+{
+    color: #003b70;
+    text-align: center;
+
+}
+.contador-negativo {
+    color: red;
+  }

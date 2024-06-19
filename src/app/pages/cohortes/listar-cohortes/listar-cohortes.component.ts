@@ -125,6 +125,10 @@ export class ListarCohortesComponent {
           
     });
   }
+  abrirReporteCDPPorPresupuesto(cohorte:any)
+  {
+    this.route.navigate(['ejecucion-presupuestal/reporte-egresos', cohorte.id.toString()]);
+  }
 
   applyFilter() {
     if (this.searchText) {

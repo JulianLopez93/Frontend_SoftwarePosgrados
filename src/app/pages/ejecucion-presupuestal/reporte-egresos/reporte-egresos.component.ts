@@ -37,11 +37,18 @@ export class ReporteEgresosComponent {
   egresosGeneralesPlanos: any[] = [];
   egresosServDocentesPlanos: any[] = [];
 
+  egresosViajesPlanos: any[] = [];
+
   mostrarTablaEgresosGenerales: boolean = false
   mostrarTablaEgresosServDocentes: boolean = false
 
-  displayedColumns: string[] = ['cpc', 'descripcionCDP','concepto', 'valorUnitario', 'cantidad', 'valorTotal'];
-  displayedSDColumns: string[] = ['cpc', 'descripcionCDP','esDocentePlanta', 'horasPracticasMat', 'horasTeoricasMat', 'nombreDocente', 'nombreMateria', 'titulo', 'totalHorasProfesor', 'valorHoraProfesor', 'totalPagoProfesor'];
+  mostrarTablaEgresosViajes: boolean = false
+
+  displayedColumns: string[] = ['cpc', 'descripcionCDP', 'concepto', 'valorUnitario', 'cantidad', 'valorTotal'];
+  displayedSDColumns: string[] = ['cpc', 'descripcionCDP', 'esDocentePlanta', 'horasPracticasMat', 'horasTeoricasMat', 'nombreDocente', 'nombreMateria', 'titulo', 'totalHorasProfesor', 'valorHoraProfesor', 'totalPagoProfesor'];
+
+
+  displayedVColumns: string[] = ['cpc', 'descripcionCDP', 'apoyoDesplazamiento', 'descripcion', 'numPersonas', 'numViajesPorPersona', 'valorTransporte', 'valorTotal'];
 
   constructor(
     private cohortesService: CohortesService,
@@ -73,33 +80,29 @@ export class ReporteEgresosComponent {
     this.obtenerEjecucion();
   }
 
-  obtenerEjecucion()
-  {
-    this.ejecucionPresupuestalService.getEjecucionPorPresupuesto(this.idCohorte).subscribe((result:any) =>{
+  obtenerEjecucion() {
+    this.ejecucionPresupuestalService.getEjecucionPorPresupuesto(this.idCohorte).subscribe((result: any) => {
       console.log(result);
-      if (result !== null)
-        {
-          console.log("Ejecucion presupuestal obtenida");
-          this.ejecucionPresupuestal = result;
-          console.log(this.ejecucionPresupuestal);
-          this.obtenerCDPconEgresos();
-          //this.obtenerProgramasPorFacultad(this.facultadSeleccionada);
-        }
+      if (result !== null) {
+        console.log("Ejecucion presupuestal obtenida");
+        this.ejecucionPresupuestal = result;
+        console.log(this.ejecucionPresupuestal);
+        this.obtenerCDPconEgresos();
+        //this.obtenerProgramasPorFacultad(this.facultadSeleccionada);
+      }
     });
   }
 
-  obtenerCDPconEgresos()
-  {
+  obtenerCDPconEgresos() {
     // Filtrar los CDP que tienen al menos un egreso
     const cdpsConEgresos = this.ejecucionPresupuestal.cdps.filter((cdp: { egresosCDP: string | any[]; }) => cdp.egresosCDP.length > 0);
-    
+
     // Ahora cdpsConEgresos contiene solo los CDP con egresos
     console.log(cdpsConEgresos);
     this.asignarCDPaCadaLista(cdpsConEgresos);
   }
 
-  asignarCDPaCadaLista(cdpsConEgresos:any)
-  {
+  asignarCDPaCadaLista(cdpsConEgresos: any) {
     cdpsConEgresos.forEach((cdp: { rubro: any; }) => {
       switch (cdp.rubro) {
         case 'Generales':
@@ -132,9 +135,9 @@ export class ReporteEgresosComponent {
         case 'Otros':
           this.listaEgresosOtros.push(cdp);
           break;
-        
+
         default:
-        
+
           // Si no coincide con ningún rubro específico, puedes manejarlo aquí
           break;
       }
@@ -146,8 +149,7 @@ export class ReporteEgresosComponent {
 
   }
 
-  obtenerEgresosGeneralesPlanos()
-  {
+  obtenerEgresosGeneralesPlanos() {
     for (const cdp of this.listaEgresosGenerales) {
       for (const egresoCDP of cdp.egresosCDP) {
         this.egresosGeneralesPlanos.push(egresoCDP);
@@ -158,8 +160,7 @@ export class ReporteEgresosComponent {
     this.mostrarTablaEgresosGenerales = true;
   }
 
-  obtenerEgresosServDocentesPlanos()
-  {
+  obtenerEgresosServDocentesPlanos() {
     for (const cdp of this.listaEgresosServDocentes) {
       for (const egresoCDP of cdp.egresosCDP) {
         this.egresosServDocentesPlanos.push(egresoCDP);
@@ -170,8 +171,18 @@ export class ReporteEgresosComponent {
     this.mostrarTablaEgresosServDocentes = true;
   }
 
-  imprimirListas()
-  {
+  obtenerEgresosViajesPlanos() {
+    for (const cdp of this.listaEgresosViajes) {
+      for (const egresoCDP of cdp.egresosCDP) {
+        this.egresosViajesPlanos.push(egresoCDP);
+      }
+    }
+
+    console.log(this.egresosViajesPlanos);
+    this.mostrarTablaEgresosViajes = true;
+  }
+
+  imprimirListas() {
     console.log(this.listaEgresosGenerales)
     console.log(this.listaEgresosDescuentos)
     console.log(this.listaEgresosInversiones)
@@ -183,6 +194,6 @@ export class ReporteEgresosComponent {
     console.log(this.listaEgresosTransferencias)
     console.log(this.listaEgresosViajes)
   }
-  
+
 
 }

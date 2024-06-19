@@ -31,9 +31,9 @@
             <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;">Valor Total</th>
             <td mat-cell *matCellDef="let egreso">{{ egreso.egresoGeneral.valorTotal }}</td>
           </ng-container>
-        
+
           <!-- ... Repite las columnas para valorUnitario, cantidad y valorTotal ... -->
-        
+
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
@@ -89,16 +89,62 @@
             <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;">Total pago profesor</th>
             <td mat-cell *matCellDef="let egreso">{{ egreso.egresoServDocente.totalPagoProfesor }}</td>
           </ng-container>
-        
+
           <!-- ... Repite las columnas para valorUnitario, cantidad y valorTotal ... -->
-        
+
           <tr mat-header-row *matHeaderRowDef="displayedSDColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedSDColumns"></tr>
         </table>
     </div>
 </div>
 
-   
+<div class="row">
+  <div class="card mb-2">
+      <div class="row">
+          <h3>Lista de egresos de viajes</h3>
+      </div>
+      <table *ngIf="mostrarTablaEgresosViajes" mat-table [dataSource]="egresosViajesPlanos" class="mat-elevation-z8">
+          <ng-container matColumnDef="cpc">
+              <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;">CPC (Dane)</th>
+              <td mat-cell *matCellDef="let egreso">{{ egreso.cpc}}</td>
+          </ng-container>
+          <ng-container matColumnDef="descripcionCDP">
+              <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;">Descripción CDP</th>
+              <td mat-cell *matCellDef="let egreso">{{ egreso.descripcion}}</td>
+          </ng-container>
+        <ng-container matColumnDef="apoyoDesplazamiento">
+          <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;">Apoyo desplazamiento</th>
+          <td mat-cell *matCellDef="let egreso">{{ egreso.egresoViaje.apoyoDesplazamiento}}</td>
+        </ng-container>
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;">Descripción viaje</th>
+          <td mat-cell *matCellDef="let egreso">{{ egreso.egresoViaje.descripcion }}</td>
+        </ng-container>
+        <ng-container matColumnDef="numPersonas">
+          <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;">Número de personas</th>
+          <td mat-cell *matCellDef="let egreso">{{ egreso.egresoViaje.numPersonas }}</td>
+        </ng-container>
+        <ng-container matColumnDef="numViajesPorPersona">
+          <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;">Número de viajes por persona</th>
+          <td mat-cell *matCellDef="let egreso">{{ egreso.egresoViaje.numViajesPorPersona }}</td>
+        </ng-container>
+        <ng-container matColumnDef="valorTransporte">
+          <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;">Valor del transporte</th>
+          <td mat-cell *matCellDef="let egreso">{{ egreso.egresoViaje.valorTransporte }}</td>
+        </ng-container>
+        <ng-container matColumnDef="valorTotal">
+          <th mat-header-cell *matHeaderCellDef style="background-color: #003b70; color: white;">Valor total</th>
+          <td mat-cell *matCellDef="let egreso">{{ egreso.egresoViaje.valorTotal }}</td>
+        </ng-container>
+
+
+        <!-- ... Repite las columnas para valorUnitario, cantidad y valorTotal ... -->
+
+        <tr mat-header-row *matHeaderRowDef="displayedVColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedVColumns"></tr>
+      </table>
+  </div>
+</div>
 
 </div>
 
